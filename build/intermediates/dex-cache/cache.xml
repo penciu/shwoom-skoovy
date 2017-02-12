@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="F:\ASUSkoovy\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="1bb04c2420a9309dfe4e2a80d77f939fc83f6c54">
+        <dex dex="F:\ASUSkoovy\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_5bcc1654988013e0900668462f644cdabc85bf88\classes.dex" />
+    </item>
+
+</items>

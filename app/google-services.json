@@ -1,0 +1,140 @@
+{
+  "project_info": {
+    "project_number": "572774456876",
+    "firebase_url": "https://skoovy-b4e40.firebaseio.com",
+    "project_id": "skoovy-b4e40",
+    "storage_bucket": "skoovy-b4e40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572774456876:android:d0f0ed6ce9c85785",
+        "android_client_info": {
+          "package_name": "com.skoovy.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572774456876-ifjnlsjfj2oeef6kc29sakrmg4ms133j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEVPOli_PXU7K7CJLNynLUuj6qcjd2-xc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572774456876-ifjnlsjfj2oeef6kc29sakrmg4ms133j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "572774456876-og86c1fcvhhvfmadba8hhgp0r2c3jhmf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hotsalsainteractive.skoovytest"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572774456876:android:bdb12dbe5b35ed21",
+        "android_client_info": {
+          "package_name": "asuser421.edu.userregpart2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572774456876-ifjnlsjfj2oeef6kc29sakrmg4ms133j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEVPOli_PXU7K7CJLNynLUuj6qcjd2-xc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572774456876-ifjnlsjfj2oeef6kc29sakrmg4ms133j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "572774456876-og86c1fcvhhvfmadba8hhgp0r2c3jhmf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hotsalsainteractive.skoovytest"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572774456876:android:decafcbd42a25137",
+        "android_client_info": {
+          "package_name": "android.skoovy.com.skoovy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "572774456876-ifjnlsjfj2oeef6kc29sakrmg4ms133j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEVPOli_PXU7K7CJLNynLUuj6qcjd2-xc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "572774456876-ifjnlsjfj2oeef6kc29sakrmg4ms133j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "572774456876-og86c1fcvhhvfmadba8hhgp0r2c3jhmf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.hotsalsainteractive.skoovytest"
+              }
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
