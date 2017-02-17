@@ -36,8 +36,8 @@
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="50sp"
-        app:srcCompat="@drawable/sign_up"
-        android:id="@+id/imageButton"
+        app:srcCompat="@drawable/signup"
+        android:id="@+id/signUpImageButton"
         android:scaleType="fitCenter"
         android:background="@android:color/transparent"
         android:layout_marginTop="23dp"
