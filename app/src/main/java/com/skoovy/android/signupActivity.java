@@ -87,7 +87,7 @@ public class signupActivity extends Activity {
                 lastName = editTextLastName.getText().toString().trim();
 
                 if (lastName.length() > 0){
-                    //there is text in the laast name text field
+                    //there is text in the last name text field
                     //so we display the undo button
                     undobutton2.setVisibility(View.VISIBLE);
                     isEditText2Empty = false;
@@ -138,6 +138,9 @@ public class signupActivity extends Activity {
             }
         });
 
+        //Check to see if 'Done' button was pressed on the softkeyboard
+        //remove focus from current last name text field (focus actually passes back to LinearLayout)
+        //hide undo text button for last name text field
         editTextLastName.setOnEditorActionListener(new OnEditorActionListener() {
 
             @Override
@@ -146,8 +149,8 @@ public class signupActivity extends Activity {
                     // When 'done' button on softkeyboar is pressed, remove undo button on last name input field
                     undobutton2.setVisibility(View.INVISIBLE);
                     editTextLastName.clearFocus();
-                   // View view = this.getCurrentFocus();
-                    View view = (View) findViewById(R.id.activity_signup);
+
+                    View view = findViewById(R.id.activity_signup);
                     InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }

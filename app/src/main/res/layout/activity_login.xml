@@ -10,6 +10,8 @@
     android:paddingTop="6dp"
     android:orientation="vertical"
     android:weightSum="1"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.skoovy.android.loginActivity">
 
     <ImageButton
