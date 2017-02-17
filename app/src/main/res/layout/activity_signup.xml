@@ -10,6 +10,8 @@
     android:paddingTop="6dp"
     android:orientation="vertical"
     android:weightSum="1"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.skoovy.android.signupActivity">
 
 
@@ -65,14 +67,14 @@
             android:layout_width="257dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="11dp"
-            android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/firstName"
             android:backgroundTint="#888888"
             android:minWidth="280dp"
             android:maxWidth="314dp"
             android:layout_marginTop="-5dp"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:inputType="textCapSentences" />
 
 
         <ImageButton
@@ -105,7 +107,6 @@
         <EditText
             android:layout_width="257dp"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/lastName"
             android:backgroundTint="#888888"
@@ -115,7 +116,8 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="11dp"
             android:layout_marginTop="-5dp"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            android:inputType="textCapSentences" />
 
         <ImageButton
             android:layout_width="17dp"
@@ -183,7 +185,7 @@
             android:maxHeight="65dp"
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
-            android:src="@drawable/sign_up_grey"
+            android:src="@drawable/signupgrey"
             android:id="@+id/activityBsignupButton"
             android:visibility="visible"
             android:backgroundTint="@android:color/transparent"

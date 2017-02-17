@@ -1,5 +1,6 @@
 package com.skoovy.android;
 
+import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,30 +15,40 @@ import android.content.Intent;
 import java.util.Calendar;
 
 public class whatsYourBirthdayActivity extends AppCompatActivity {
+
     public static String birthdate;
     EditText editTextBirthdate;
-    ImageButton button1;
-    ImageButton button2;
-    ImageButton undoButton1;
+
+    ImageButton button1;        //go on to next activity
+    ImageButton button2;        //go back to previous screen
+    ImageButton undoButton1;    //undo input text in edit text field
     final Calendar c = Calendar.getInstance();
     private DatePicker myDatePicker;
 
+    private DatePickerDialog fromDatePickerDialog;
+    private DatePickerDialog toDatePickerDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whats_your_birthday);
 
+        //find elements in this activity
         myDatePicker = ((DatePicker)findViewById(R.id.datePicker));
         editTextBirthdate = ((EditText)findViewById(R.id.dob));
         undoButton1 = ((ImageButton)findViewById(R.id.undoButton1));
 
+        //upon start of activity hide the undo text for editText
         undoButton1.setVisibility(View.INVISIBLE);
 
+        //upon start of activity hide the DatePicker
         myDatePicker.setVisibility(View.INVISIBLE);
 
+        //upon start of activity place current date in Datepicker
         setCurrentDateOnView();
 
+
+        //this gets the values from the DatePicker and places the text in the editText
         myDatePicker.init(myDatePicker.getYear(), myDatePicker.getMonth(), myDatePicker.getDayOfMonth(), new DatePicker.OnDateChangedListener()
         {
             public void onDateChanged(DatePicker arg0, int arg1, int arg2, int arg3)
@@ -45,23 +56,26 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
                 //Convert integer month to string month
                 String [] monthArray = new String[] {"January ","February ","March ","April ","May ","June ","July ","August ","September ","October ","November ","December "};
                 String month = "";
-                //Array is 0 based, months are not
+                //Toast.makeText(getApplicationContext(), "month int is: " + arg2, Toast.LENGTH_SHORT).show();
+                //switch on the month integer
                 switch (arg2) {
-                    case 1: month = monthArray[0]; break;
-                    case 2: month = monthArray[1]; break;
-                    case 3: month = monthArray[2]; break;
-                    case 4: month = monthArray[3]; break;
-                    case 5: month = monthArray[4]; break;
-                    case 6: month = monthArray[5]; break;
-                    case 7: month = monthArray[6]; break;
-                    case 8: month = monthArray[7]; break;
-                    case 9: month = monthArray[8]; break;
-                    case 10: month = monthArray[9]; break;
-                    case 11: month = monthArray[10]; break;
-                    case 12: month = monthArray[11]; break;
+                    case 0: month = monthArray[0]; break;
+                    case 1: month = monthArray[1]; break;
+                    case 2: month = monthArray[2]; break;
+                    case 3: month = monthArray[3]; break;
+                    case 4: month = monthArray[4]; break;
+                    case 5: month = monthArray[5]; break;
+                    case 6: month = monthArray[6]; break;
+                    case 7: month = monthArray[7]; break;
+                    case 8: month = monthArray[8]; break;
+                    case 9: month = monthArray[9]; break;
+                    case 10: month = monthArray[10]; break;
+                    case 11: month = monthArray[11]; break;
                 }
 
-                editTextBirthdate.setText(" " + month + arg3 + ", " + arg1);
+                //Now we set the date from the DatePicker into the text field
+                editTextBirthdate.setText(" " + month + arg3 + ",  " + arg1);
+                //and present the undo button
                 undoButton1.setVisibility(View.VISIBLE);
             }
         });
@@ -75,15 +89,40 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
             public boolean onTouch(View arg0, MotionEvent arg1)
             {
                 myDatePicker.setVisibility(View.VISIBLE);
+                //****************************************
+               /* fromDatePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
 
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(year, monthOfYear, dayOfMonth);
+                        editTextBirthdate.setText(dateFormatter.format(newDate.getTime()));
+                    }
+
+                },c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
+
+                toDatePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
+
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        Calendar newDate = Calendar.getInstance();
+                        newDate.set(year, monthOfYear, dayOfMonth);
+                        //toDateEtxt.setText(dateFormatter.format(newDate.getTime()));
+                    }
+
+                },c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));*/
+                //****************************************
                 return false;
             }
         });
+
 
         //tell my buttons to listen up!
         addListenerOnButton();
     }
 
+    /**
+     * addListenerOnButton
+     * Listens to the buttons of this activity
+     */
     public void addListenerOnButton()
     {
         //undo input text in edit text field
@@ -103,12 +142,14 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
         {
             public void onClick(View view)
             {
+                //place logic here to do signup action
                 birthdate = editTextBirthdate.getText().toString().trim();
                 if (TextUtils.isEmpty(birthdate)) {
                     return;
                 }
+                //declare where you intend to go
                 Intent intent1 = new Intent(whatsYourBirthdayActivity.this, signupCreateUsernameActivity.class);
-
+                //now make it happen
                 startActivity(intent1);
             }
         });
@@ -125,8 +166,8 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
     }
 
     /**
-     *
-     *
+     * setCurrentDateOnView
+     * Initializes the DatePicker to today's date
      */
     public void setCurrentDateOnView()
     {

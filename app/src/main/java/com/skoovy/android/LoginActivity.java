@@ -101,7 +101,7 @@ public class loginActivity extends Activity {
                 return false;
             }
         });
-        this.mEmailView.addTextChangedListener(new TextWatcher()
+        mEmailView.addTextChangedListener(new TextWatcher()
         {
             public void afterTextChanged(Editable s) {}
 
