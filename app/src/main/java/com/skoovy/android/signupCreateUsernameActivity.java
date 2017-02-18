@@ -5,11 +5,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,13 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.*;
 
 public class signupCreateUsernameActivity extends Activity{
 
@@ -39,7 +35,7 @@ public class signupCreateUsernameActivity extends Activity{
 //    private DatabaseReference mDatabase;
 
     private EditText editTextUserName;
-    private String userName;
+    public static String userName;
 
     ImageButton button1;
     ImageButton button2;
@@ -133,9 +129,7 @@ public class signupCreateUsernameActivity extends Activity{
         editTextUserName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                Toast.makeText(getBaseContext(),
-                        ((EditText) v).getId() + " has focus - " + hasFocus,
-                        Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), ((EditText) v).getId() + " has focus - " + hasFocus, Toast.LENGTH_LONG).show();
                 userName = editTextUserName.getText().toString().trim();
                 if (editTextUserName.hasFocus() && userName.length() > 0){
                     //there is text in the username text field
@@ -173,7 +167,7 @@ public class signupCreateUsernameActivity extends Activity{
             @Override
             public void onClick(View view) {
                 //find spinnerView
-                final View spinnerView = (View) findViewById(R.id.spinnerView);
+                final View spinnerView = findViewById(R.id.spinnerView);
 
                 //get text from values entered and trim whitespace
                 userName = editTextUserName.getText().toString().trim();
@@ -208,19 +202,20 @@ public class signupCreateUsernameActivity extends Activity{
 //                        mySpinner.setVisibility(View.INVISIBLE);
 
                         if(dataSnapshot.exists()){
-                            System.out.println("Already in use"+dataSnapshot.getChildren());
-                            Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Selected Username is ALREADY in use", Toast.LENGTH_SHORT).show();
+                            //System.out.println("Already in use"+dataSnapshot.getChildren());
+                            //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Selected Username is ALREADY in use", Toast.LENGTH_SHORT).show();
                             updateTextView(" " + userName + " is already taken. Try again.");
                             return;
                         }
                         else{
-                            System.out.println("not found");
-                            Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Username selection is new", Toast.LENGTH_SHORT).show();
+                            //System.out.println("not found");
+                            //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Username selection is new", Toast.LENGTH_SHORT).show();
                             updateTextView("");
+                            Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + userName, Toast.LENGTH_LONG).show();
 
                             //User entered an un-used username requirement
                             //declare where you intend to go
-                            Intent intent1 = new Intent(signupCreateUsernameActivity.this, whatsYourEmail.class);
+                            Intent intent1 = new Intent(signupCreateUsernameActivity.this, whatsYourEmailActivity.class);
                             //now make it happen
                             startActivity(intent1);
                         }
@@ -248,9 +243,7 @@ public class signupCreateUsernameActivity extends Activity{
 
         //this is where you want to send first name, last name, and unique user name to firebase database
 
-        //Call method to build json object in order to send to databasesave firstName, lastName, and userName to database
         //passing the userName is not neccessary here, as we have it for further use here as a class variable
-        //             String personsFirstLastUserName = objectBuilder(signupActivity.firstName,signupActivity.lastName);
 
         //Call method to write to database
         //             registerUserToDatabase(personsFirstLastUserName);
@@ -275,11 +268,12 @@ public class signupCreateUsernameActivity extends Activity{
     }
 
 
-    // Write a name to the database
-    //   public void registerUserToDatabase(String names) {
-    //       mDatabase.push().setValue(names);
-    //   }
-
+    /**
+     * updateTextView
+     * When user name exists in database, methos is called to update the text view
+     * @param toThis string text to display in text view
+     *
+     */
     public void updateTextView(String toThis) {
         TextView textView = (TextView) findViewById(R.id.userTaken);
         textView.setText(toThis);

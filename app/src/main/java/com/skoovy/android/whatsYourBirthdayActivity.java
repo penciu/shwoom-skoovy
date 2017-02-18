@@ -141,6 +141,7 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
                     return;
                 }
                 //Toast.makeText(getApplicationContext(), "YEAH! YOU ARE OF AGE", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + birthdate, Toast.LENGTH_LONG).show();
                 //User meets the minAge requirement
                 //declare where you intend to go
                 Intent intent1 = new Intent(whatsYourBirthdayActivity.this, signupCreateUsernameActivity.class);

@@ -10,6 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2410d2df-e264-4400-b90f-26716d5cf87c" name="Default" comment="">
+      <change type="MOVED" beforePath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourEmail.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourEmailActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.14.1/taskArtifacts/fileSnapshots.bin" />
@@ -19,8 +20,13 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localClassSetAnalysis/localClassSetAnalysis.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" afterPath="$PROJECT_DIR$/.gradle/2.14.1/tasks/_app_compileDebugJavaWithJavac/localJarClasspathSnapshot/localJarClasspathSnapshot.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/LoginActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/LoginActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupCreateUsernameActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupCreateUsernameActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourBirthdayActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourBirthdayActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourEmail.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourEmail.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_whats_your_email.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_whats_your_email.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
     </list>
     <ignored path="ASUSkoovy-UserAuthentication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,6 +59,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="signupActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="301">
+              <caret line="28" column="25" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#4894#5431#0" expanded="true" />
+                <element signature="e#5430#5431#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="resetPasswordActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/resetPasswordActivity.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -66,53 +86,66 @@
       <file leaf-file-name="whatsYourBirthdayActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourBirthdayActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="27" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_whats_your_email.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_whats_your_email.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="88" column="47" selection-start-line="88" selection-start-column="31" selection-end-line="88" selection-end-column="47" />
-              <folding>
-                <element signature="e#316#349#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="whatsYourEmail.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourEmail.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
-              <caret line="159" column="0" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+            <state relative-caret-position="714">
+              <caret line="143" column="115" selection-start-line="143" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3724#4497#0" expanded="true" />
-                <element signature="e#4496#4497#0" expanded="true" />
-                <element signature="e#4719#4937#0" expanded="true" />
-                <element signature="e#4936#4937#0" expanded="true" />
-                <element signature="e#4977#6431#0" expanded="true" />
-                <element signature="e#6430#6431#0" expanded="true" />
-                <element signature="e#6513#6718#0" expanded="true" />
-                <element signature="e#6717#6718#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StartScreen.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/StartScreen.java">
+      <file leaf-file-name="whatsYourEmailActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourEmailActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+            <state relative-caret-position="274">
+              <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="153" selection-end-column="17" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#3739#4512#0" expanded="true" />
+                <element signature="e#4511#4512#0" expanded="true" />
+                <element signature="e#4734#4952#0" expanded="true" />
+                <element signature="e#4951#4952#0" expanded="true" />
+                <element signature="e#4992#6785#0" expanded="true" />
+                <element signature="e#6784#6785#0" expanded="true" />
+                <element signature="e#6867#7072#0" expanded="true" />
+                <element signature="e#7071#7072#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="loginActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/loginActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="393">
+              <caret line="325" column="52" selection-start-line="325" selection-start-column="52" selection-end-line="325" selection-end-column="52" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#10270#10894#0" expanded="true" />
+                <element signature="e#10893#10894#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="signupCreateUsernameActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupCreateUsernameActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="321">
+              <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="User.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/User.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -2079,12 +2112,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_reset_password.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/LoginActivityBackup.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/RegisterActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/User.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/StartScreen.java" />
         <option value="$PROJECT_DIR$/local.properties" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/loginActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_signup.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_whats_your_birthday.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" />
@@ -2092,10 +2122,14 @@
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_whats_your_email.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_signup_create_username.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupCreateUsernameActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/anim/android_rotate_animation.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourBirthdayActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourEmail.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourBirthdayActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/User.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupCreateUsernameActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourEmailActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/skoovy/android/loginActivity.java" />
       </list>
     </option>
   </component>
@@ -2172,24 +2206,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ASUSkoovy-UserAuthentication" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -2593,6 +2609,7 @@
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21801706" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32976446" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -2602,7 +2619,6 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -2673,6 +2689,8 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4894#5431#0" expanded="true" />
+            <element signature="e#5430#5431#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2681,7 +2699,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2091">
           <caret line="123" column="7" selection-start-line="123" selection-start-column="7" selection-end-line="123" selection-end-column="46" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2713,12 +2733,6 @@
           <caret line="67" column="20" selection-start-line="67" selection-start-column="20" selection-end-line="67" selection-end-column="112" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4060#4842#0" expanded="true" />
-            <element signature="e#4841#4842#0" expanded="true" />
-            <element signature="e#5097#5886#0" expanded="true" />
-            <element signature="e#5885#5886#0" expanded="true" />
-            <element signature="e#6455#9918#0" expanded="true" />
-            <element signature="e#9917#9918#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2739,6 +2753,8 @@
           <caret line="96" column="39" selection-start-line="0" selection-start-column="0" selection-end-line="177" selection-end-column="1" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#4894#5431#0" expanded="true" />
+            <element signature="e#5430#5431#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2747,7 +2763,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2091">
           <caret line="126" column="7" selection-start-line="126" selection-start-column="7" selection-end-line="126" selection-end-column="7" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2779,12 +2797,6 @@
           <caret line="34" column="0" selection-start-line="34" selection-start-column="0" selection-end-line="34" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4060#4842#0" expanded="true" />
-            <element signature="e#4841#4842#0" expanded="true" />
-            <element signature="e#5097#5886#0" expanded="true" />
-            <element signature="e#5885#5886#0" expanded="true" />
-            <element signature="e#6455#9918#0" expanded="true" />
-            <element signature="e#9917#9918#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2954,25 +2966,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="765">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="425">
-          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -3011,33 +3004,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2126">
-          <caret line="138" column="11" selection-start-line="138" selection-start-column="11" selection-end-line="138" selection-end-column="11" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/StartScreen.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/loginActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="270" column="0" selection-start-line="270" selection-start-column="0" selection-end-line="273" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#8642#9394#0" expanded="true" />
-            <element signature="e#9393#9394#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3051,22 +3022,6 @@
         <state relative-caret-position="170">
           <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupCreateUsernameActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="801">
-          <caret line="315" column="0" selection-start-line="315" selection-start-column="0" selection-end-line="315" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4060#4842#0" expanded="true" />
-            <element signature="e#4841#4842#0" expanded="true" />
-            <element signature="e#5097#5886#0" expanded="true" />
-            <element signature="e#5885#5886#0" expanded="true" />
-            <element signature="e#6455#9918#0" expanded="true" />
-            <element signature="e#9917#9918#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -3102,28 +3057,83 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourBirthdayActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="27" selection-start-line="10" selection-start-column="22" selection-end-line="10" selection-end-column="27" />
+        <state relative-caret-position="714">
+          <caret line="143" column="115" selection-start-line="143" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourEmail.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
-          <caret line="159" column="0" selection-start-line="159" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
+        <state relative-caret-position="301">
+          <caret line="28" column="25" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3724#4497#0" expanded="true" />
-            <element signature="e#4496#4497#0" expanded="true" />
-            <element signature="e#4719#4937#0" expanded="true" />
-            <element signature="e#4936#4937#0" expanded="true" />
-            <element signature="e#4977#6431#0" expanded="true" />
-            <element signature="e#6430#6431#0" expanded="true" />
-            <element signature="e#6513#6718#0" expanded="true" />
-            <element signature="e#6717#6718#0" expanded="true" />
+            <element signature="e#4894#5431#0" expanded="true" />
+            <element signature="e#5430#5431#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/signupCreateUsernameActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="37" column="18" selection-start-line="37" selection-start-column="18" selection-end-line="37" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/whatsYourEmailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="146" column="0" selection-start-line="146" selection-start-column="0" selection-end-line="153" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#3739#4512#0" expanded="true" />
+            <element signature="e#4511#4512#0" expanded="true" />
+            <element signature="e#4734#4952#0" expanded="true" />
+            <element signature="e#4951#4952#0" expanded="true" />
+            <element signature="e#4992#6785#0" expanded="true" />
+            <element signature="e#6784#6785#0" expanded="true" />
+            <element signature="e#6867#7072#0" expanded="true" />
+            <element signature="e#7071#7072#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/skoovy/android/loginActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="325" column="52" selection-start-line="325" selection-start-column="52" selection-end-line="325" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#10270#10894#0" expanded="true" />
+            <element signature="e#10893#10894#0" expanded="true" />
           </folding>
         </state>
       </provider>

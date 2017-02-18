@@ -192,6 +192,7 @@ public class signupActivity extends Activity {
                 //Both text fields were filled, so we allow user to continue to next activity
                 //place logic here to do login action
                 //declare where you intend to go
+                Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + firstName + "\r\nUSER LAST NAME: " + lastName, Toast.LENGTH_LONG).show();
                 Intent intent1 = new Intent(signupActivity.this, whatsYourBirthdayActivity.class);
                 //now make it happen
                 startActivity(intent1);

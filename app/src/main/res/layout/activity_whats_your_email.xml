@@ -12,7 +12,7 @@
     android:weightSum="1"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    tools:context="com.skoovy.android.whatsYourEmail">
+    tools:context="com.skoovy.android.whatsYourEmailActivity">
 
     <ImageButton
         android:layout_width="40dp"

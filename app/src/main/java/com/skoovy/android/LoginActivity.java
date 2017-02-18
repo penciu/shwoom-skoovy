@@ -31,6 +31,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class loginActivity extends Activity {
 
@@ -52,6 +55,8 @@ public class loginActivity extends Activity {
 
     boolean isEditText1Empty = true;
     boolean isEditText2Empty = true;
+
+    Boolean wasEmailValid = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -310,6 +315,15 @@ public class loginActivity extends Activity {
                     return;
                 }
 
+                //User entered an text, but we need to check if text is valid email pattern
+                wasEmailValid = isValidEmail(email);
+                if (!(wasEmailValid)){
+                    //email text is INVALID email pattern
+                    Toast.makeText(getApplicationContext(), "Please enter a valid EMAIL", Toast.LENGTH_SHORT).show();
+                    //stopping the function from executing further
+                    return;
+                }
+                //email text was valid email pattern
                 //Both text fields were filled, so we allow user to continue
                 //place logic here to do login action
                 attemptLogin();
@@ -334,6 +348,36 @@ public class loginActivity extends Activity {
                 startActivity(intent);
             }
         });
+    }
+
+    /**
+     * isValidEmail
+     * Checks for valid email pattern
+     * @param target
+     * @return boolean
+     */
+    public final  boolean isValidEmail(String target) {
+        String regExpn =
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                        +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        +"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+
+        CharSequence inputStr = target;
+
+        Pattern pattern = Pattern.compile(regExpn,Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+
+        if(matcher.matches()) {
+            //Toast.makeText(getApplicationContext(), " VALID EMAIL", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        else {
+            //Toast.makeText(getApplicationContext(), " BAD EMAIL", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 }
 
