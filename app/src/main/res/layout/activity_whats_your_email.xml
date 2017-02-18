@@ -65,7 +65,8 @@
         android:textSize="15sp"
         android:backgroundTint="@android:color/transparent"
         android:background="?android:attr/selectableItemBackground"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:textAllCaps="false" />
 
     <TextView
         android:text="EMAIL"

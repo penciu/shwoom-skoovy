@@ -33,7 +33,8 @@
         <activity android:name=".signupCreateUsernameActivity" />
         <activity android:name=".loginActivity" />
         <activity android:name=".resetPasswordActivity" />
-        <activity android:name=".whatsYourEmailActivity"></activity>
+        <activity android:name=".whatsYourEmailActivity" />
+        <activity android:name=".whatsYourMobileNumber"></activity>
     </application>
 
 </manifest>

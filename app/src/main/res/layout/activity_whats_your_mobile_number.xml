@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_whats_your_mobile_number"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="6dp"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context="com.skoovy.android.whatsYourMobileNumber">
+
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/backbutton"
+        android:id="@+id/backToEmailButton"
+        android:backgroundTint="@android:color/transparent"
+        android:padding="10dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginTop="0dp" />
+
+    <ImageView
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/skoovylogo"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginTop="-40dp" />
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:textStyle="normal|bold"
+        android:textSize="22sp"
+        android:layout_marginTop="5dp"
+        android:text="What's your moilbe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5"
+        android:textColor="#000000"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:textStyle="normal|bold"
+        android:textSize="22sp"
+        android:layout_marginTop="5dp"
+        android:text="phone number?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView9"
+        android:textColor="#000000"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:text="or"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:id="@+id/textView6"
+        android:textSize="15sp"
+        android:textColor="#FF7F00"/>
+
+    <Button
+        android:text="Sign up with a email instead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF7F00"
+        android:gravity="center_horizontal"
+        android:id="@+id/textView7"
+        android:textSize="15sp"
+        android:backgroundTint="@android:color/transparent"
+        android:background="?android:attr/selectableItemBackground"
+        android:focusable="false"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:text="MOBILE PHONE NUMBER"
+        android:layout_marginStart="11dp"
+        android:layout_width="313dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="#888888"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/editText"
+        android:layout_alignStart="@+id/editText"
+        android:textSize="14dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="phone"
+            android:ems="10"
+            android:id="@+id/registerYourMobileNuber"
+            android:backgroundTint="#888888"
+            android:minWidth="280dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="17sp"
+            android:textColor="#FF7F00"
+            android:layout_toEndOf="@+id/countrycode"
+            android:layout_marginLeft="25dp" />
+
+
+        <ImageButton
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@drawable/close"
+            android:id="@+id/undoButton1"
+            android:layout_alignEnd="@+id/registerYourMobileNuber"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_gravity="end"
+            android:layout_marginTop="0dp" />
+
+        <EditText
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/countrycode"
+            android:backgroundTint="#888888"
+            android:minWidth="80dp"
+            android:layout_gravity="center_horizontal"
+            android:textSize="17sp"
+            android:textColor="#FF7F00"
+            android:hint="US +1"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:textColorHint="#FF7F00"
+            android:textStyle="normal|bold"
+            android:gravity="center_vertical|center_horizontal" />
+
+    </RelativeLayout>
+    <TextView
+        android:text=""
+        android:textColor="#FF7F00"
+        android:layout_width="278dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/registerUsername"
+        android:layout_alignStart="@+id/registerUsername"
+        android:textSize="16sp"
+        android:id="@+id/userTaken" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:text="We won't share your mobile number."
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:id="@+id/textView"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="16dp"
+                android:textSize="14sp"
+                android:gravity="center_horizontal" />
+
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxHeight="65dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:src="@drawable/next"
+                android:id="@+id/signupButton"
+                android:visibility="visible"
+                android:backgroundTint="@android:color/transparent"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="90dp"
+                android:maxWidth="217dp" />
+
+            <RelativeLayout
+                android:layout_width="255dp"
+                android:layout_height="30dp"
+                android:layout_below="@+id/textView"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-10dp">
+
+                <TextView
+                    android:text="Read our"
+                    android:layout_width="55dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/textView10"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="-8dp"
+                    android:textSize="14sp"
+                    android:gravity="center_horizontal"
+                    android:paddingTop="10dp" />
+
+                <TextView
+                    android:text="Privacy Policy"
+                    android:textColor="#1F1FFF"
+                    android:layout_width="90dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/textView11"
+                    android:layout_alignBaseline="@+id/textView10"
+                    android:layout_alignBottom="@+id/textView10"
+                    android:layout_toEndOf="@+id/textView10"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="14sp"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:text="to learn more."
+                    android:layout_width="110dp"
+                    android:layout_height="35dp"
+                    android:id="@+id/textView12"
+                    android:layout_alignBaseline="@+id/textView11"
+                    android:layout_alignBottom="@+id/textView11"
+                    android:layout_toEndOf="@+id/textView11"
+                    android:textSize="14sp"
+                    android:gravity="center_horizontal"
+                    android:layout_marginLeft="2dp" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

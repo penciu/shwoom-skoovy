@@ -1,7 +1,6 @@
 package com.skoovy.android;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -171,6 +170,9 @@ public class whatsYourEmailActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
+        //STILL NEED AN ADDITIONAL BUTTON TO GO TO whatsYourMobileNumber.class
     }
 
     /**
