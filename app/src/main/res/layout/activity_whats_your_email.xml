@@ -61,7 +61,7 @@
         android:layout_height="wrap_content"
         android:textColor="#FF7F00"
         android:gravity="center_horizontal"
-        android:id="@+id/textView7"
+        android:id="@+id/signUpWithMobile"
         android:textSize="15sp"
         android:backgroundTint="@android:color/transparent"
         android:background="?android:attr/selectableItemBackground"

@@ -1,6 +1,7 @@
 package com.skoovy.android;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -26,6 +28,7 @@ public class whatsYourEmailActivity extends AppCompatActivity {
 
     ImageButton button1;
     ImageButton button2;
+    Button button3;
     ImageButton undobutton1;
 
     Boolean isEditText1Empty = true;
@@ -40,6 +43,7 @@ public class whatsYourEmailActivity extends AppCompatActivity {
         //find widgets on this activity
         button1 = (ImageButton) findViewById(R.id.signupButton);
         button2 = (ImageButton) findViewById(R.id.backToUsernameButton);
+        button3 = (Button) findViewById(R.id.signUpWithMobile);
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
 
         //hide undo buttons at activty startup
@@ -171,7 +175,16 @@ public class whatsYourEmailActivity extends AppCompatActivity {
             }
         });
 
-
+        //button3 is the SIGNUP WITH MOBILE NUMBER button
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //declare where you intend to go
+                Intent intent2 = new Intent(whatsYourEmailActivity.this, whatsYourMobileNumber.class);
+                //now make it happen
+                startActivity(intent2);
+            }
+        });
         //STILL NEED AN ADDITIONAL BUTTON TO GO TO whatsYourMobileNumber.class
     }
 

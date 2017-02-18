@@ -34,7 +34,9 @@
         <activity android:name=".loginActivity" />
         <activity android:name=".resetPasswordActivity" />
         <activity android:name=".whatsYourEmailActivity" />
-        <activity android:name=".whatsYourMobileNumber"></activity>
+        <activity android:name=".whatsYourMobileNumber" />
+        <activity android:name=".setUpPasswordActivity" />
+        <activity android:name=".verifyMobileNumberActivity"></activity>
     </application>
 
 </manifest>
