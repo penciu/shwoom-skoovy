@@ -196,7 +196,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="8107bdd66ad87d29ccd8d992b048a33a81969b53">
+        sha1="f08217f6687f822b4b6f77459519a1e5ae13b666">
         <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_9525ce3da38b89f7a46680d8efa7352a7f260733\classes.dex" />
     </item>
     <item

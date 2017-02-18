@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 public class whatsYourEmailActivity extends AppCompatActivity {
 
     private EditText editTextEmail;
-    private static String email;
+    public static String email;
 
     ImageButton button1;
     ImageButton button2;
@@ -155,13 +155,13 @@ public class whatsYourEmailActivity extends AppCompatActivity {
                     //stopping the function from executing further
                     return;
                 }
-                Toast.makeText(getApplicationContext(), " TODO ITEM", Toast.LENGTH_SHORT).show();
+                
                 Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + signupCreateUsernameActivity.userName + "\nUSER EMAIL: " + email, Toast.LENGTH_LONG).show();
 
                 //declare where you intend to go
-                //Intent intent1 = new Intent(whatsYourEmailActivity.this, whatsYourValidationPIN.class);
+                Intent intent1 = new Intent(whatsYourEmailActivity.this, setUpPasswordActivity.class);
                 //now make it happen
-                //startActivity(intent1);
+                startActivity(intent1);
 
             }
         });

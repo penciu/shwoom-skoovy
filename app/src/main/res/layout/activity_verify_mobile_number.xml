@@ -80,7 +80,7 @@
                 android:maxHeight="65dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                android:src="@drawable/sendSMS"
+                android:src="@drawable/sendsms"
                 android:id="@+id/verifymobilenumber"
                 android:visibility="visible"
                 android:backgroundTint="@android:color/transparent"
