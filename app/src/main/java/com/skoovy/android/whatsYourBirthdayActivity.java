@@ -24,7 +24,7 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
     ImageButton undoButton1;    //undo input text in edit text field
     final Calendar c = Calendar.getInstance();
     private DatePicker myDatePicker;
-
+    final int minAge = 13;
     private DatePickerDialog fromDatePickerDialog;
     private DatePickerDialog toDatePickerDialog;
 
@@ -89,27 +89,7 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
             public boolean onTouch(View arg0, MotionEvent arg1)
             {
                 myDatePicker.setVisibility(View.VISIBLE);
-                //****************************************
-               /* fromDatePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
 
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar newDate = Calendar.getInstance();
-                        newDate.set(year, monthOfYear, dayOfMonth);
-                        editTextBirthdate.setText(dateFormatter.format(newDate.getTime()));
-                    }
-
-                },c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));
-
-                toDatePickerDialog = new DatePickerDialog(this, new OnDateSetListener() {
-
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        Calendar newDate = Calendar.getInstance();
-                        newDate.set(year, monthOfYear, dayOfMonth);
-                        //toDateEtxt.setText(dateFormatter.format(newDate.getTime()));
-                    }
-
-                },c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DAY_OF_MONTH));*/
-                //****************************************
                 return false;
             }
         });
@@ -138,8 +118,7 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
 
         //go on to next activity
         button1 = ((ImageButton)findViewById(R.id.next));
-        button1.setOnClickListener(new View.OnClickListener()
-        {
+        button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view)
             {
                 //place logic here to do signup action
@@ -147,11 +126,30 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(birthdate)) {
                     return;
                 }
+                //check that age is at least 13 years old
+                if (myDatePicker.getYear() > c.get(Calendar.YEAR) - minAge ) {
+                    Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS", Toast.LENGTH_LONG).show();
+                    //we exit from method
+                    return;
+                }
+                if ((myDatePicker.getYear() == (c.get(Calendar.YEAR) - minAge)) && ((myDatePicker.getMonth() > c.get(Calendar.MONTH)))){
+                    Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS", Toast.LENGTH_LONG).show();
+                    //we exit from method
+                    return;
+                }
+                if ((myDatePicker.getYear() == (c.get(Calendar.YEAR) - minAge)) && ((myDatePicker.getMonth() == c.get(Calendar.MONTH) + 0)) && (myDatePicker.getDayOfMonth() > c.get(Calendar.DAY_OF_MONTH))){
+                    Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS", Toast.LENGTH_LONG).show();
+                    //we exit from method
+                    return;
+                }
+
+                //User meets the minAge requirement
                 //declare where you intend to go
                 Intent intent1 = new Intent(whatsYourBirthdayActivity.this, signupCreateUsernameActivity.class);
                 //now make it happen
                 startActivity(intent1);
             }
+
         });
 
         //go back to previous screen
@@ -176,7 +174,6 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
         int mYear = c.get(Calendar.YEAR);
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
-
 
         editTextBirthdate = ((EditText)findViewById(R.id.dob));
         editTextBirthdate.append(new StringBuilder()
