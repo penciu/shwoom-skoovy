@@ -13,10 +13,14 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +45,11 @@ public class signupCreateUsernameActivity extends Activity{
     ImageButton button2;
     ImageButton undobutton1;
 
+    TextView userTaken;
+
+    FrameLayout animationContainer;
+    ImageView mySpinner;
+
     Boolean isEditText1Empty = true;
 
     @Override
@@ -59,9 +68,14 @@ public class signupCreateUsernameActivity extends Activity{
         button1 = (ImageButton) findViewById(R.id.activityCsignupButton);
         button2 = (ImageButton) findViewById(R.id.backToBirthdateButton);
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
+        mySpinner = (ImageView) findViewById(R.id.rotate_image);
+        userTaken = (TextView) findViewById(R.id.userTaken);
 
         //hide undo buttons at activty startup
         undobutton1.setVisibility(View.INVISIBLE);
+
+        //hide spinner at activity startup
+        mySpinner.setVisibility(View.INVISIBLE);
 
         //Retrieve text values entered for first name and last name
         editTextUserName =  (EditText) findViewById(R.id.registerUsername);
@@ -127,6 +141,7 @@ public class signupCreateUsernameActivity extends Activity{
                     //there is text in the username text field
                     //so we display the undo button
                     undobutton1.setVisibility(View.VISIBLE);
+                    userTaken.setText("");
                     isEditText1Empty = false;
                     isFieldsSet();
                 }
@@ -157,6 +172,9 @@ public class signupCreateUsernameActivity extends Activity{
         button1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                //find spinnerView
+                final View spinnerView = (View) findViewById(R.id.spinnerView);
+
                 //get text from values entered and trim whitespace
                 userName = editTextUserName.getText().toString().trim();
 
@@ -167,6 +185,12 @@ public class signupCreateUsernameActivity extends Activity{
                     //stopping the function from executing further
                     return;
                 }
+                //at this point, text field was NOT empty.
+                //so we display the spinner and start spin
+                animationContainer = (FrameLayout)findViewById(R.id.animationHoldingFrame);
+                animationContainer.setVisibility(View.VISIBLE);
+
+                startRotatingImage(spinnerView);
 
                 //CHECK DATABASE IF REQUESTED USERNAME IS TAKEN
                 // Get an instance to our database
@@ -178,10 +202,15 @@ public class signupCreateUsernameActivity extends Activity{
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                     // do some stuff once
+                        //database has returned dataSnapshot, so we can stop mySpinner
+                        animationContainer.setVisibility(View.INVISIBLE);
+//                        spinnerView.clearAnimation();
+//                        mySpinner.setVisibility(View.INVISIBLE);
+
                         if(dataSnapshot.exists()){
                             System.out.println("Already in use"+dataSnapshot.getChildren());
                             Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Selected Username is ALREADY in use", Toast.LENGTH_SHORT).show();
-                            updateTextView(userName + " is already taken. Try again.");
+                            updateTextView(" " + userName + " is already taken. Try again.");
                             return;
                         }
                         else{
@@ -200,7 +229,8 @@ public class signupCreateUsernameActivity extends Activity{
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
-
+                        //database has returned dataSnapshot, so we can stop mySpinner
+                        mySpinner.setVisibility(View.INVISIBLE);
                     }
                 });
             }
@@ -275,4 +305,14 @@ public class signupCreateUsernameActivity extends Activity{
         }
     }
 
+    /**
+     * startRotatingImage
+     * @param view
+     * Called to rotate spinner while database is checked for existing username
+     */
+    public void startRotatingImage(View view) {
+        mySpinner = (ImageView) findViewById(R.id.rotate_image);
+        Animation startRotateAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.android_rotate_animation);
+        mySpinner.startAnimation(startRotateAnimation);
+    }
 }

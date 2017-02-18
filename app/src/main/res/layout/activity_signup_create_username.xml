@@ -67,7 +67,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerView" >
 
         <EditText
             android:layout_width="match_parent"
@@ -92,6 +93,22 @@
             android:layout_gravity="end"
             android:layout_marginTop="0dp" />
 
+        <FrameLayout
+            android:id="@+id/animationHoldingFrame"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/undoButton1"
+            android:layout_marginEnd="14dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/refresh_icon"
+                android:id="@+id/rotate_image" />
+
+        </FrameLayout>
+
     </RelativeLayout>
     <TextView
         android:text=""
@@ -102,12 +119,6 @@
         android:layout_alignStart="@+id/registerUsername"
         android:textSize="16sp"
         android:id="@+id/userTaken" />
-
-    <ImageView
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:src=""
-        android:id="@+id/imageView" />
 
     <RelativeLayout
         android:layout_width="match_parent"
