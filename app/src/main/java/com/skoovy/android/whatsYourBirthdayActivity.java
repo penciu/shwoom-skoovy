@@ -55,7 +55,6 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
                 //Convert integer month to string month
                 String [] monthArray = new String[] {"January ","February ","March ","April ","May ","June ","July ","August ","September ","October ","November ","December "};
                 String month = "";
-                //Toast.makeText(getApplicationContext(), "month int is: " + arg2, Toast.LENGTH_SHORT).show();
                 //switch on the month integer
                 switch (arg2) {
                     case 0: month = monthArray[0]; break;
@@ -141,7 +140,7 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
                     //we exit from method
                     return;
                 }
-                Toast.makeText(getApplicationContext(), "YEAH! YOU ARE OF AGE", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "YEAH! YOU ARE OF AGE", Toast.LENGTH_LONG).show();
                 //User meets the minAge requirement
                 //declare where you intend to go
                 Intent intent1 = new Intent(whatsYourBirthdayActivity.this, signupCreateUsernameActivity.class);
