@@ -2,18 +2,25 @@ package com.skoovy.android;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-/*
+
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,8 +28,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.*;
-*/
-public class signupCreateUsernameActivity extends Activity {
+
+public class signupCreateUsernameActivity extends Activity{
 
     // [START declare_database_ref]
 //    private DatabaseReference mDatabase;
@@ -30,10 +37,11 @@ public class signupCreateUsernameActivity extends Activity {
     private EditText editTextUserName;
     private String userName;
 
-    ImageButton button3;
-    ImageButton button4;
+    ImageButton button1;
+    ImageButton button2;
+    ImageButton undobutton1;
 
-
+    Boolean isEditText1Empty = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,16 +55,106 @@ public class signupCreateUsernameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_create_username);
 
+        //find widgets on this activity
+        button1 = (ImageButton) findViewById(R.id.activityCsignupButton);
+        button2 = (ImageButton) findViewById(R.id.backToBirthdateButton);
+        undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
+
+        //hide undo buttons at activty startup
+        undobutton1.setVisibility(View.INVISIBLE);
+
         //Retrieve text values entered for first name and last name
         editTextUserName =  (EditText) findViewById(R.id.registerUsername);
+
+        //Listen for text on editTextFirstName input field
+        editTextUserName.addTextChangedListener(new TextWatcher(){
+            public void afterTextChanged(Editable s) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+            public void onTextChanged(CharSequence s, int start, int before, int count){
+
+                userName = editTextUserName.getText().toString().trim();
+
+                if (userName.length() > 0){
+                    //there is text in the first name text field
+                    //so we display the undo button
+                    undobutton1.setVisibility(View.VISIBLE);
+                    isEditText1Empty = false;
+                    isFieldsSet();
+                }
+                if (userName.length() == 0){
+                    //there is text in the first name text field
+                    undobutton1.setVisibility(View.INVISIBLE);
+                    isEditText1Empty = true;
+                    isFieldsSet();
+                }
+            }
+        });
+
+        //Check to see if 'Done' button was pressed on the softkeyboard
+        //remove focus from current last name text field (focus actually passes back to LinearLayout)
+        //hide undo text button for last name text field
+        editTextUserName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    // When 'done' button on softkeyboar is pressed, remove undo button on last name input field
+                    undobutton1.setVisibility(View.INVISIBLE);
+                    editTextUserName.clearFocus();
+
+                    View view = findViewById(R.id.activity_signup_create_username);
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+                return false;
+            }
+        });
+
+
+        /*
+        // Check for focus coming back to the editTextUserName text field
+        // make sure that field is in focus and still has text
+        // display the undo text button
+         */
+        editTextUserName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                Toast.makeText(getBaseContext(),
+                        ((EditText) v).getId() + " has focus - " + hasFocus,
+                        Toast.LENGTH_LONG).show();
+                userName = editTextUserName.getText().toString().trim();
+                if (editTextUserName.hasFocus() && userName.length() > 0){
+                    //there is text in the username text field
+                    //so we display the undo button
+                    undobutton1.setVisibility(View.VISIBLE);
+                    isEditText1Empty = false;
+                    isFieldsSet();
+                }
+            }
+        });
 
         //Tell my buttons to listen up!
         addListenerOnButton();
     }
 
+
+    /**
+     * addListenerOnButton
+     * Listens to the buttons of this activity
+     */
     public void addListenerOnButton() {
-        button3 = (ImageButton) findViewById(R.id.activityCsignupButton);
-        button3.setOnClickListener(new OnClickListener() {
+
+        //undobutton1 is the undo text in text field button
+        undobutton1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editTextUserName.setText("");
+                undobutton1.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
+        button1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 //get text from values entered and trim whitespace
@@ -70,35 +168,41 @@ public class signupCreateUsernameActivity extends Activity {
                     return;
                 }
 
+                //CHECK DATABASE IF REQUESTED USERNAME IS TAKEN
                 // Get an instance to our database
-//                FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
+                FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
                 // Get a  reference to our userInfo node
-//                DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
+                DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
 
-//                currentSkoovyUsers.orderByChild("username").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-                // do some stuff once
-//                        if(dataSnapshot.exists()){
-//                            System.out.println("Already in use"+dataSnapshot.getChildren());
-//                            Toast.makeText(getApplicationContext(), "Already in use", Toast.LENGTH_SHORT).show();
-//                            updateTextView(userName + " is already taken. Try again.");
-//                        }
-//                        else{
-//                            System.out.println("not found");
-//                            Toast.makeText(getApplicationContext(), "not found", Toast.LENGTH_SHORT).show();
-//                            updateTextView("");
-//                        }
+                currentSkoovyUsers.orderByChild("username").equalTo(userName).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                    // do some stuff once
+                        if(dataSnapshot.exists()){
+                            System.out.println("Already in use"+dataSnapshot.getChildren());
+                            Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Selected Username is ALREADY in use", Toast.LENGTH_SHORT).show();
+                            updateTextView(userName + " is already taken. Try again.");
+                            return;
+                        }
+                        else{
+                            System.out.println("not found");
+                            Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Username selection is new", Toast.LENGTH_SHORT).show();
+                            updateTextView("");
 
-//                    }
+                            //User entered an un-used username requirement
+                            //declare where you intend to go
+                            Intent intent1 = new Intent(signupCreateUsernameActivity.this, whatsYourEmail.class);
+                            //now make it happen
+                            startActivity(intent1);
+                        }
 
-//                    @Override
-//                    public void onCancelled(DatabaseError databaseError) {
+                    }
 
-//                    }
-//                });
-                Toast.makeText(getApplicationContext(), "TODO ITEM", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
 
+                    }
+                });
             }
         });
 
@@ -130,8 +234,8 @@ public class signupCreateUsernameActivity extends Activity {
 
 
 
-        button4 = (ImageButton) findViewById(R.id.backtoNameButton);
-        button4.setOnClickListener(new OnClickListener() {
+
+        button2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 //place logic here to do back button action
@@ -140,17 +244,12 @@ public class signupCreateUsernameActivity extends Activity {
         });
     }
 
-    //Object builder for writing to database
-    //   public String objectBuilder( String firstName, String lastName){
-    //       String objectToSend = "{\"firstName\":" + firstName + ",\"lastName\":" + lastName + ",\"username\":" +
-    //               userName + "}";
-    //       return objectToSend;
-    //   }
 
     // Write a name to the database
     //   public void registerUserToDatabase(String names) {
     //       mDatabase.push().setValue(names);
     //   }
+
     public void updateTextView(String toThis) {
         TextView textView = (TextView) findViewById(R.id.userTaken);
         textView.setText(toThis);
@@ -161,5 +260,19 @@ public class signupCreateUsernameActivity extends Activity {
 
 //        mDatabase.push().setValue(user);
 //    }
+
+    /**
+     * areBothFieldsSet
+     * Switches signup button image if both fields are set
+     */
+    public void isFieldsSet(){
+        if (!(isEditText1Empty)) {
+            //switch image on signup button
+            button1.setImageResource(R.drawable.next);
+        }
+        else {
+            button1.setImageResource(R.drawable.signupgrey);
+        }
+    }
 
 }

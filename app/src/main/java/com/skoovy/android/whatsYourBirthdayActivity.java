@@ -1,6 +1,5 @@
 package com.skoovy.android;
 
-import android.app.DatePickerDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -22,11 +21,11 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
     ImageButton button1;        //go on to next activity
     ImageButton button2;        //go back to previous screen
     ImageButton undoButton1;    //undo input text in edit text field
+
     final Calendar c = Calendar.getInstance();
     private DatePicker myDatePicker;
     final int minAge = 13;
-    private DatePickerDialog fromDatePickerDialog;
-    private DatePickerDialog toDatePickerDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +141,7 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
                     //we exit from method
                     return;
                 }
-
+                Toast.makeText(getApplicationContext(), "YEAH! YOU ARE OF AGE", Toast.LENGTH_LONG).show();
                 //User meets the minAge requirement
                 //declare where you intend to go
                 Intent intent1 = new Intent(whatsYourBirthdayActivity.this, signupCreateUsernameActivity.class);
@@ -154,10 +153,8 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
 
         //go back to previous screen
         button2 = ((ImageButton)findViewById(R.id.backtoNameButton));
-        button2.setOnClickListener(new View.OnClickListener()
-        {
-            public void onClick(View view)
-            {
+        button2.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
                 finish();
             }
         });

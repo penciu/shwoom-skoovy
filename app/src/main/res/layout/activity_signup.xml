@@ -74,7 +74,8 @@
             android:maxWidth="314dp"
             android:layout_marginTop="-5dp"
             android:textSize="17sp"
-            android:inputType="textCapSentences" />
+            android:inputType="textCapSentences"
+            android:textColor="#FF7F00" />
 
 
         <ImageButton
@@ -117,7 +118,8 @@
             android:layout_marginStart="11dp"
             android:layout_marginTop="-5dp"
             android:textSize="17sp"
-            android:inputType="textCapSentences" />
+            android:inputType="textCapSentences"
+            android:textColor="#FF7F00" />
 
         <ImageButton
             android:layout_width="17dp"

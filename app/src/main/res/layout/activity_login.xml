@@ -71,7 +71,8 @@
             android:minWidth="280dp"
             android:maxWidth="314dp"
             android:layout_marginTop="-5dp"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:textColor="#FF7F00" />
 
         <ImageButton
             android:layout_width="17dp"
@@ -116,7 +117,8 @@
             android:layout_marginTop="-5dp"
             android:imeActionId="@+id/login"
             android:imeOptions="actionUnspecified"
-            android:textSize="16dp" />
+            android:textSize="16dp"
+            android:textColor="#FF7F00" />
 
         <ImageButton
             android:layout_width="17dp"

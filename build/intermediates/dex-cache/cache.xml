@@ -3,15 +3,6 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="ecb496cc08dd52551fc5ec6db3bc0632e95a89bb">
-        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.1.1_d1727c56e418910c0999ab83cb69d40aa47dae3f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.google.firebase\firebase-iid\10.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -39,29 +30,11 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\transition\25.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="15b049fedbd8e3926bf99d9e45dfc9b2a1043bb9">
-        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.1.1_a8c274f3c7855a5b9abb01fde89b834a71f8a9a2\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="c03bf57f358aa10d253f21989e93bcf6014b3b17">
-        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.1.1_d60240c0acae9a73e0cdd3fdff2dbcffcf60d0e4\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="243aba1306397a628e496a39bc68880c4272ee70">
+        sha1="a82872c6df8b74161b4730cf4c4651e188a8f8b5">
         <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_317cd2ed7fe2a8a4f6f19049deaf2055550a23bd\classes.dex" />
     </item>
     <item
@@ -72,6 +45,15 @@
         revision="24.0.2"
         sha1="cd7951e04cfb9a8bf008d544a478d9a8d8192d38">
         <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.1.1_a051843ad59bad21701efed100d4e9564750fdef\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database\10.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8f128aeeb7e31271b28a7adb9dac1f3a6ed9f5e7">
+        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-database-10.0.1_56fcf40df79ff9b01ec5ec142b888d9493406c1b\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -120,24 +102,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="e2719c102dca3a7a5b02ce07f769362da6ddb4ab">
-        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.1.1_7a7162eff2411606dfd105d7aeb75e607f09c05f\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="c9649557905bf7a80fca9e0d54cbcb7662627860">
-        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.1.1_44a1938d5a1a1cb54c13079d4deec8d58035d717\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\10.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -153,6 +117,78 @@
         revision="24.0.2"
         sha1="6116e0e7069de7fc259aac8e08b84f32c2038231">
         <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-analytics-impl-10.0.1_9e07044f8571fe7aa6003ddcbd37551fb8c8bcda\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.google.firebase\firebase-database-connection\10.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8010ae6ed32828a145b25ec97bc07b7a83c6318f">
+        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-database-connection-10.0.1_25f8f50917d0d9dd3e4d43753b304953d4f7088f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\10.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
+        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-common-10.0.1_878301515e913b97215a348ffea37393a75cd7a0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.1.1_385857a5f7d2ef5ee285146684a09baa1bf4035a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="ecb496cc08dd52551fc5ec6db3bc0632e95a89bb">
+        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.1.1_d1727c56e418910c0999ab83cb69d40aa47dae3f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\transition\25.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="15b049fedbd8e3926bf99d9e45dfc9b2a1043bb9">
+        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.1.1_a8c274f3c7855a5b9abb01fde89b834a71f8a9a2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c03bf57f358aa10d253f21989e93bcf6014b3b17">
+        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.1.1_d60240c0acae9a73e0cdd3fdff2dbcffcf60d0e4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e2719c102dca3a7a5b02ce07f769362da6ddb4ab">
+        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.1.1_7a7162eff2411606dfd105d7aeb75e607f09c05f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="c9649557905bf7a80fca9e0d54cbcb7662627860">
+        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.1.1_44a1938d5a1a1cb54c13079d4deec8d58035d717\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -178,17 +214,8 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="f867df7a44f99dd499687735f2a7cb8989e25bb9">
+        sha1="def2ad20bf0f5b647cfbbfcb1c19bc1af7f1b148">
         <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_9525ce3da38b89f7a46680d8efa7352a7f260733\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\10.0.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="eb0d830e3eabb9deb9ec44869cf7ac7ea1ad794c">
-        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-common-10.0.1_878301515e913b97215a348ffea37393a75cd7a0\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -198,15 +225,6 @@
         revision="24.0.2"
         sha1="02741d05d4b697fba5e279e9881aaa1da0ca7c7f">
         <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.1.1_c80946fcd1bf575b6770c08cccbcddb51434b58a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.1.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="24.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="C:\Users\Keenan\AndroidStudioProjects\v7\ASUSkoovy-UserAuthentication\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.1.1_385857a5f7d2ef5ee285146684a09baa1bf4035a\classes.dex" />
     </item>
 
 </items>

@@ -24,7 +24,6 @@
             </intent-filter>
         </activity>
 
-
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="36373e6dece1dca524f5dd9b17cc1abef5af2cf9" />
@@ -34,6 +33,7 @@
         <activity android:name=".signupCreateUsernameActivity" />
         <activity android:name=".loginActivity" />
         <activity android:name=".resetPasswordActivity" />
+        <activity android:name=".whatsYourEmail"></activity>
     </application>
 
 </manifest>
