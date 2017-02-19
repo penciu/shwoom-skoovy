@@ -155,7 +155,7 @@ public class whatsYourEmailActivity extends AppCompatActivity {
                     //stopping the function from executing further
                     return;
                 }
-                
+
                 Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + signupCreateUsernameActivity.userName + "\nUSER EMAIL: " + email, Toast.LENGTH_LONG).show();
 
                 //declare where you intend to go
