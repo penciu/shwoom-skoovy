@@ -50,7 +50,7 @@ public class signupActivity extends Activity {
         undobutton1.setVisibility(View.INVISIBLE);
         undobutton2.setVisibility(View.INVISIBLE);
 
-        //Retrieve text values entered for first name and last name
+        //find editText widgets on this activity
         editTextFirstName =  (EditText) findViewById(R.id.firstName);
         editTextLastName = (EditText) findViewById(R.id.lastName);
 
@@ -132,7 +132,7 @@ public class signupActivity extends Activity {
                     undobutton2.setVisibility(View.INVISIBLE);
                 }
                 if (hasFocus && (editTextLastName.length() > 0 )) {
-                    // code to execute when EditText loses focus
+                    // code to execute when EditText has focus and text
                     undobutton2.setVisibility(View.VISIBLE);
                 }
             }
