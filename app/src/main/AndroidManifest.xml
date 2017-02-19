@@ -13,9 +13,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
+
         <activity
             android:name=".StartScreen"
+                android:screenOrientation="portrait"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,15 +31,24 @@
             android:name="io.fabric.ApiKey"
             android:value="36373e6dece1dca524f5dd9b17cc1abef5af2cf9" />
 
-        <activity android:name=".signupActivity" />
-        <activity android:name=".whatsYourBirthdayActivity" />
-        <activity android:name=".signupCreateUsernameActivity" />
-        <activity android:name=".loginActivity" />
-        <activity android:name=".resetPasswordActivity" />
-        <activity android:name=".whatsYourEmailActivity" />
-        <activity android:name=".whatsYourMobileNumber" />
-        <activity android:name=".setUpPasswordActivity" />
-        <activity android:name=".verifyMobileNumberActivity"></activity>
+        <activity android:name=".signupActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".whatsYourBirthdayActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".signupCreateUsernameActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".loginActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".resetPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".whatsYourEmailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".whatsYourMobileNumber"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".setUpPasswordActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".verifyMobileNumberActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>
