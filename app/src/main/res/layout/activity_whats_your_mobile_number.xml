@@ -79,8 +79,7 @@
         android:backgroundTint="@android:color/transparent"
         android:background="?android:attr/selectableItemBackground"
         android:focusable="false"
-        android:textAllCaps="false"
-        android:onClick="showChoiceDialog"/>
+        android:textAllCaps="false" />
 
     <TextView
         android:text="MOBILE PHONE NUMBER"
@@ -100,7 +99,7 @@
         android:layout_gravity="center_horizontal">
 
         <TextView
-            android:layout_width="60dp"
+            android:layout_width="90dp"
             android:layout_height="33dp"
             android:ems="10"
             android:id="@+id/countrycode"
