@@ -31,6 +31,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -241,12 +243,14 @@ public class loginActivity extends Activity {
      * areBothFieldsSet
      * Switches LOGIN button image if both fields are set
      */
-    public void areBothFieldsSet()
+    public boolean areBothFieldsSet()
     {
         if ((!(isEditText1Empty)) && (!(isEditText2Empty))) {
             this.button1.setImageResource(R.drawable.login);   //    THIS NEEDS DIFFERENT SRC
+            return true;
         } else {
             this.button1.setImageResource(R.drawable.login);
+            return false;
         }
     }
 
@@ -327,7 +331,7 @@ public class loginActivity extends Activity {
                 //email text was valid email pattern
                 //Both text fields were filled, so we allow user to continue
                 //place logic here to do login action
-                attemptLogin();
+                attemptLogin2(email,password);
             }
         });
 
@@ -349,6 +353,33 @@ public class loginActivity extends Activity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void attemptLogin2(String emailString,String passwordString) {
+        //CHECK DATABASE IF REQUESTED USERNAME IS TAKEN
+        // Get an instance to our database
+        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
+        // Get a  reference to our userInfo node
+        DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                        Toast.makeText(loginActivity.this, "login successful",
+                                Toast.LENGTH_SHORT).show();
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            //Log.w(TAG, "signInWithEmail:failed", task.getException());
+                            Toast.makeText(loginActivity.this, "login failed",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
     }
 
     /**

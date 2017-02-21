@@ -16,7 +16,7 @@
 
     <LinearLayout
         android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_height="220dp"
         android:background="@drawable/roundborder"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true">
@@ -94,24 +94,6 @@
                 android:layout_marginTop="0dp" />
 
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxHeight="65dp"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                android:src="@drawable/voicecall"
-                android:id="@+id/verifyByVoiceCall"
-                android:visibility="visible"
-                android:backgroundTint="@android:color/transparent"
-                android:layout_gravity="center_horizontal"
-                android:baselineAlignBottom="false"
-                android:maxWidth="217dp"
-                android:focusable="false"
-                android:layout_below="@+id/verifymobilenumber"
-                android:layout_alignStart="@+id/verifymobilenumber"
-                android:layout_marginTop="-10dp" />
-
             <Button
                 android:textStyle="normal|bold"
                 android:text="CANCEL"
@@ -120,7 +102,7 @@
                 android:id="@+id/cancel"
                 android:textColor="#FF7F00"
                 android:background="?android:attr/selectableItemBackground"
-                android:layout_below="@+id/verifyByVoiceCall"
+                android:layout_below="@+id/verifymobilenumber"
                 android:layout_centerHorizontal="true"
                 android:textSize="17sp"/>
 

@@ -10,7 +10,12 @@ public class User {
 
     public String firstname;
     public String lastname;
+    public String birthday;
     public String username;
+    public String email;
+    public String phoneCountryCode;
+    public String phoneNumber;
+    public String password;
 
 
 
@@ -18,10 +23,15 @@ public class User {
         //Default constructor
     }
 
-    public User(String firstname, String lastname, String username){
+    public User(String firstname, String lastname, String birthday, String username, String email, String phoneCountryCode, String phoneNumber, String password){
         this.firstname = firstname;
         this.lastname = lastname;
+        this.birthday= birthday;
         this.username = username;
+        this.email= email;
+        this.phoneCountryCode= phoneCountryCode;
+        this.phoneNumber= phoneNumber;
+        this.password= password;
     }
 
 

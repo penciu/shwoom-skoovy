@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.TextView;
+
+import com.skoovy.android.R;
 
 public class SingleChoiceDialogFragment extends DialogFragment {
 
@@ -271,7 +276,15 @@ public class SingleChoiceDialogFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(getActivity());
+
+        builder.setIcon(R.drawable.backbuttonsmall);
+        TextView title = new TextView(getActivity());
+        title.setGravity(Gravity.LEFT);
+        title.setText("Select your Country Code" );
+
+        title.setTextSize(22);
 
         //From the countries array we just want to display the country name and country code
         String[] displayStrings = new String[countries.length];
@@ -284,7 +297,7 @@ public class SingleChoiceDialogFragment extends DialogFragment {
 
         // NOTE: setMessage doesn't work here because the list takes up the content
         // area. Use the setTitle method to set a descriptive prompt
-        builder.setTitle("<   Select Your Country Code");
+        builder.setTitle("Select Your Country Code");
 
         // The setItems function is used to create a list of content
         builder.setItems(displayStrings, new DialogInterface.OnClickListener() {
