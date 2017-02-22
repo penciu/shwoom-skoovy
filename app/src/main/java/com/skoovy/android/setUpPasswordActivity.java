@@ -203,9 +203,9 @@ whatIsRegistrationStatus();  //ALSO VERIFY THIS METHOD BELOW
 
 
                 //declare where you intend to go
-                //Intent intent1 = new Intent(whatsYourEmailActivity.this, whatsYourValidationPIN.class);
+                Intent intent1 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
                 //now make it happen
-                //startActivity(intent1);
+                startActivity(intent1);
 
             }
         });

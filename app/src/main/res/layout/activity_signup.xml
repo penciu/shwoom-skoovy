@@ -40,7 +40,7 @@
         android:layout_gravity="center_horizontal"
         android:textStyle="normal|bold"
         android:textSize="22sp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:text="What's your name?"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,19 +53,19 @@
         android:layout_width="313dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="17dp"
         android:textColor="#888888"
         android:id="@+id/textView3"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:textSize="17sp" />
+        android:textSize="16sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
             android:layout_width="257dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginStart="11dp"
             android:ems="10"
             android:id="@+id/firstName"
@@ -73,9 +73,9 @@
             android:minWidth="280dp"
             android:maxWidth="314dp"
             android:layout_marginTop="-5dp"
-            android:textSize="17sp"
             android:inputType="textCapSentences"
-            android:textColor="#FF7F00" />
+            android:textColor="#FF7F00"
+            android:textSize="20sp" />
 
 
         <ImageButton
@@ -86,7 +86,8 @@
             android:layout_alignEnd="@+id/firstName"
             android:backgroundTint="@android:color/transparent"
             android:layout_gravity="end"
-            android:layout_marginTop="0dp" />
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="-17dp" />
 
     </RelativeLayout>
 
@@ -95,19 +96,19 @@
         android:layout_marginStart="11dp"
         android:layout_width="313dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
         android:textColor="#888888"
         android:id="@+id/textView4"
         android:layout_below="@+id/editText"
         android:layout_alignStart="@+id/editText"
-        android:textSize="17sp" />
+        android:textSize="16sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
             android:layout_width="257dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:ems="10"
             android:id="@+id/lastName"
             android:backgroundTint="#888888"
@@ -117,9 +118,9 @@
             android:layout_alignParentStart="true"
             android:layout_marginStart="11dp"
             android:layout_marginTop="-5dp"
-            android:textSize="17sp"
             android:inputType="textCapSentences"
-            android:textColor="#FF7F00" />
+            android:textColor="#FF7F00"
+            android:textSize="20sp" />
 
         <ImageButton
             android:layout_width="17dp"
@@ -128,7 +129,8 @@
             android:id="@+id/undoButton2"
             android:layout_alignEnd="@+id/lastName"
             android:backgroundTint="@android:color/transparent"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            android:layout_marginRight="-17dp" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -144,7 +146,8 @@
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="16dp"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:layout_marginTop="-3dp" />
 
         <TextView
             android:text="Terms of Service"
@@ -193,9 +196,10 @@
             android:backgroundTint="@android:color/transparent"
             android:layout_marginBottom="68dp"
             android:maxWidth="217dp"
-            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true"
             android:layout_alignParentStart="false"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp" />
 
     </RelativeLayout>
 

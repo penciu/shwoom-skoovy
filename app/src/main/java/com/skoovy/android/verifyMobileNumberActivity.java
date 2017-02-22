@@ -48,12 +48,12 @@ public class verifyMobileNumberActivity extends AppCompatActivity {
 
 
 
-                Toast.makeText(getApplicationContext(), "THIS IS WHERE WE WOULD SEND SMS TO USER", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "THIS IS WHERE THE NEXMO API WOULD SEND PIN VIA SMS TO USER", Toast.LENGTH_LONG).show();
 
                 //declare where you intend to go
-                //Intent intent1 = new Intent(whatsYourEmailActivity.this, setUpPasswordActivity.class);
+                Intent intent1 = new Intent(verifyMobileNumberActivity.this, verificationCodeActivity.class);
                 //now make it happen
-                //startActivity(intent1);
+                startActivity(intent1);
 
             }
         });

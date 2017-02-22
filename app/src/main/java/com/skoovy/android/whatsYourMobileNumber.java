@@ -226,7 +226,7 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
 
 
 
-                Toast.makeText(getApplicationContext(), "TODO ITEM", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "TODO ITEM", Toast.LENGTH_SHORT).show();
                 //Phone number text field was filled, so we allow user to continue to next activity
                 //place logic here to do login action
                 //declare where you intend to go
