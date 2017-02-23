@@ -1,28 +1,38 @@
 package com.skoovy.android;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
 public class StartScreen extends AppCompatActivity {
 
-    ImageButton button1;
-    ImageButton button2;
+    Button button1;
+    Button button2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_screen);
 
+        //get font asset
+        Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
+        button1 = (Button) findViewById(R.id.loginButton);
+        button2 = (Button) findViewById(R.id.signupButton);
+
+        button1.setTypeface(centuryGothic);
+        button2.setTypeface(centuryGothic);
+
         addListenerOnButton();
     }
 
     public void addListenerOnButton() {
         //programatically link button to ImageButton & setup listening
-        button1 = (ImageButton) findViewById(R.id.loginButton);
+        button1 = (Button) findViewById(R.id.loginButton);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,7 +47,7 @@ public class StartScreen extends AppCompatActivity {
         });
 
         //programatically link button to ImageButton & setup listening
-        button2 = (ImageButton) findViewById(R.id.signupButton);
+        button2 = (Button) findViewById(R.id.signupButton);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

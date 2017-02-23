@@ -1,6 +1,7 @@
 package com.skoovy.android;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +9,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -25,7 +27,7 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
     public static String countryAbrv;
     public static String countryCode = "(+1)"; //Set to default
 
-    ImageButton button1;
+    Button button1;
     ImageButton button2;
     ImageButton undobutton1;
 
@@ -35,10 +37,17 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whats_your_mobile_number);
 
+        //get font asset
+        Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
 
         //find my activity's widgets and setup listeners
         cc = (TextView) findViewById(R.id.countrycode);
         cc.setOnTouchListener(MyOnTouchListener);
+        button1 = (Button) findViewById(R.id.signupButton);
+
+        //set font on button
+        button1.setTypeface(centuryGothic);
+
         //find undo text buttons
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
             //hide undo buttons at activty startup
@@ -76,6 +85,9 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
                 if (phoneNumber.length() == 0){
                     undobutton1.setVisibility(View.INVISIBLE);
                     isEditText1Empty = true;
+                }
+                if (phoneNumber.length() == 14){
+                    button1.setBackgroundResource(R.drawable.roundedorangebutton);
                 }
             }
             public void afterTextChanged(Editable s) {
@@ -199,16 +211,16 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
      * Listens to the buttons of this activity
      */
     public void addListenerOnButton() {
-        button1 = (ImageButton) findViewById(R.id.signupButton);
+
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //get text from values entered and trim whitespace
                 phoneNumber = mobilePhoneNumber.getText().toString().trim();
 
-                //Detect empty fields before allowing user to continue to next activity
+                //Detect empty field before allowing user to continue to next activity
                 if(TextUtils.isEmpty(phoneNumber)){
-                    //firstName is empty
+                    //mobile number is empty
                     Toast.makeText(getApplicationContext(), "Please enter your mobile phone number", Toast.LENGTH_SHORT).show();
                     //stopping the function from executing further
                     return;
@@ -216,7 +228,7 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
 
                 //Detect if phone number field has enough numbers before allowing user to continue to next activity
                 if(phoneNumber.length() < 14){
-                    //firstName is empty
+                    //mobile number is not long enough
                     Toast.makeText(getApplicationContext(), "Please enter a valid mobile phone number", Toast.LENGTH_SHORT).show();
                     //stopping the function from executing further
                     return;
@@ -252,6 +264,7 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(View view) {
                 mobilePhoneNumber.setText("");
+                button1.setBackgroundResource(R.drawable.roundedgreybutton);
                 undobutton1.setVisibility(View.INVISIBLE);
             }
         });
@@ -261,16 +274,16 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
 
 
     /**
-     * areBothFieldsSet
+     * isFieldsSet
      * Switches signup button image if both fields are set
      */
-    public void areBothFieldsSet(){
+    public void isFieldsSet(){
         if (!(isEditText1Empty)) {
             //switch image on signup button
-            button1.setImageResource(R.drawable.signup);
+            button1.setBackgroundResource(R.drawable.roundedorangebutton);
         }
         else {
-            button1.setImageResource(R.drawable.signupgrey);
+            button1.setBackgroundResource(R.drawable.roundedgreybutton);
         }
     }
 }

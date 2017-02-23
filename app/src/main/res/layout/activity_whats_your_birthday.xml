@@ -17,7 +17,7 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/backbutton"
-        android:id="@+id/backtoNameButton"
+        android:id="@+id/backButton"
         android:backgroundTint="@android:color/transparent"
         android:padding="10dp"
         android:layout_marginLeft="-15dp"
@@ -93,18 +93,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="65dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:src="@drawable/next"
+        <Button
+            android:text="next"
+            android:layout_width="190dp"
+            android:layout_height="42dp"
+            android:background="@drawable/roundedgreybutton"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:textSize="25sp"
             android:id="@+id/next"
-            android:visibility="visible"
-            android:backgroundTint="@android:color/transparent"
             android:layout_gravity="center_horizontal"
-            android:maxWidth="217dp"
             android:layout_marginTop="44dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />

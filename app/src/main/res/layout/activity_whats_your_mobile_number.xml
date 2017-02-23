@@ -216,20 +216,19 @@
 
             </RelativeLayout>
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxHeight="65dp"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
-                android:src="@drawable/next"
+            <Button
+                android:text="next"
+                android:layout_width="190dp"
+                android:layout_height="42dp"
+                android:background="@drawable/roundedgreybutton"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                android:textSize="25sp"
                 android:id="@+id/signupButton"
-                android:visibility="visible"
-                android:backgroundTint="@android:color/transparent"
-                android:layout_gravity="center_horizontal"
-                android:maxWidth="217dp"
+                android:layout_marginTop="38dp"
+                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="38dp" />
+                android:layout_gravity="center_horizontal" />
 
         </RelativeLayout>
     </RelativeLayout>

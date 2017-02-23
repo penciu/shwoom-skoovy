@@ -2,6 +2,7 @@ package com.skoovy.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -9,6 +10,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -24,7 +26,9 @@ public class verificationCodeActivity extends AppCompatActivity {
     TextView appStatus; //status text from app to user.  Default is currently 'Starting verification process ...'
     TextView placeHolder; //Described in comment above; TextView3 in case we need to dynamically update.
 
-    ImageButton button1; //main action button for this activity
+    PinEntryEditText pinNumber;
+
+    Button button1; //main action button for this activity
     ImageButton button2; //backbutton
 
     @Override
@@ -32,12 +36,18 @@ public class verificationCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verification_code);
 
+        //get font asset
+        Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
+
         //Find elements for this activity
         appStatus = (TextView) findViewById(R.id.textView2);
         placeHolder = (TextView) findViewById(R.id.textView3);
 
-        button1 = (ImageButton) findViewById(R.id.signupButton);
+        button1 = (Button) findViewById(R.id.signupButton);
         button2 = (ImageButton) findViewById(R.id.backButton);
+
+        //set font on button
+        button1.setTypeface(centuryGothic);
 
         final PinEntryEditText txtPinEntry = (PinEntryEditText) findViewById(R.id.txt_pin_entry);
         txtPinEntry.addTextChangedListener(new TextWatcher() {
@@ -53,7 +63,11 @@ public class verificationCodeActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (s.length() < 4) {
+                    button1.setBackgroundResource(R.drawable.roundedgreybutton);
+                }
                 if (s.length() == 4){
+                    button1.setBackgroundResource(R.drawable.roundedorangebutton);
                     View view = findViewById(R.id.activity_verification_code);
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -93,8 +107,11 @@ public class verificationCodeActivity extends AppCompatActivity {
 
                 //Text fields was filled, so we now need to verify pin before allowing user to continue to next activity
                 //place logic here to do verification action
-
-
+                pinNumber = (PinEntryEditText) findViewById(R.id.txt_pin_entry);
+                if (pinNumber.length() < 4){
+                    Toast.makeText(verificationCodeActivity.this, "I'm afraid that's not a valid pin number", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 //declare where you intend to go
                 Intent intent1 = new Intent(verificationCodeActivity.this, userIsRegisteredActivity.class);
                 //now make it happen

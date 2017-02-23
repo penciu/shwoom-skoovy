@@ -71,7 +71,7 @@
         android:id="@+id/spinnerView" >
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="257dp"
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
@@ -79,8 +79,9 @@
             android:backgroundTint="#888888"
             android:minWidth="280dp"
             android:layout_gravity="center_horizontal"
-            android:textSize="17sp"
-            android:textColor="#FF7F00" />
+            android:textColor="#FF7F00"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_centerHorizontal="true" />
 
 
         <ImageButton
@@ -91,7 +92,8 @@
             android:layout_alignEnd="@+id/registerUsername"
             android:backgroundTint="@android:color/transparent"
             android:layout_gravity="end"
-            android:layout_marginTop="0dp" />
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="-17dp" />
 
         <FrameLayout
             android:id="@+id/animationHoldingFrame"
@@ -99,7 +101,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/undoButton1"
-            android:layout_marginEnd="14dp">
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_alignParentEnd="true">
 
             <ImageView
                 android:layout_width="20dp"
@@ -113,31 +116,32 @@
     <TextView
         android:text=""
         android:textColor="#FF7F00"
-        android:layout_width="278dp"
+        android:layout_width="257dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/registerUsername"
         android:layout_alignStart="@+id/registerUsername"
         android:textSize="16sp"
-        android:id="@+id/userTaken" />
+        android:id="@+id/userTaken"
+        android:layout_gravity="center_horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="65dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:src="@drawable/next"
-            android:id="@+id/activityCsignupButton"
-            android:visibility="visible"
-            android:backgroundTint="@android:color/transparent"
+
+        <Button
+            android:text="next"
+            android:layout_width="190dp"
+            android:layout_height="42dp"
+            android:background="@drawable/roundedgreybutton"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:textSize="25sp"
+            android:id="@+id/signupButton"
+            android:layout_marginTop="44dp"
+            android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="90dp"
-            android:maxWidth="217dp" />
+            android:layout_gravity="center_horizontal" />
+
     </RelativeLayout>
 
 </LinearLayout>

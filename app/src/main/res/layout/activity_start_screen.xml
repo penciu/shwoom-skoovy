@@ -37,38 +37,36 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="65dp"
-            android:scaleType="fitCenter"
+        <Button
+            android:text="login"
+            android:layout_width="190dp"
+            android:layout_height="42dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/login"
             android:id="@+id/loginButton"
-            android:visibility="visible"
-            android:backgroundTint="@android:color/transparent"
+            android:background="@drawable/roundedwhitebuttonblackborder"
+            android:textColor="#000000"
+            android:textAllCaps="false"
+            android:textSize="25sp"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="100dp"
-            android:maxWidth="217dp" />
+            android:shadowRadius="0"/>
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="65dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:src="@drawable/signup"
+        <Button
+            android:text="sign up"
+            android:layout_width="190dp"
+            android:layout_height="42dp"
             android:id="@+id/signupButton"
-            android:visibility="visible"
-            android:backgroundTint="@android:color/transparent"
+            android:background="@drawable/roundedorangebutton"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:textSize="25sp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:layout_alignParentBottom="true"
             android:baselineAlignBottom="false"
-            android:layout_marginBottom="40dp"
-            android:maxWidth="217dp" />
+            android:layout_marginBottom="40dp" />
 
 
     </RelativeLayout>

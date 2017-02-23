@@ -1,10 +1,12 @@
 package com.skoovy.android;
 
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -18,8 +20,8 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
     public static String birthdate;
     EditText editTextBirthdate;
 
-    ImageButton button1;        //go on to next activity
-    ImageButton button2;        //go back to previous screen
+    Button button1;        //go on to next activity
+    ImageButton button2;        //go back to previous screen with BACK ARROW
     ImageButton undoButton1;    //undo input text in edit text field
 
     final Calendar c = Calendar.getInstance();
@@ -31,6 +33,11 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whats_your_birthday);
+
+        //get font asset
+        Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
+        button1 = (Button) findViewById(R.id.next);
+        button1.setTypeface(centuryGothic);
 
         //find elements in this activity
         myDatePicker = ((DatePicker)findViewById(R.id.datePicker));
@@ -75,6 +82,35 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
                 editTextBirthdate.setText(" " + month + arg3 + ",  " + arg1);
                 //and present the undo button
                 undoButton1.setVisibility(View.VISIBLE);
+
+                //THIS IS WHERE THE LOGIC TO CHANGE BUTTON BACKGROUND SHOULD GO
+                //NEED TO EVALUATE IF DATEPICKER DATE IS LESS THAN 13 YEARS THAN TODAY
+                //IF TRUE, THEN SET BUTTON BACKGROUND TO ORANGE
+                birthdate = editTextBirthdate.getText().toString().trim();
+                if (TextUtils.isEmpty(birthdate)) {
+                    button1.setBackgroundResource(R.drawable.roundedgreybutton);
+                    return;
+                }
+                //check that age is at least 13 years old
+                if (myDatePicker.getYear() > c.get(Calendar.YEAR) - minAge ) {
+                    //Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS", Toast.LENGTH_LONG).show();
+                    button1.setBackgroundResource(R.drawable.roundedgreybutton);
+                    //we exit from method
+                    return;
+                }
+                if ((myDatePicker.getYear() == (c.get(Calendar.YEAR) - minAge)) && ((myDatePicker.getMonth() > c.get(Calendar.MONTH)))){
+                    //Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS", Toast.LENGTH_LONG).show();
+                    button1.setBackgroundResource(R.drawable.roundedgreybutton);
+                    //we exit from method
+                    return;
+                }
+                if ((myDatePicker.getYear() == (c.get(Calendar.YEAR) - minAge)) && ((myDatePicker.getMonth() == c.get(Calendar.MONTH) + 0)) && (myDatePicker.getDayOfMonth() > c.get(Calendar.DAY_OF_MONTH))){
+                    //Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS", Toast.LENGTH_LONG).show();
+                    button1.setBackgroundResource(R.drawable.roundedgreybutton);
+                    //we exit from method
+                    return;
+                }
+                button1.setBackgroundResource(R.drawable.roundedorangebutton);
             }
         });
 
@@ -110,12 +146,13 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 editTextBirthdate.setText("");
+                button1.setBackgroundResource(R.drawable.roundedgreybutton);
                 undoButton1.setVisibility(View.INVISIBLE);
             }
         });
 
         //go on to next activity
-        button1 = ((ImageButton)findViewById(R.id.next));
+        button1 = (Button)findViewById(R.id.next);
         button1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view)
             {
@@ -126,17 +163,17 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
                 }
                 //check that age is at least 13 years old
                 if (myDatePicker.getYear() > c.get(Calendar.YEAR) - minAge ) {
-                    Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS OLD", Toast.LENGTH_LONG).show();
                     //we exit from method
                     return;
                 }
                 if ((myDatePicker.getYear() == (c.get(Calendar.YEAR) - minAge)) && ((myDatePicker.getMonth() > c.get(Calendar.MONTH)))){
-                    Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS OLD", Toast.LENGTH_LONG).show();
                     //we exit from method
                     return;
                 }
                 if ((myDatePicker.getYear() == (c.get(Calendar.YEAR) - minAge)) && ((myDatePicker.getMonth() == c.get(Calendar.MONTH) + 0)) && (myDatePicker.getDayOfMonth() > c.get(Calendar.DAY_OF_MONTH))){
-                    Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "SORRY, YOU MUST BE AT LEAST 13 YEARS OLD", Toast.LENGTH_LONG).show();
                     //we exit from method
                     return;
                 }
@@ -152,7 +189,7 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
         });
 
         //go back to previous screen
-        button2 = ((ImageButton)findViewById(R.id.backtoNameButton));
+        button2 = ((ImageButton)findViewById(R.id.backButton));
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 finish();

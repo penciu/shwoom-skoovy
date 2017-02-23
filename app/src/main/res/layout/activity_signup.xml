@@ -184,22 +184,23 @@
             android:layout_marginStart="-10dp"
             android:textSize="14sp" />
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="65dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:src="@drawable/signupgrey"
-            android:id="@+id/activityBsignupButton"
-            android:visibility="visible"
-            android:backgroundTint="@android:color/transparent"
+
+
+        <Button
+            android:text="sign up"
+            android:layout_width="190dp"
+            android:layout_height="42dp"
+            android:id="@+id/signupButton"
+            android:layout_below="@+id/textView10"
+            android:background="@drawable/roundedgreybutton"
+            android:textColor="#FFFFFF"
+            android:textAllCaps="false"
+            android:textSize="25sp"
             android:layout_marginBottom="68dp"
-            android:maxWidth="217dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="40dp"/>
 
     </RelativeLayout>
 

@@ -4,6 +4,7 @@ package com.skoovy.android;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -37,7 +39,7 @@ public class signupCreateUsernameActivity extends Activity{
     private EditText editTextUserName;
     public static String userName;
 
-    ImageButton button1;
+    Button button1;
     ImageButton button2;
     ImageButton undobutton1;
 
@@ -60,12 +62,18 @@ public class signupCreateUsernameActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_create_username);
 
+        //get font asset
+        Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
+
         //find widgets on this activity
-        button1 = (ImageButton) findViewById(R.id.activityCsignupButton);
+        button1 = (Button) findViewById(R.id.signupButton);
         button2 = (ImageButton) findViewById(R.id.backToBirthdateButton);
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
         mySpinner = (ImageView) findViewById(R.id.rotate_image);
         userTaken = (TextView) findViewById(R.id.userTaken);
+
+        //set font on button
+        button1.setTypeface(centuryGothic);
 
         //hide undo buttons at activty startup
         undobutton1.setVisibility(View.INVISIBLE);
@@ -166,6 +174,9 @@ public class signupCreateUsernameActivity extends Activity{
         button1.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                //hide undobutton
+                undobutton1.setVisibility(View.GONE);
+
                 //find spinnerView
                 final View spinnerView = findViewById(R.id.spinnerView);
 
@@ -287,15 +298,15 @@ public class signupCreateUsernameActivity extends Activity{
 
     /**
      * areBothFieldsSet
-     * Switches signup button image if both fields are set
+     * Switches signup button background if username field is set
      */
     public void isFieldsSet(){
         if (!(isEditText1Empty)) {
             //switch image on signup button
-            button1.setImageResource(R.drawable.next);
+            button1.setBackgroundResource(R.drawable.roundedorangebutton);  //field is NOT empty
         }
         else {
-            button1.setImageResource(R.drawable.signupgrey);
+            button1.setBackgroundResource(R.drawable.roundedgreybutton);  //field IS empty
         }
     }
 

@@ -2,6 +2,7 @@ package com.skoovy.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -26,7 +27,7 @@ public class whatsYourEmailActivity extends AppCompatActivity {
     private EditText editTextEmail;
     public static String email;
 
-    ImageButton button1;
+    Button button1;
     ImageButton button2;
     Button button3;
     ImageButton undobutton1;
@@ -40,11 +41,17 @@ public class whatsYourEmailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whats_your_email);
 
+        //get font asset
+        Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
+
         //find widgets on this activity
-        button1 = (ImageButton) findViewById(R.id.signupButton);
+        button1 = (Button) findViewById(R.id.signupButton);
         button2 = (ImageButton) findViewById(R.id.backToUsernameButton);
         button3 = (Button) findViewById(R.id.signUpWithMobile);
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
+
+        //set font on button
+        button1.setTypeface(centuryGothic);
 
         //hide undo buttons at activty startup
         undobutton1.setVisibility(View.INVISIBLE);
@@ -65,6 +72,7 @@ public class whatsYourEmailActivity extends AppCompatActivity {
                     //so we display the undo button
                     undobutton1.setVisibility(View.VISIBLE);
                     isEditText1Empty = false;
+                    isValidEmail(email);
                     isFieldsSet();
                 }
                 if (email.length() == 0){
@@ -129,6 +137,7 @@ public class whatsYourEmailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 editTextEmail.setText("");
                 undobutton1.setVisibility(View.INVISIBLE);
+                button1.setBackgroundResource(R.drawable.roundedgreybutton);
             }
         });
 
@@ -195,10 +204,10 @@ public class whatsYourEmailActivity extends AppCompatActivity {
     public void isFieldsSet(){
         if (!(isEditText1Empty)) {
             //switch image on signup button
-            button1.setImageResource(R.drawable.next);
+            //button1.setBackgroundResource(R.drawable.roundedorangebutton);
         }
         else {
-            button1.setImageResource(R.drawable.signupgrey);
+            //button1.setBackgroundResource(R.drawable.roundedgreybutton);
         }
     }
 
@@ -224,10 +233,12 @@ public class whatsYourEmailActivity extends AppCompatActivity {
 
         if(matcher.matches()) {
             //Toast.makeText(getApplicationContext(), " VALID EMAIL", Toast.LENGTH_SHORT).show();
+            button1.setBackgroundResource(R.drawable.roundedorangebutton);
             return true;
         }
         else {
             //Toast.makeText(getApplicationContext(), " BAD EMAIL", Toast.LENGTH_SHORT).show();
+            button1.setBackgroundResource(R.drawable.roundedgreybutton);
             return false;
         }
     }
