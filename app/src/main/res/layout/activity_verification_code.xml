@@ -39,7 +39,7 @@
         android:textStyle="normal|bold"
         android:textSize="22sp"
         android:layout_marginTop="5dp"
-        android:text="Verification Code"
+        android:text="@string/verification_code_screen_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView1"
@@ -64,7 +64,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:text="ENTER CODE"
+        android:text="@string/enter_code"
         android:layout_width="195dp"
         android:layout_height="wrap_content"
         android:textColor="#888888"
@@ -90,7 +90,7 @@
         android:layout_height="match_parent">
 
         <Button
-            android:text="next"
+            android:text="@string/next"
             android:layout_width="190dp"
             android:layout_height="42dp"
             android:background="@drawable/roundedgreybutton"

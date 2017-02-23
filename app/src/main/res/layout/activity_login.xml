@@ -38,23 +38,22 @@
         android:layout_gravity="center_horizontal"
         android:textStyle="normal|bold"
         android:textSize="22sp"
-        android:layout_marginTop="5dp"
-        android:text="Log In"
+        android:text="@string/login_screen_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000000"
         android:gravity="center_horizontal" />
 
     <TextView
-        android:text="USERNAME OR EMAIL"
+        android:text="@string/username_or_email"
         android:layout_width="313dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
-        android:layout_marginTop="29dp"
+        android:layout_marginTop="17dp"
         android:textColor="#888888"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:textSize="14dp" />
+        android:textSize="16sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -62,7 +61,7 @@
 
         <EditText
             android:layout_width="257dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_marginStart="11dp"
             android:inputType="textEmailAddress"
             android:ems="10"
@@ -71,7 +70,6 @@
             android:minWidth="280dp"
             android:maxWidth="314dp"
             android:layout_marginTop="-5dp"
-            android:textSize="16dp"
             android:textColor="#FF7F00" />
 
         <ImageButton
@@ -87,7 +85,7 @@
     </RelativeLayout>
 
     <TextView
-        android:text="PASSWORD"
+        android:text="@string/password"
         android:layout_marginStart="11dp"
         android:layout_width="313dp"
         android:layout_height="wrap_content"
@@ -96,7 +94,7 @@
         android:id="@+id/textView4"
         android:layout_below="@+id/editText"
         android:layout_alignStart="@+id/editText"
-        android:textSize="14dp" />
+        android:textSize="16sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -104,7 +102,7 @@
 
         <EditText
             android:layout_width="257dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:inputType="textPassword"
             android:ems="10"
             android:id="@+id/passwordTextField"
@@ -117,7 +115,6 @@
             android:layout_marginTop="-5dp"
             android:imeActionId="@+id/login"
             android:imeOptions="actionUnspecified"
-            android:textSize="16dp"
             android:textColor="#FF7F00" />
 
         <ImageButton
@@ -131,40 +128,42 @@
 
     </RelativeLayout>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:inputType="textPersonName"
+        android:text="@string/password_help"
+        android:ems="10"
+        android:id="@+id/passwordHelp"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:textColorLink="#1F1FFF"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#1F1FFF"
+        android:backgroundTint="@android:color/transparent"
+        android:background="?android:attr/selectableItemBackground"
+        android:focusable="false"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
-            android:layout_width="140dp"
-            android:layout_height="30dp"
-            android:inputType="textPersonName"
-            android:text="Password help?"
-            android:ems="10"
-            android:id="@+id/passwordHelp"
-            android:gravity="center_vertical|center_horizontal"
-            android:textColor="#1F1FFF"
-            android:backgroundTint="@android:color/transparent"
-            android:background="?android:attr/selectableItemBackground"
-            android:focusable="false"
-            android:layout_centerHorizontal="true"
-            android:textSize="15dp" />
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:maxHeight="65dp"
-            android:scaleType="fitCenter"
+            android:text="@string/next"
+            android:layout_width="190dp"
+            android:layout_height="42dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/login"
-            android:id="@+id/loginImageButton"
-            android:visibility="visible"
-            android:backgroundTint="@android:color/transparent"
-            android:layout_marginBottom="68dp"
-            android:maxWidth="217dp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="false"
-            android:layout_centerHorizontal="true" />
+            android:id="@+id/loginButton"
+            android:background="@drawable/roundedwhitebuttonblackborder"
+            android:textColor="#000000"
+            android:textAllCaps="false"
+            android:textSize="25sp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:shadowRadius="0" />
 
     </RelativeLayout>
 

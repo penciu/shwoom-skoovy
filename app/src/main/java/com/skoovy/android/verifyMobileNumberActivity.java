@@ -1,6 +1,7 @@
 package com.skoovy.android;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 
 public class verifyMobileNumberActivity extends AppCompatActivity {
 
-    ImageButton button1;
+    Button button1;
     Button button2;
     TextView phoneNumber;
 
@@ -21,10 +22,16 @@ public class verifyMobileNumberActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_mobile_number);
 
+        //get font asset
+        Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
+
         //find widgets on this activity
-        button1 = (ImageButton) findViewById(R.id.verifymobilenumber);
+        button1 = (Button) findViewById(R.id.verifymobilenumber);
         button2 = (Button) findViewById(R.id.cancel);
         phoneNumber = (TextView) findViewById(R.id.selectedMobileNumber);
+
+        //set font on button
+        button1.setTypeface(centuryGothic);
 
         //fill in phoneNumber text with user's phone number
         String modPhoneNumber = whatsYourMobileNumber.phoneNumber.trim().replace(")","-").substring(1,14);

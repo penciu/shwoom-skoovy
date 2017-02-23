@@ -40,7 +40,7 @@
         android:textStyle="normal|bold"
         android:textSize="22sp"
         android:layout_marginTop="5dp"
-        android:text="Create a Username"
+        android:text="@string/create_username_screen_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView5"
@@ -48,7 +48,7 @@
         android:gravity="center_horizontal" />
 
     <TextView
-        android:text="Your username allows friends to"
+        android:text="@string/your_username_allows"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#888888"
@@ -57,7 +57,7 @@
         android:textSize="15sp" />
 
     <TextView
-        android:text="add you on skoovy."
+        android:text="@string/add_you_on_skoovy"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#888888"
@@ -108,7 +108,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:src="@drawable/refresh_icon"
-                android:id="@+id/rotate_image" />
+                android:id="@+id/rotate_image"
+                android:layout_marginTop="-1dp" />
 
         </FrameLayout>
 
@@ -129,7 +130,7 @@
         android:layout_height="match_parent">
 
         <Button
-            android:text="next"
+            android:text="@string/next"
             android:layout_width="190dp"
             android:layout_height="42dp"
             android:background="@drawable/roundedgreybutton"

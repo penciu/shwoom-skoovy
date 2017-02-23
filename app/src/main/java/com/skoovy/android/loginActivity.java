@@ -3,6 +3,7 @@ package com.skoovy.android;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -50,7 +51,7 @@ public class loginActivity extends Activity {
     public static String email;
     public static String password;
 
-    ImageButton button1;
+    Button button1;
     ImageButton button2;
     ImageButton undoButton1;
     ImageButton undoButton2;
@@ -66,11 +67,18 @@ public class loginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        //get font asset
+        Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
+
         //find all buttons in this activity
-        button1 = ((ImageButton)findViewById(R.id.loginImageButton));
+        button1 = (Button)findViewById(R.id.loginButton);
         passwordreset = ((Button)findViewById(R.id.passwordHelp));
         undoButton1 = ((ImageButton)findViewById(R.id.undoButton1));
         undoButton2 = ((ImageButton)findViewById(R.id.undoButton2));
+
+        //set font on button and initial background
+        button1.setTypeface(centuryGothic);
+
         //initialize undo text buttons to INVISIBLE
         undoButton1.setVisibility(View.INVISIBLE);
         undoButton2.setVisibility(View.INVISIBLE);
@@ -139,7 +147,10 @@ public class loginActivity extends Activity {
                     undoButton1.setVisibility(View.VISIBLE);
                     areBothFieldsSet();
                 }
-
+                if (email.length() > 0 && password.length() >= 8){
+                    button1.setBackgroundResource(R.drawable.roundedorangebutton);   //fields are NOT empty
+                    button1.setTextColor(0xFFFFFFFF);
+                }
                 if (email.length() == 0)
                 {
                     //there is NO text in the email text field
@@ -147,6 +158,8 @@ public class loginActivity extends Activity {
                     //and call a check to switch image on login button
                     isEditText1Empty = true;
                     undoButton1.setVisibility(View.INVISIBLE);
+                    button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);
+                    button1.setTextColor(0xFF000000);
                     areBothFieldsSet();
                 }
             }
@@ -177,16 +190,25 @@ public class loginActivity extends Activity {
                     //so we trip the empty flag, HIDE the undo button,
                     //and call a check to switch image on login button
                     isEditText2Empty = true;
+                   // button1.setTextColor(0xFF000000);
                     undoButton2.setVisibility(View.INVISIBLE);
                     areBothFieldsSet();
+                }
+                if (password.length() >= 8 && email.length() > 0) {
+                    button1.setBackgroundResource(R.drawable.roundedorangebutton);   //fields are NOT empty
+                    button1.setTextColor(0xFFFFFFFF);
+                }
+                if (password.length() < 8){
+                    button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);
+                    button1.setTextColor(0xFF000000);
                 }
             }
         });
 
-                /*
+        /*
         * Listen for focus changes to control presentation of undo buttons here.
         * Additional presentation control is also done when text changes (in code above)
-         */
+        */
 
         //if EditText mEmailView is not focused, remove undo button
         mEmailView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -246,10 +268,12 @@ public class loginActivity extends Activity {
     public boolean areBothFieldsSet()
     {
         if ((!(isEditText1Empty)) && (!(isEditText2Empty))) {
-            this.button1.setImageResource(R.drawable.login);   //    THIS NEEDS DIFFERENT SRC
+
             return true;
         } else {
-            this.button1.setImageResource(R.drawable.login);
+            if (password.length() < 8) {
+                button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);  //fields ARE empty
+            }
             return false;
         }
     }

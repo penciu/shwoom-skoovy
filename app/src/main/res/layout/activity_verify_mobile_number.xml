@@ -25,12 +25,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
-
             <TextView
                 android:textStyle="normal|bold"
                 android:textSize="16sp"
-                android:text="Verify mobile number"
+                android:text="@string/verify_mobile_number"
                 android:layout_width="match_parent"
                 android:layout_height="18dp"
                 android:textColor="#000000"
@@ -54,7 +52,7 @@
 
             <TextView
                 android:textSize="14sp"
-                android:text="We need to send a verification code"
+                android:text="@string/need_to_send_verification_code"
                 android:layout_width="match_parent"
                 android:layout_height="18dp"
                 android:textColor="#000000"
@@ -65,7 +63,7 @@
 
             <TextView
                 android:textSize="14sp"
-                android:text="to complete your registration."
+                android:text="@string/to_complete"
                 android:layout_width="match_parent"
                 android:layout_height="18dp"
                 android:textColor="#000000"
@@ -74,34 +72,32 @@
                 android:layout_alignParentStart="true"
                 android:gravity="center_horizontal" />
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:maxHeight="65dp"
-                android:scaleType="fitCenter"
+            <Button
+                android:text="@string/send_sms"
+                android:layout_width="190dp"
+                android:layout_height="42dp"
                 android:adjustViewBounds="true"
-                android:src="@drawable/sendsms"
                 android:id="@+id/verifymobilenumber"
                 android:visibility="visible"
-                android:backgroundTint="@android:color/transparent"
-                android:layout_gravity="center_horizontal"
-                android:baselineAlignBottom="false"
-                android:maxWidth="217dp"
-                android:focusable="false"
-                android:layout_marginLeft="7dp"
-                android:layout_below="@+id/verifyCaption2"
+                android:background="@drawable/roundedwhitebuttonorangeborder"
+                android:textColor="#FF7F00"
+                android:textAllCaps="false"
+                android:textSize="25sp"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="0dp" />
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:shadowRadius="0"
+                android:layout_below="@+id/verifyCaption2" />
 
 
             <Button
                 android:textStyle="normal|bold"
-                android:text="CANCEL"
+                android:text="@string/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/cancel"
                 android:textColor="#FF7F00"
-                android:background="?android:attr/selectableItemBackground"
+                android:background="#00FFFFFF"
                 android:layout_below="@+id/verifymobilenumber"
                 android:layout_centerHorizontal="true"
                 android:textSize="17sp"/>
