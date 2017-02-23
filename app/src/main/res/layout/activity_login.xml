@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="6dp"
+    android:orientation="vertical"
+    android:weightSum="1"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context="com.skoovy.android.loginActivity">
+
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/backbutton"
+        android:id="@+id/backtToStartButton"
+        android:backgroundTint="@android:color/transparent"
+        android:padding="10dp"
+        android:layout_marginLeft="-15dp"
+        android:layout_marginTop="0dp" />
+
+    <ImageView
+        android:layout_width="170dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:src="@drawable/skoovylogo"
+        android:layout_gravity="center_horizontal"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginTop="-40dp" />
+
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:textStyle="normal|bold"
+        android:textSize="22sp"
+        android:text="@string/login_screen_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:gravity="center_horizontal" />
+
+    <TextView
+        android:text="@string/username_or_email"
+        android:layout_width="313dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="17dp"
+        android:textColor="#888888"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="257dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="11dp"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/emailTextField"
+            android:backgroundTint="#888888"
+            android:minWidth="280dp"
+            android:maxWidth="314dp"
+            android:layout_marginTop="-5dp"
+            android:textColor="#FF7F00" />
+
+        <ImageButton
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@drawable/close"
+            android:id="@+id/undoButton1"
+            android:layout_alignEnd="@+id/emailTextField"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_gravity="end"
+            android:layout_marginTop="0dp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:text="@string/password"
+        android:layout_marginStart="11dp"
+        android:layout_width="313dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:textColor="#888888"
+        android:id="@+id/textView4"
+        android:layout_below="@+id/editText"
+        android:layout_alignStart="@+id/editText"
+        android:textSize="16sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="257dp"
+            android:layout_height="40dp"
+            android:inputType="textPassword"
+            android:ems="10"
+            android:id="@+id/passwordTextField"
+            android:backgroundTint="#888888"
+            android:minWidth="280dp"
+            android:maxWidth="314dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="-5dp"
+            android:imeActionId="@+id/login"
+            android:imeOptions="actionUnspecified"
+            android:textColor="#FF7F00" />
+
+        <ImageButton
+            android:layout_width="17dp"
+            android:layout_height="17dp"
+            android:src="@drawable/close"
+            android:id="@+id/undoButton2"
+            android:layout_alignEnd="@+id/passwordTextField"
+            android:backgroundTint="@android:color/transparent"
+            android:layout_gravity="end" />
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:inputType="textPersonName"
+        android:text="@string/password_help"
+        android:ems="10"
+        android:id="@+id/passwordHelp"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:textColorLink="#1F1FFF"
+        android:gravity="center_vertical|center_horizontal"
+        android:textColor="#1F1FFF"
+        android:backgroundTint="@android:color/transparent"
+        android:background="?android:attr/selectableItemBackground"
+        android:focusable="false"
+        android:layout_centerHorizontal="true"
+        android:textSize="15dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:text="@string/next"
+            android:layout_width="190dp"
+            android:layout_height="42dp"
+            android:adjustViewBounds="true"
+            android:id="@+id/loginButton"
+            android:background="@drawable/roundedwhitebuttonblackborder"
+            android:textColor="#000000"
+            android:textAllCaps="false"
+            android:textSize="25sp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:shadowRadius="0" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>
