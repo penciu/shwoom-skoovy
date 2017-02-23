@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button1"
-            android:background="@drawable/gradientbutton"
+            android:background="@drawable/buttonwithshadow"
             android:layout_below="@+id/textView15"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="56dp"
