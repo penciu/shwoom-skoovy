@@ -185,7 +185,7 @@ public class signupCreateUsernameActivity extends Activity{
                 animationContainer.setVisibility(View.VISIBLE);
 
                 startRotatingImage(spinnerView);
-
+                /*
                 //CHECK DATABASE IF REQUESTED USERNAME IS TAKEN
                 // Get an instance to our database
                 FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
@@ -212,7 +212,7 @@ public class signupCreateUsernameActivity extends Activity{
                             //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Username selection is new", Toast.LENGTH_SHORT).show();
                             updateTextView("");
                             Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + userName, Toast.LENGTH_LONG).show();
-
+*/
                             //User entered an un-used username requirement
                             //declare where you intend to go
                             Intent intent1 = new Intent(signupCreateUsernameActivity.this, whatsYourEmailActivity.class);
@@ -220,7 +220,7 @@ public class signupCreateUsernameActivity extends Activity{
                             startActivity(intent1);
                         }
 
-                    }
+                    /*}
 
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
@@ -265,7 +265,7 @@ public class signupCreateUsernameActivity extends Activity{
                 finish();
             }
         });
-    }
+    }*/
 
 
     /**
@@ -310,3 +310,4 @@ public class signupCreateUsernameActivity extends Activity{
         mySpinner.startAnimation(startRotateAnimation);
     }
 }
+    }

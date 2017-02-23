@@ -3,20 +3,17 @@ package com.skoovy.android;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -29,7 +26,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -208,10 +204,7 @@ public class loginActivity extends Activity {
         mAuthListener = new FirebaseAuth.AuthStateListener()
         {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
-            {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {}
-            }
+            {}
         };
         mAuth.addAuthStateListener(mAuthListener);
 
@@ -220,6 +213,7 @@ public class loginActivity extends Activity {
         //hide undo text button for password text field
         mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.CUPCAKE)
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -234,6 +228,7 @@ public class loginActivity extends Activity {
                 return false;
             }
         });
+
 
         //Tell my buttons to listen up!
         addListenerOnButton();
@@ -252,30 +247,6 @@ public class loginActivity extends Activity {
             this.button1.setImageResource(R.drawable.login);
             return false;
         }
-    }
-
-    /**
-     * attemptLogin
-     *
-     */
-    private void attemptLogin()
-    {
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        if (!task.isSuccessful())
-                        {
-                            Log.w("ContentValues", "signInWithEmail", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-                    }
-                });
     }
 
     /**
@@ -320,18 +291,26 @@ public class loginActivity extends Activity {
                     return;
                 }
 
-                //User entered an text, but we need to check if text is valid email pattern
-                wasEmailValid = isValidEmail(email);
-                if (!(wasEmailValid)){
-                    //email text is INVALID email pattern
-                    Toast.makeText(getApplicationContext(), "Please enter a valid EMAIL", Toast.LENGTH_SHORT).show();
-                    //stopping the function from executing further
-                    return;
-                }
-                //email text was valid email pattern
-                //Both text fields were filled, so we allow user to continue
-                //place logic here to do login action
-                attemptLogin2(email,password);
+                //User entered an text, but we need to check if text is valid email pattern or if it was a username
+                //Text is an email, but not an @skoovy.com email (@skoovy.com emails are reserved for phone users.)
+                if(email.contains("@") && !email.contains("@skoovy.com")) {
+                    //Text could be an email. Checking to see if email is valid.
+                    wasEmailValid = isValidEmail(email);
+                     if (!(wasEmailValid)) {
+                         //email text is INVALID email pattern
+                         Toast.makeText(getApplicationContext(), "Please enter a valid EMAIL", Toast.LENGTH_SHORT).show();
+                         //stopping the function from executing further
+                         return;
+                     } else {
+                         //email text was valid email pattern
+                         //Both text fields were filled, so we allow user to continue
+                         //place logic here to do login action
+                         attemptLogin(email,password);
+                     }
+                 } else {
+                    //Text is a username.
+                     attemptLogin(email,password);
+                 }
             }
         });
 
@@ -355,29 +334,47 @@ public class loginActivity extends Activity {
         });
     }
 
-    private void attemptLogin2(String emailString,String passwordString) {
-        //CHECK DATABASE IF REQUESTED USERNAME IS TAKEN
-        // Get an instance to our database
-        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
-        // Get a  reference to our userInfo node
-        DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
-        mAuth.signInWithEmailAndPassword(email, password)
+    /**
+     * Attempts to login the user with a given email/username and password.
+     * Potential users can fit into three categories: Email Users, Phone Users, and Fake Users.
+     * Email and Phone users can be in two states: Valid and Invalid.
+     * Program performs different checks to only allow Valid users in.
+     * @param emailString The email address or username of the user.
+     * @param passwordString The given password for the account. If this doesn't match what's on file, the user is not allowed in.
+     */
+    private void attemptLogin(String emailString, String passwordString) {
+        //Username was passed
+        String countryCode = "";
+        String phoneNumber = "";
+        if(!emailString.contains("@")) {
+
+        }
+        mAuth.signInWithEmailAndPassword(emailString, passwordString)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        Toast.makeText(loginActivity.this, "login successful",
-                                Toast.LENGTH_SHORT).show();
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
+                        //Login failed. Bad email or password given.
                         if (!task.isSuccessful()) {
-                            //Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(loginActivity.this, "login failed",
+                            Toast.makeText(loginActivity.this, "Username or password not found.",
                                     Toast.LENGTH_SHORT).show();
                         }
-
-                        // ...
+                        //User successfully logged into system. Checking for verification.
+                        else if(email.contains("@skoovy.com")){
+                            //User has no email on file. Checking for Verified Phone Number.
+                            //TODO: PHONE VALIDATION
+                        } else if (mAuth.getCurrentUser().isEmailVerified()) {
+                            //User has entered a verified email. Sending to App.
+                            //Set Up Intent
+                            Intent intent = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+                            //Now make it happen
+                            startActivity(intent);
+                        } else {
+                            //User entered an unverified Email.
+                            Toast.makeText(loginActivity.this, "Verify your email first.",
+                                    Toast.LENGTH_SHORT).show();
+                            mAuth.getCurrentUser().sendEmailVerification();
+                            mAuth.signOut();
+                        }
                     }
                 });
     }

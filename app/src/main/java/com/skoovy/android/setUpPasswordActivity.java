@@ -3,11 +3,13 @@ package com.skoovy.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -20,6 +22,11 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -241,8 +248,26 @@ whatIsRegistrationStatus();  //ALSO VERIFY THIS METHOD BELOW
             if(TextUtils.isEmpty(getRegisteredPhone)){
                 User user = new User(signupActivity.firstName, signupActivity.lastName, whatsYourBirthdayActivity.birthdate, signupCreateUsernameActivity.userName, whatsYourEmailActivity.email,"", "", password);
                 mDatabase.push().setValue(user);
+                sendEmail();
             }
 
+    }
+
+    public void sendEmail() {
+        String email = whatsYourEmailActivity.email;
+        final FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseAuth.AuthStateListener mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    user.sendEmailVerification();
+                    Toast.makeText(setUpPasswordActivity.this,"Check your email first...",Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+        mAuth.addAuthStateListener(mAuthListener);
+        mAuth.createUserWithEmailAndPassword(email, password);
     }
 
     public void whatIsRegistrationStatus () {
