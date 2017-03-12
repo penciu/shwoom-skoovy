@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Skoovy</string>
 
+    <!-- Strings Related to Nexmo -->
+    <string name="nexmo_application_id"> 1c9b5586</string>
+    <string name="nexmo_shared_secret"> 85dfafe8ae479665 </string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
