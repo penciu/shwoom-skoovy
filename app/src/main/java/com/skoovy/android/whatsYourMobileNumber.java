@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -29,6 +30,7 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
 
     Button button1;
     ImageButton button2;
+    Button button3;
     ImageButton undobutton1;
 
     Boolean isEditText1Empty = true;
@@ -44,6 +46,7 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
         cc = (TextView) findViewById(R.id.countrycode);
         cc.setOnTouchListener(MyOnTouchListener);
         button1 = (Button) findViewById(R.id.signupButton);
+        button3 = (Button) findViewById(R.id.signUpWithEmailInsteadButton);
 
         //set font on button
         button1.setTypeface(centuryGothic);
@@ -120,7 +123,7 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
                         mobilePhoneNumber.setText(ans);
                         mobilePhoneNumber.setSelection(mobilePhoneNumber.getText().length()-cursorComplement);
                     }
-                    // We just edited the field, ignoring this cicle of the watcher and getting ready for the next
+                    // We just edited the field, ignoring this circle of the watcher and getting ready for the next
                 } else {
                     editedFlag = false;
                 }
@@ -136,7 +139,6 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
 
         @Override
         public boolean onTouch(View view, MotionEvent event) {
-            // TODO Auto-generated method stub
 
             switch(event.getAction() & MotionEvent.ACTION_MASK){
                 case MotionEvent.ACTION_DOWN:
@@ -212,6 +214,7 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
      */
     public void addListenerOnButton() {
 
+        //Listens for button to go to next activity clicked
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -234,17 +237,26 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
                     return;
                 }
 
-
-
-
-
-                //Toast.makeText(getApplicationContext(), "TODO ITEM", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "countryCode:"+countryCode, Toast.LENGTH_SHORT).show();
                 //Phone number text field was filled, so we allow user to continue to next activity
+                //User satisfied phone number requirement
+                Intent intent5 = getIntent();
+                User user = (User)intent5.getSerializableExtra("user");
+                Log.d("User", user.toString());
+                Log.d("User", "user's phoneNumber: "+ phoneNumber);
+                Log.d("User", "user's countryCode: "+ countryCode);
+                //User meets the username requirement
+                user.setPhoneCountryCode(countryCode);
+                user.setPhoneNumber(phoneNumber);
+
+                user.getNexmoPhoneNumber();
+
                 //place logic here to do login action
                 //declare where you intend to go
-                Intent intent1 = new Intent(whatsYourMobileNumber.this, verifyMobileNumberActivity.class);
+                Intent intent6 = new Intent(whatsYourMobileNumber.this, verifyMobileNumberActivity.class);
                 //now make it happen
-                startActivity(intent1);
+                intent6.putExtra("user", user);
+                startActivity(intent6);
             }
         });
 
@@ -254,7 +266,25 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
             @Override
             public void onClick(View view) {
                 //place logic here to do back button action
-                finish();
+                Intent intent5 = new Intent(whatsYourMobileNumber.this, signupCreateUsernameActivity.class);
+                //now make it happen
+                startActivity(intent5);
+            }
+        });
+
+        //listens for 'Sign up with email instead' button
+        button3 = (Button) findViewById(R.id.signUpWithEmailInsteadButton);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //place logic here to do button action
+                Intent intent4 = getIntent();
+                User user = (User)intent4.getSerializableExtra("user");
+                Intent intent5 = new Intent(whatsYourMobileNumber.this, whatsYourEmailActivity.class);
+                //now make it happen
+                intent5.putExtra("user", user);
+                startActivity(intent5);
+
             }
         });
 
@@ -272,19 +302,5 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
 
     }
 
-
-    /**
-     * isFieldsSet
-     * Switches signup button image if both fields are set
-     */
-    public void isFieldsSet(){
-        if (!(isEditText1Empty)) {
-            //switch image on signup button
-            button1.setBackgroundResource(R.drawable.roundedorangebutton);
-        }
-        else {
-            button1.setBackgroundResource(R.drawable.roundedgreybutton);
-        }
-    }
 }
 

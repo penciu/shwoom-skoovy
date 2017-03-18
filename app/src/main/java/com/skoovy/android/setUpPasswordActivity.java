@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -42,7 +43,7 @@ public class setUpPasswordActivity extends AppCompatActivity {
     Boolean wasPasswordValid = false;
 
     Boolean isRegistered = false;
-
+    Boolean amIRegistered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +56,14 @@ public class setUpPasswordActivity extends AppCompatActivity {
                 .getReference()
                 .child("userInfo");//to send data to correct child
 
-        //find widgets on this activity
+        //Create widget references on this activity
         button1 = (ImageButton) findViewById(R.id.signupButton);
         button2 = (ImageButton) findViewById(R.id.backButton);
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
+        editTextPassword = (EditText) findViewById(R.id.setapasswordinput);
 
         //hide undo buttons at activty startup
         undobutton1.setVisibility(View.INVISIBLE);
-
-        //Retrieve text values entered for password
-        editTextPassword = (EditText) findViewById(R.id.setapasswordinput);
 
         //Listen for text on editTextFirstName input field
         editTextPassword.addTextChangedListener(new TextWatcher() {
@@ -94,7 +93,6 @@ public class setUpPasswordActivity extends AppCompatActivity {
             }
         });
 
-/*
         /*
         * Listen for focus changes to control presentation of undo buttons here.
         * Additional presentation control is also done when text changes (in code above)
@@ -123,7 +121,7 @@ public class setUpPasswordActivity extends AppCompatActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    // When 'done' button on softkeyboar is pressed, remove undo button on last name input field
+                    // When 'done' button on softkeyboard is pressed, remove undo button on last name input field
                     undobutton1.setVisibility(View.INVISIBLE);
                     editTextPassword.clearFocus();
 
@@ -169,21 +167,9 @@ public class setUpPasswordActivity extends AppCompatActivity {
                     //stopping the function from executing further
                     return;
                 }
-               // Toast.makeText(getApplicationContext(), " TODO ITEM", Toast.LENGTH_SHORT).show();
 
 
-registerUserToDatabase();
-// *************************************************
-// NEED TO VERIFY THIS CODE RUNS CORRECTLY - FIREBASE SEEMS TO BE DOWN AT THE MOMENT 2-21-17 00:47
-whatIsRegistrationStatus();  //ALSO VERIFY THIS METHOD BELOW
 
-                if (isRegistered){
-                    Toast.makeText(getApplicationContext(), "USER REGISTERED", Toast.LENGTH_LONG).show();
-                }
-                if (!isRegistered){
-                    Toast.makeText(getApplicationContext(), "REGISTERATION FAILED", Toast.LENGTH_LONG).show();
-                }
-// *************************************************
 
 
                 //CODE BELOW IS TO SEND DATA TO FIREBASE ABOUT USER //MAYBE NEEDED ELSEWHERE
@@ -201,11 +187,21 @@ whatIsRegistrationStatus();  //ALSO VERIFY THIS METHOD BELOW
                 //startActivity(intent4);
                 //    registerUserToDatabase();
 
+                Intent intent5 = getIntent();
+                User user = (User)intent5.getSerializableExtra("user");
+                user.setPassword(password);
+                Log.d("User", user.toString());
+ //               registerUserToDatabase();
+                mDatabase.push().setValue(user);  //User registration data is now pushed to Firebase DB in node 'userInfo'
+                isUserRegistered();
 
                 //declare where you intend to go
-                Intent intent1 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
+                Intent intent6 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
                 //now make it happen
-                startActivity(intent1);
+// *******************************************************************************
+//                PROBABLY WANT TO PASS THE USER OBJECT TO THE NEXT INTENT HERE
+// *******************************************************************************
+                startActivity(intent6);
 
             }
         });
@@ -219,13 +215,11 @@ whatIsRegistrationStatus();  //ALSO VERIFY THIS METHOD BELOW
             }
         });
 
-
-        //STILL NEED AN ADDITIONAL BUTTON TO GO TO whatsYourMobileNumber.class
     }
 
     /**
-     * areBothFieldsSet
-     * Switches signup button image if both fields are set
+     * isFieldsSet
+     * Switches signup button image if field are set
      */
     public void isFieldsSet() {
         if (!(isEditText1Empty)) {
@@ -236,53 +230,33 @@ whatIsRegistrationStatus();  //ALSO VERIFY THIS METHOD BELOW
         }
     }
 
-        private void registerUserToDatabase() {
-            String getRegisteredPhone = whatsYourMobileNumber.phoneNumber;
-            if(TextUtils.isEmpty(getRegisteredPhone)){
-                User user = new User(signupActivity.firstName, signupActivity.lastName, whatsYourBirthdayActivity.birthdate, signupCreateUsernameActivity.userName, whatsYourEmailActivity.email,"", "", password);
-                mDatabase.push().setValue(user);
-            }
 
-    }
-
-    public void whatIsRegistrationStatus () {
-
+    /**
+     * isUserRegistered
+     * Confirms if user push to DB was successful
+     */
+    public void isUserRegistered () {
+        Log.d("User", "REG STATUS IS GETTING CHECKED");
         mDatabase.orderByChild("username").equalTo(signupCreateUsernameActivity.userName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // do some stuff once
-                //database has returned dataSnapshot, so we can stop mySpinner
-//                animationContainer.setVisibility(View.INVISIBLE);
-//                        spinnerView.clearAnimation();
-//                        mySpinner.setVisibility(View.INVISIBLE);
+                Log.d("User", "DB DATA CHANGED");
+                //database has returned a changed dataSnapshot, so do some stuff once
 
 //                if(dataSnapshot.exists()){
-                    //System.out.println("Already in use"+dataSnapshot.getChildren());
-                    //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Selected Username is ALREADY in use", Toast.LENGTH_SHORT).show();
-//                    updateTextView(" " + userName + " is already taken. Try again.");
-//                    return;
 //                }
 //                else{
-                    //System.out.println("not found");
-                    //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Username selection is new", Toast.LENGTH_SHORT).show();
-//                    updateTextView("");
-//                    Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + userName, Toast.LENGTH_LONG).show();
-
-                    //User entered an un-used username requirement
-                    //declare where you intend to go
-//                    Intent intent1 = new Intent(signupCreateUsernameActivity.this, whatsYourEmailActivity.class);
-                    //now make it happen
-//                    startActivity(intent1);
 //                }
-
+                Toast.makeText(getApplicationContext(), "USER REGISTERED", Toast.LENGTH_LONG).show();
                 isRegistered = true;
+
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                //database has returned dataSnapshot, so we can stop mySpinner
-//                mySpinner.setVisibility(View.INVISIBLE);
+                Toast.makeText(getApplicationContext(), "REGISTERATION FAILED", Toast.LENGTH_LONG).show();
                 isRegistered = false;
+
             }
         });
     }

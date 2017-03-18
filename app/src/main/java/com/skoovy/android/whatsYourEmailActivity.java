@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 public class whatsYourEmailActivity extends AppCompatActivity {
 
-    private EditText editTextEmail;
+    EditText editTextEmail;
     public static String email;
 
     Button button1;
@@ -44,20 +44,18 @@ public class whatsYourEmailActivity extends AppCompatActivity {
         //get font asset
         Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
 
-        //find widgets on this activity
+        //create widget references for this activity
         button1 = (Button) findViewById(R.id.signupButton);
         button2 = (ImageButton) findViewById(R.id.backToUsernameButton);
         button3 = (Button) findViewById(R.id.signUpWithMobile);
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
+        editTextEmail =  (EditText) findViewById(R.id.registerYourEmail);
 
         //set font on button
         button1.setTypeface(centuryGothic);
 
         //hide undo buttons at activty startup
         undobutton1.setVisibility(View.INVISIBLE);
-
-        //Retrieve text values entered for first name and last name
-        editTextEmail =  (EditText) findViewById(R.id.registerYourEmail);
 
         //Listen for text on editTextFirstName input field
         editTextEmail.addTextChangedListener(new TextWatcher(){
@@ -73,13 +71,11 @@ public class whatsYourEmailActivity extends AppCompatActivity {
                     undobutton1.setVisibility(View.VISIBLE);
                     isEditText1Empty = false;
                     isValidEmail(email);
-                    isFieldsSet();
                 }
                 if (email.length() == 0){
                     //there is text in the first name text field
                     undobutton1.setVisibility(View.INVISIBLE);
                     isEditText1Empty = true;
-                    isFieldsSet();
                 }
             }
         });
@@ -167,10 +163,17 @@ public class whatsYourEmailActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + signupCreateUsernameActivity.userName + "\nUSER EMAIL: " + email, Toast.LENGTH_LONG).show();
 
+                //User satisfied email requirement
+                Intent intent3 = getIntent();
+                User user = (User)intent3.getSerializableExtra("user");
+                //User meets the username requirement
+                user.setEmail(email);
+
                 //declare where you intend to go
-                Intent intent1 = new Intent(whatsYourEmailActivity.this, setUpPasswordActivity.class);
+                Intent intent5 = new Intent(whatsYourEmailActivity.this, setUpPasswordActivity.class);
                 //now make it happen
-                startActivity(intent1);
+                intent5.putExtra("user", user);
+                startActivity(intent5);
 
             }
         });
@@ -188,33 +191,23 @@ public class whatsYourEmailActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent3 = getIntent();
+                User user = (User)intent3.getSerializableExtra("user");
                 //declare where you intend to go
-                Intent intent2 = new Intent(whatsYourEmailActivity.this, whatsYourMobileNumber.class);
+                Intent intent5 = new Intent(whatsYourEmailActivity.this, whatsYourMobileNumber.class);
                 //now make it happen
-                startActivity(intent2);
+                intent5.putExtra("user", user);
+                startActivity(intent5);
             }
         });
-        //STILL NEED AN ADDITIONAL BUTTON TO GO TO whatsYourMobileNumber.class
     }
 
-    /**
-     * areBothFieldsSet
-     * Switches signup button image if both fields are set
-     */
-    public void isFieldsSet(){
-        if (!(isEditText1Empty)) {
-            //switch image on signup button
-            //button1.setBackgroundResource(R.drawable.roundedorangebutton);
-        }
-        else {
-            //button1.setBackgroundResource(R.drawable.roundedgreybutton);
-        }
-    }
+
 
     /**
      * isValidEmail
      * Checks for valid email pattern
-     * @param target
+     * @param target, String text from user input
      * @return boolean
      */
     public final  boolean isValidEmail(String target) {
@@ -226,10 +219,9 @@ public class whatsYourEmailActivity extends AppCompatActivity {
                         +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
                         +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
 
-        CharSequence inputStr = target;
 
         Pattern pattern = Pattern.compile(regExpn,Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
+        Matcher matcher = pattern.matcher(target);
 
         if(matcher.matches()) {
             //Toast.makeText(getApplicationContext(), " VALID EMAIL", Toast.LENGTH_SHORT).show();

@@ -17,6 +17,8 @@ import java.util.Calendar;
 
 public class whatsYourBirthdayActivity extends AppCompatActivity {
 
+
+
     public static String birthdate;
     EditText editTextBirthdate;
 
@@ -33,6 +35,8 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whats_your_birthday);
+
+
 
         //get font asset
         Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
@@ -177,13 +181,20 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
                     //we exit from method
                     return;
                 }
+
+                Intent intent1 = getIntent();
+                User user = (User)intent1.getSerializableExtra("user");
+                //User meets the minAge requirement
+                user.setBirthday(birthdate);
+
                 //Toast.makeText(getApplicationContext(), "YEAH! YOU ARE OF AGE", Toast.LENGTH_LONG).show();
                 Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + birthdate, Toast.LENGTH_LONG).show();
-                //User meets the minAge requirement
+
                 //declare where you intend to go
-                Intent intent1 = new Intent(whatsYourBirthdayActivity.this, signupCreateUsernameActivity.class);
+                Intent intent2 = new Intent(whatsYourBirthdayActivity.this, signupCreateUsernameActivity.class);
                 //now make it happen
-                startActivity(intent1);
+                intent2.putExtra("user", user);
+                startActivity(intent2);
             }
 
         });

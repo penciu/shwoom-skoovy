@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +33,7 @@ public class verifyMobileNumberActivity extends AppCompatActivity {
         button1.setTypeface(centuryGothic);
 
         //fill in phoneNumber text with user's phone number
+        Toast.makeText(getApplicationContext(), whatsYourMobileNumber.phoneNumber, Toast.LENGTH_LONG).show();
         String modPhoneNumber = whatsYourMobileNumber.phoneNumber.trim().replace(")","-").substring(1,14);
         phoneNumber.setText(whatsYourMobileNumber.countryCode + " " + modPhoneNumber);
 

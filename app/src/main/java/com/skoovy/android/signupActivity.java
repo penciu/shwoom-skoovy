@@ -34,8 +34,6 @@ public class signupActivity extends Activity {
     Button button1;
     ImageButton button2;
 
-    Button button3;
-
     ImageButton undobutton1;
     ImageButton undobutton2;
 
@@ -200,10 +198,14 @@ public class signupActivity extends Activity {
                 }
 
                 //Both text fields were filled, so we allow user to continue to next activity
-                //place logic here to do login action
+                //place logic here to do registration action
                 //declare where you intend to go
+                User user = new User();
+                user.setFirstname(firstName);
+                user.setLastname(lastName);
                 Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + firstName + "\r\nUSER LAST NAME: " + lastName, Toast.LENGTH_LONG).show();
                 Intent intent1 = new Intent(signupActivity.this, whatsYourBirthdayActivity.class);
+                intent1.putExtra("user", user);
                 //now make it happen
                 startActivity(intent1);
             }

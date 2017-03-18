@@ -24,7 +24,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,8 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class signupCreateUsernameActivity extends Activity{
 
-    // [START declare_database_ref]
-//    private DatabaseReference mDatabase;
+
 
     private EditText editTextUserName;
     public static String userName;
@@ -52,13 +50,6 @@ public class signupCreateUsernameActivity extends Activity{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //Set up database reference, and reference the location we write to
-//        mDatabase = FirebaseDatabase
-//                .getInstance()
-//                .getReference()
-//                .child("userInfo");//to send data to correct child
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_create_username);
 
@@ -190,11 +181,11 @@ public class signupCreateUsernameActivity extends Activity{
                     //stopping the function from executing further
                     return;
                 }
+
                 //at this point, text field was NOT empty.
                 //so we display the spinner and start spin
                 animationContainer = (FrameLayout)findViewById(R.id.animationHoldingFrame);
                 animationContainer.setVisibility(View.VISIBLE);
-
                 startRotatingImage(spinnerView);
 
                 //CHECK DATABASE IF REQUESTED USERNAME IS TAKEN
@@ -209,26 +200,26 @@ public class signupCreateUsernameActivity extends Activity{
                     // do some stuff once
                         //database has returned dataSnapshot, so we can stop mySpinner
                         animationContainer.setVisibility(View.INVISIBLE);
-//                        spinnerView.clearAnimation();
-//                        mySpinner.setVisibility(View.INVISIBLE);
 
                         if(dataSnapshot.exists()){
-                            //System.out.println("Already in use"+dataSnapshot.getChildren());
                             //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Selected Username is ALREADY in use", Toast.LENGTH_SHORT).show();
                             updateTextView(" " + userName + " is already taken. Try again.");
-                            return;
                         }
                         else{
-                            //System.out.println("not found");
                             //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Username selection is new", Toast.LENGTH_SHORT).show();
                             updateTextView("");
                             Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + userName, Toast.LENGTH_LONG).show();
 
                             //User entered an un-used username requirement
+                            Intent intent2 = getIntent();
+                            User user = (User)intent2.getSerializableExtra("user");
+                            //User meets the username requirement
+                            user.setUsername(userName);
                             //declare where you intend to go
-                            Intent intent1 = new Intent(signupCreateUsernameActivity.this, whatsYourEmailActivity.class);
+                            Intent intent3 = new Intent(signupCreateUsernameActivity.this, whatsYourEmailActivity.class);
                             //now make it happen
-                            startActivity(intent1);
+                            intent3.putExtra("user", user);
+                            startActivity(intent3);
                         }
 
                     }
@@ -242,33 +233,7 @@ public class signupCreateUsernameActivity extends Activity{
             }
         });
 
-
-
-
-
-
-        //CODE BELOW IS TO SEND DATA TO FIREBASE ABOUT USER //MAYBE NEEDED ELSEWHERE
-        //Text field was filled, so we allow user to continue to next activity
-        //place logic here to do login action
-        //Toast.makeText(getApplicationContext(), "activityC signup button clicked", Toast.LENGTH_SHORT).show();
-
-        //this is where you want to send first name, last name, and unique user name to firebase database
-
-        //passing the userName is not neccessary here, as we have it for further use here as a class variable
-
-        //Call method to write to database
-        //             registerUserToDatabase(personsFirstLastUserName);
-        //    String key = mDatabase.push().child(signupActivity.firstName).child(signupActivity.lastName).child(userName).setValue();
-        //   Toast.makeText(getApplicationContext(), "Your UID is: " + key, Toast.LENGTH_SHORT).show();
-        //declare where you intend to go
-        //Intent intent4 = new Intent(signupCreateUsernameActivity.this, signupCreateUsernameActivity.class);
-        //now make it happen
-        //startActivity(intent4);
-        //    registerUserToDatabase();
-
-
-
-
+        //Back arrow button listener
         button2.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -290,11 +255,6 @@ public class signupCreateUsernameActivity extends Activity{
         textView.setText(toThis);
     }
 
-//    private void registerUserToDatabase() {
-//        User user = new User(signupActivity.firstName,signupActivity.lastName, userName);
-
-//        mDatabase.push().setValue(user);
-//    }
 
     /**
      * areBothFieldsSet
@@ -310,6 +270,7 @@ public class signupCreateUsernameActivity extends Activity{
         }
     }
 
+
     /**
      * startRotatingImage
      * @param view
@@ -320,4 +281,5 @@ public class signupCreateUsernameActivity extends Activity{
         Animation startRotateAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.android_rotate_animation);
         mySpinner.startAnimation(startRotateAnimation);
     }
+
 }
