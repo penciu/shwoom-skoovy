@@ -265,9 +265,12 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //place logic here to do back button action
-                Intent intent5 = new Intent(whatsYourMobileNumber.this, signupCreateUsernameActivity.class);
+                //place logic here to do button action
+                Intent intent4 = getIntent();
+                User user = (User)intent4.getSerializableExtra("user");
+                Intent intent5 = new Intent(whatsYourMobileNumber.this, whatsYourEmailActivity.class);
                 //now make it happen
+                intent5.putExtra("user", user);
                 startActivity(intent5);
             }
         });

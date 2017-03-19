@@ -21,12 +21,17 @@ public class resetPasswordActivity extends Activity {
         setContentView(R.layout.activity_reset_password);
 
 
+        //Create GUI references for this activity
+        button1 = (ImageButton)findViewById(R.id.resetPasswordViaEmail);
+        button2 = (ImageButton)findViewById(R.id.resetPasswordViaMobile);
+        button3 = (Button) findViewById(R.id.cancelBackToLogIn);
+
         addListenerOnButton();
     }
 
     public void addListenerOnButton()
     {
-        button1 = (ImageButton)findViewById(R.id.resetPasswordViaEmail);
+        //button1 is the email reset method button
         button1.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View view)
@@ -38,7 +43,7 @@ public class resetPasswordActivity extends Activity {
             }
         });
 
-        button2 = (ImageButton)findViewById(R.id.resetPasswordViaMobile);
+        //button2 is the mobile reset method button
         button2.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View view)
@@ -50,7 +55,7 @@ public class resetPasswordActivity extends Activity {
             }
         });
 
-        button3 = (Button) findViewById(R.id.cancelBackToLogIn);
+        //button3 is the cancel button
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

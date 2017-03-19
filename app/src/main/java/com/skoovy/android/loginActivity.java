@@ -139,6 +139,9 @@ public class loginActivity extends Activity {
             {
                 email = mEmailView.getText().toString().trim();
 
+                if(TextUtils.isEmpty(password)) {
+                    return;
+                }
                 if (email.length() > 0) {
                     //there is text in the email text field
                     //so we trip the empty flag, DISPLAY the undo button,
@@ -271,7 +274,11 @@ public class loginActivity extends Activity {
 
             return true;
         } else {
-            if (password.length() < 8) {
+            if(TextUtils.isEmpty(password)) {
+                button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);  //fields ARE empty
+
+            }
+            else if (password.length() < 8) {
                 button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);  //fields ARE empty
             }
             return false;
