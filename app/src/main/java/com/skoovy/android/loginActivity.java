@@ -248,7 +248,7 @@ public class loginActivity extends Activity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    // When 'done' button on softkeyboar is pressed, remove undo button on password input field
+                    // When 'done' button on softkeyboard is pressed, remove undo button on password input field
                     undoButton2.setVisibility(View.INVISIBLE);
                     mPasswordView.clearFocus();
 
@@ -283,30 +283,6 @@ public class loginActivity extends Activity {
             }
             return false;
         }
-    }
-
-    /**
-     * attemptLogin
-     *
-     */
-    private void attemptLogin()
-    {
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        if (!task.isSuccessful())
-                        {
-                            Log.w("ContentValues", "signInWithEmail", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-                    }
-                });
     }
 
     /**
@@ -386,7 +362,7 @@ public class loginActivity extends Activity {
         });
     }
 
-    private void attemptLogin2(String emailString,String passwordString) {
+    private void attemptLogin2(String emailString, String passwordString) {
         //CHECK DATABASE IF REQUESTED USERNAME IS TAKEN
         // Get an instance to our database
         FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
@@ -396,9 +372,6 @@ public class loginActivity extends Activity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        Toast.makeText(loginActivity.this, "login successful",
-                                Toast.LENGTH_SHORT).show();
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
                         // signed in user can be handled in the listener.
@@ -406,9 +379,14 @@ public class loginActivity extends Activity {
                             //Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(loginActivity.this, "login failed",
                                     Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(loginActivity.this, "login successful",
+                                    Toast.LENGTH_SHORT).show();
+                            //declare where you intend to go
+                            Intent intent = new Intent(loginActivity.this, MapsActivity.class);
+                            //now make it happen
+                            startActivity(intent);
                         }
-
-                        // ...
                     }
                 });
     }
