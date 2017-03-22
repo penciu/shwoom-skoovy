@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -32,8 +31,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -50,6 +52,7 @@ public class loginActivity extends Activity {
 
     public static String email;
     public static String password;
+
 
     Button button1;
     ImageButton button2;
@@ -70,11 +73,13 @@ public class loginActivity extends Activity {
         //get font asset
         Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
 
-        //find all buttons in this activity
+        //Create GUI references for this activity
         button1 = (Button)findViewById(R.id.loginButton);
         passwordreset = ((Button)findViewById(R.id.passwordHelp));
         undoButton1 = ((ImageButton)findViewById(R.id.undoButton1));
         undoButton2 = ((ImageButton)findViewById(R.id.undoButton2));
+        mEmailView = ((EditText)findViewById(R.id.emailTextField));
+        mPasswordView = ((EditText)findViewById(R.id.passwordTextField));
 
         //set font on button and initial background
         button1.setTypeface(centuryGothic);
@@ -82,11 +87,6 @@ public class loginActivity extends Activity {
         //initialize undo text buttons to INVISIBLE
         undoButton1.setVisibility(View.INVISIBLE);
         undoButton2.setVisibility(View.INVISIBLE);
-
-        //find all EditTexts in this activity
-        mEmailView = ((EditText)findViewById(R.id.emailTextField));
-        mPasswordView = ((EditText)findViewById(R.id.passwordTextField));
-
 
         //listen for changes on the email text field
         //HIDE undo text button when no field has no text
@@ -222,7 +222,7 @@ public class loginActivity extends Activity {
                     undoButton1.setVisibility(View.INVISIBLE);
                 }
                 if (hasFocus && (mEmailView.length() > 0 )) {
-                    // code to execute when EditText loses focus
+                    // code to execute when EditText has focus
                     undoButton1.setVisibility(View.VISIBLE);
                 }
             }
@@ -262,52 +262,8 @@ public class loginActivity extends Activity {
 
         //Tell my buttons to listen up!
         addListenerOnButton();
-    }
+    } // END OF ONCREATE FOR LOGIN ACTIVITY
 
-    /**
-     * areBothFieldsSet
-     * Switches LOGIN button image if both fields are set
-     */
-    public boolean areBothFieldsSet()
-    {
-        if ((!(isEditText1Empty)) && (!(isEditText2Empty))) {
-
-            return true;
-        } else {
-            if(TextUtils.isEmpty(password)) {
-                button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);  //fields ARE empty
-
-            }
-            else if (password.length() < 8) {
-                button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);  //fields ARE empty
-            }
-            return false;
-        }
-    }
-
-    /**
-     * attemptLogin
-     *
-     */
-    private void attemptLogin()
-    {
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        if (!task.isSuccessful())
-                        {
-                            Log.w("ContentValues", "signInWithEmail", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-                    }
-                });
-    }
 
     /**
      * addListenerOnButton
@@ -386,12 +342,102 @@ public class loginActivity extends Activity {
         });
     }
 
-    private void attemptLogin2(String emailString,String passwordString) {
+
+    /**
+     * areBothFieldsSet
+     * Switches LOGIN button image if both fields are set
+     */
+    public boolean areBothFieldsSet()
+    {
+        if ((!(isEditText1Empty)) && (!(isEditText2Empty))) {
+
+            return true;
+        } else {
+            if(TextUtils.isEmpty(password)) {
+                button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);  //fields ARE empty
+
+            }
+            else if (password.length() < 8) {
+                button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);  //fields ARE empty
+            }
+            return false;
+        }
+    }
+
+    /**
+     * attemptLogin
+     *
+     */
+    private void attemptLogin()
+    {
+        String email = mEmailView.getText().toString();
+        String password = mPasswordView.getText().toString();
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                        if (!task.isSuccessful())
+                        {
+                            Log.w("ContentValues", "signInWithEmail", task.getException());
+                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
+                                    .show();
+                        }
+                    }
+                });
+    }
+
+
+
+    private void attemptLogin2(String emailString, final String passwordString) {
         //CHECK DATABASE IF REQUESTED USERNAME IS TAKEN
         // Get an instance to our database
         FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
-        // Get a  reference to our userInfo node
-        DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
+        // Get a reference to our userInfo node
+        final DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
+
+        currentSkoovyUsers.orderByChild("email").equalTo(emailString).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // do some stuff once
+                //database has returned dataSnapshot, so we can
+
+                if(dataSnapshot.exists()){
+                    Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email  in Firebase DB", Toast.LENGTH_SHORT).show();
+                    //NOW WE NEED TO CHECK THAT THE SUPPLIED PASSWORD MATCHES THIS EMAIL
+                    String key = dataSnapshot.getKey();
+                    String value = dataSnapshot.getValue().toString();
+                    Log.d("User", "skoovyUser key: "+key.toString());
+                    Log.d("User", "skoovyUser value: "+value);
+                    SkoovyUser skoovyUser = dataSnapshot.getValue(SkoovyUser.class);
+                    //String dbPassword = skoovyUser.getSkoovyUserPassword();
+                    Log.d("User", "skoovyUser objectpassword: "+skoovyUser.getSkoovyUserPassword());
+
+                    Toast.makeText(getApplicationContext(), dataSnapshot.getValue(SkoovyUser.class).toString(), Toast.LENGTH_SHORT).show();
+                    //if (dbPassword == passwordString){
+                   //     Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email and Password match", Toast.LENGTH_LONG).show();
+                   // }
+                    //IF PASSWORD IS OKAY THEN DO SOMETHING HERE
+                    //...
+
+                    //IF PASSWORD IS NOT OKAY THEN DO SOMETHING ELSE HERE
+                    //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email supplied matches an email in Firebase DB, HOWEVER PASSWORD DOESN'T MATCH FOR THIS USER", Toast.LENGTH_LONG).show();
+                }
+                else{
+                    //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: USER DOES NOT EXIST", Toast.LENGTH_SHORT).show();
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override

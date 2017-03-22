@@ -70,6 +70,20 @@
             android:layout_marginTop="56dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp" />
+
+        <Button
+            android:text="Launch Camera"
+            android:layout_width="190dp"
+            android:layout_height="42dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/roundedwhitebuttonblackborder"
+            android:textColor="#000000"
+            android:textAllCaps="false"
+            android:textSize="25sp"
+            android:layout_below="@+id/button1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="21dp"
+            android:id="@+id/button2" />
     </RelativeLayout>
 
 </LinearLayout>

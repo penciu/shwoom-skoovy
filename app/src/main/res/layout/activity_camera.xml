@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_camera"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.skoovy.android.CameraActivity">
+
+    <TextureView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textureView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="28dp"
+        android:layout_height="30dp"
+        android:src="@drawable/flash"
+        android:id="@+id/imageButtonFlash"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginLeft="10dp"
+        android:baselineAlignBottom="false"
+        android:layout_alignBottom="@+id/imageViewSkoovyLogo"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="6dp" />
+
+    <ImageButton
+        android:layout_width="36dp"
+        android:layout_height="30dp"
+        android:src="@drawable/library"
+        android:id="@+id/imageButtonLibrary"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginStart="21dp"
+        android:layout_alignTop="@+id/imageButtonFlash"
+        android:layout_toEndOf="@+id/imageButtonFlash" />
+
+    <ImageView
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:src="@drawable/skoovylogo"
+        android:id="@+id/imageViewSkoovyLogo"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/switch_camera"
+        android:id="@+id/imageButtonSwitchCamera"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_alignTop="@+id/imageButtonLibrary"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="10dp" />
+
+
+    <ImageButton
+        android:layout_width="85dp"
+        android:layout_height="85dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/add_content"
+        android:id="@+id/imageButtonUseCamera"
+        android:backgroundTint="@android:color/transparent"
+        android:foregroundGravity="fill_vertical|fill_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/color_filters"
+        android:id="@+id/imageButtonFilters"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_above="@+id/imageButtonUseCamera"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/timerValue"
+        android:textColor="#ff0000"
+        android:layout_below="@+id/imageViewSkoovyLogo"
+        android:layout_centerHorizontal="true"
+        android:textSize="16sp"
+        android:layout_centerInParent="true" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/galleryImageView"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+
+    <ImageButton
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/share"
+        android:id="@+id/imageButtonShare"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginLeft="25dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignEnd="@+id/imageButtonLibrary"
+        android:layout_marginBottom="22dp" />
+
+    <ImageButton
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/chat"
+        android:id="@+id/imageButtonChat"
+        android:backgroundTint="@android:color/transparent"
+        android:layout_marginRight="25dp"
+        android:layout_marginEnd="15dp"
+        android:layout_alignTop="@+id/imageButtonShare"
+        android:layout_alignEnd="@+id/imageButtonSwitchCamera" />
+
+</RelativeLayout>
