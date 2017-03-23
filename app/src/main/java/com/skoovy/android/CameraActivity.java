@@ -68,7 +68,7 @@ public class CameraActivity extends AppCompatActivity {
     private ImageButton flashButton;
 
     private static enum FlashState{
-        FLASHAUTOMATIC, FLASHON, FLASHOFF;
+        FLASHAUTOMATIC, FLASHON, TORCH, FLASHOFF;
         public FlashState getNext() {
             return values()[(ordinal()+1)%values().length];
         }
@@ -328,6 +328,12 @@ public class CameraActivity extends AppCompatActivity {
                         // INSERT FLASH ON FUNCTIONALITY HERE
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_ALWAYS_FLASH);
                         break;
+                    //case TORCH:
+                     //   flashButton.setImageResource(R.drawable.flash_on);
+                        // INSERT FLASH ON FUNCTIONALITY HERE
+                        //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
+                     //   mCaptureRequestBuilder.setTag(C);
+                     //   break;
                     case FLASHOFF:
                         flashButton.setImageResource(R.drawable.flash_off);
                         // IINSERT FLASH OFF FUNCTIONALITY HERE
