@@ -307,6 +307,7 @@ public class loginActivity extends Activity {
                     return;
                 }
 
+                /* WE'RE JUST GONNA IGNORE THIS FOR A BIT -Tyler
                 //User entered an text, but we need to check if text is valid email pattern
                 wasEmailValid = isValidEmail(email);
                 if (!(wasEmailValid)){
@@ -317,7 +318,7 @@ public class loginActivity extends Activity {
                 }
                 //email text was valid email pattern
                 //Both text fields were filled, so we allow user to continue
-                //place logic here to do login action
+                //place logic here to do login action */
                 attemptLogin2(email,password);
             }
         });
@@ -364,99 +365,72 @@ public class loginActivity extends Activity {
         }
     }
 
-    /**
-     * attemptLogin
-     *
-     */
-    private void attemptLogin()
-    {
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        if (!task.isSuccessful())
-                        {
-                            Log.w("ContentValues", "signInWithEmail", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
-                                    .show();
-                        }
+    //This will work with usernames so long as they exist in the "usernames" table
+    private void attemptLogin2(final String emailString, final String passwordString) {
+        if (!emailString.contains("@")) {
+            // Get an instance to our database
+            final FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
+            //Get the "usernames" table
+            skoovyDatabase.getReference("usernames").child(emailString).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()) {
+                        //Get the userID associated with the
+                        String userID = (String) dataSnapshot.getValue();
+                        //Open the database again and get a refrence to that specific user
+                        skoovyDatabase.getReference("userInfo").child(userID).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                //User has an email! sign them in!
+                                if (dataSnapshot.child("email").getValue() != null)
+                                    signIn(dataSnapshot.child("email").getValue().toString(), passwordString);
+                                //User doesn't have an email! Use the fake one!
+                                else
+                                    signIn(emailString + "@skoovy.com", passwordString);
+                            }
+                            //Don't know, Don't Care
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                                Log.println(Log.DEBUG, "TYLER", "NOPE ALPHA");
+                            }
+                        });
                     }
-                });
+                }
+                //Don't Know, Don't Care
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Log.println(Log.DEBUG, "TYLER", "NOPE BETA");
+                }
+            });
+        } else {
+            if(isValidEmail(emailString))
+                signIn(emailString,passwordString);
+            else
+                Toast.makeText(getApplicationContext(), "Please enter a VALID email", Toast.LENGTH_SHORT).show();
+        }
     }
 
-
-
-    private void attemptLogin2(String emailString, final String passwordString) {
-        //CHECK DATABASE IF REQUESTED USERNAME IS TAKEN
-        // Get an instance to our database
-        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
-        // Get a reference to our userInfo node
-        final DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
-
-        currentSkoovyUsers.orderByChild("email").equalTo(emailString).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // do some stuff once
-                //database has returned dataSnapshot, so we can
-
-                if(dataSnapshot.exists()){
-                    Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email  in Firebase DB", Toast.LENGTH_SHORT).show();
-                    //NOW WE NEED TO CHECK THAT THE SUPPLIED PASSWORD MATCHES THIS EMAIL
-                    String key = dataSnapshot.getKey();
-                    String value = dataSnapshot.getValue().toString();
-                    Log.d("User", "skoovyUser key: "+key.toString());
-                    Log.d("User", "skoovyUser value: "+value);
-                    SkoovyUser skoovyUser = dataSnapshot.getValue(SkoovyUser.class);
-                    //String dbPassword = skoovyUser.getSkoovyUserPassword();
-                    Log.d("User", "skoovyUser objectpassword: "+skoovyUser.getSkoovyUserPassword());
-
-                    Toast.makeText(getApplicationContext(), dataSnapshot.getValue(SkoovyUser.class).toString(), Toast.LENGTH_SHORT).show();
-                    //if (dbPassword == passwordString){
-                   //     Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email and Password match", Toast.LENGTH_LONG).show();
-                   // }
-                    //IF PASSWORD IS OKAY THEN DO SOMETHING HERE
-                    //...
-
-                    //IF PASSWORD IS NOT OKAY THEN DO SOMETHING ELSE HERE
-                    //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email supplied matches an email in Firebase DB, HOWEVER PASSWORD DOESN'T MATCH FOR THIS USER", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: USER DOES NOT EXIST", Toast.LENGTH_SHORT).show();
-
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+    private void signIn(String emStr, String psStr) {
+        mAuth.signInWithEmailAndPassword(emStr, psStr)
+            .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    // If sign in fails, display a message to the user. If sign in succeeds
+                    // the auth state listener will be notified and logic to handle the
+                    // signed in user can be handled in the listener.
+                    if (!task.isSuccessful()) {
+                        Toast.makeText(loginActivity.this, "login failed",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
                         Toast.makeText(loginActivity.this, "login successful",
                                 Toast.LENGTH_SHORT).show();
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            //Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(loginActivity.this, "login failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
+                        //declare where you intend to go
+                        Intent intent = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+                        //now make it happen
+                        startActivity(intent);
                     }
-                });
+                }
+        });
     }
 
     /**
