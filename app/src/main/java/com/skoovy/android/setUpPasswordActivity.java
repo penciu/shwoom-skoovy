@@ -214,8 +214,11 @@ public class setUpPasswordActivity extends AppCompatActivity {
                 Intent intent5 = getIntent();
                 User user = (User)intent5.getSerializableExtra("user");
                 user.setPassword(password);
+                if(user.getEmail()==null){
+                    user.setEmail(user.getUsername()+"@skoovy.com");
+                }
                 Log.d("User", user.toString());
- //               registerUserToDatabase();
+
                 mDatabase.push().setValue(user);  //User registration data is now pushed to Firebase DB in node 'userInfo'
                 isUserRegistered();
 
@@ -244,19 +247,13 @@ public class setUpPasswordActivity extends AppCompatActivity {
 
     }
 
-    /**
-     * isFieldsSet
-     * Switches signup button image if field are set
-     */
-//    public void isFieldsSet() {
-//        if (!(isEditText1Empty)) {
-//            //switch image on signup button
-//            button1.setImageResource(R.drawable.next);
-//        } else {
-//            button1.setImageResource(R.drawable.signupgrey);
-//        }
-//    }
 
+    /**
+     * createAccount
+     * Creates email/password account for FIREBASE AUTH
+     * @param email
+     * @param password
+     */
     private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

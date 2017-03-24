@@ -92,7 +92,7 @@ public class User implements Serializable {
 
     public void setPhoneNumber(String userPhoneNumber) {
         this.phoneNumber = userPhoneNumber;
-        setNexmoPhoneNumber();
+      //  setNexmoPhoneNumber();
         Log.d("User", "PHONE NUMBER WAS SET");
         setNexmoPhoneNumber();
     }

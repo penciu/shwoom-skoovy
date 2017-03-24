@@ -438,7 +438,12 @@ public class loginActivity extends Activity {
                         user.setLastname(lastnameAtGivenUser);
                         user.setBirthday(birthdayAtGivenUser);
                         user.setUsername(email);
-                        user.setEmail(emailAtGivenUser);
+                        if (emailAtGivenUser.contains("@skoovy.com")){ //user registered via mobile number instead of via email
+                            //user has not updated email in their Skoovy profile, so we continue to set their email to null.
+                            user.setEmail(null);
+                        } else {
+                            user.setEmail(emailAtGivenUser);
+                        }
                         user.setPassword(password);
                         Log.d("User", "Current Skoovy " + user.toString());
                         //WELCOME TO SKOOVY

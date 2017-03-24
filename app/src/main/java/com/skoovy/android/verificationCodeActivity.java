@@ -112,10 +112,13 @@ public class verificationCodeActivity extends AppCompatActivity {
                     Toast.makeText(verificationCodeActivity.this, "I'm afraid that's not a valid pin number", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                Intent intent6 = getIntent();
+                User user = (User)intent6.getSerializableExtra("user");
                 //declare where you intend to go
-                Intent intent1 = new Intent(verificationCodeActivity.this, userIsRegisteredActivity.class);
+                Intent intent5 = new Intent(verificationCodeActivity.this, setUpPasswordActivity.class);
                 //now make it happen
-                startActivity(intent1);
+                intent5.putExtra("user", user);
+                startActivity(intent5);
             }
         });
 
