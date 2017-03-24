@@ -113,4 +113,29 @@
         android:layout_alignTop="@+id/imageButtonShare"
         android:layout_alignEnd="@+id/imageButtonSwitchCamera" />
 
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageButtonFilters"
+        android:layout_alignEnd="@+id/imageButtonSwitchCamera"
+        android:text="Negative" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sepia"
+        android:layout_above="@+id/imageButtonFilters"
+        android:layout_alignStart="@+id/imageButtonUseCamera" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grayscale"
+        android:layout_alignBaseline="@+id/button5"
+        android:layout_alignBottom="@+id/button5"
+        android:layout_alignStart="@+id/imageButtonFlash" />
+
 </RelativeLayout>

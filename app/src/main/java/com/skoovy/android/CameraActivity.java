@@ -15,6 +15,7 @@ import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
+import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
@@ -68,7 +69,7 @@ public class CameraActivity extends AppCompatActivity {
     private ImageButton flashButton;
 
     private static enum FlashState{
-        FLASHAUTOMATIC, FLASHON, FLASHOFF;
+        FLASHAUTOMATIC, FLASHON, TORCH, FLASHOFF;
         public FlashState getNext() {
             return values()[(ordinal()+1)%values().length];
         }
@@ -328,6 +329,12 @@ public class CameraActivity extends AppCompatActivity {
                         // INSERT FLASH ON FUNCTIONALITY HERE
                         mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON_ALWAYS_FLASH);
                         break;
+                    //case TORCH:
+                     //   flashButton.setImageResource(R.drawable.flash_on);
+                        // INSERT FLASH ON FUNCTIONALITY HERE
+                        //mCaptureRequestBuilder.set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON);
+                     //   mCaptureRequestBuilder.setTag(C);
+                     //   break;
                     case FLASHOFF:
                         flashButton.setImageResource(R.drawable.flash_off);
                         // IINSERT FLASH OFF FUNCTIONALITY HERE
@@ -573,7 +580,123 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
 
+/*
+    private String convertColorEffect(int value2) {
+        String value;
+        switch( value2 ) {
+            case CameraMetadata.CONTROL_EFFECT_MODE_AQUA:
+                value = "aqua";
+                break;
+            case CameraMetadata.CONTROL_EFFECT_MODE_BLACKBOARD:
+                value = "blackboard";
+                break;
+            case CameraMetadata.CONTROL_EFFECT_MODE_MONO:
+                value = "mono";
+                break;
+            case CameraMetadata.CONTROL_EFFECT_MODE_NEGATIVE:
+                value = "negative";
+                break;
+            case CameraMetadata.CONTROL_EFFECT_MODE_OFF:
+                value = "none";
+                break;
+            case CameraMetadata.CONTROL_EFFECT_MODE_POSTERIZE:
+                value = "posterize";
+                break;
+            case CameraMetadata.CONTROL_EFFECT_MODE_SEPIA:
+                value = "sepia";
+                break;
+            case CameraMetadata.CONTROL_EFFECT_MODE_SOLARIZE:
+                value = "solarize";
+                break;
+            case CameraMetadata.CONTROL_EFFECT_MODE_WHITEBOARD:
+                value = "whiteboard";
+                break;
+            default:
+                if( MyDebug.LOG )
+                    Log.d(TAG, "unknown effect mode: " + value2);
+                value = null;
+                break;
+        }
+        return value;
+    }
 
+    @Override
+    public SupportedValues setColorEffect(String value) {
+        if( MyDebug.LOG )
+            Log.d(TAG, "setColorEffect: " + value);
+        // we convert to/from strings to be compatible with original Android Camera API
+        String default_value = getDefaultColorEffect();
+        int [] values2 = characteristics.get(CameraCharacteristics.CONTROL_AVAILABLE_EFFECTS);
+        List<String> values = new ArrayList<>();
+        for(int value2 : values2) {
+            String this_value = convertColorEffect(value2);
+            if( this_value != null ) {
+                values.add(this_value);
+            }
+        }
+        SupportedValues supported_values = checkModeIsSupported(values, value, default_value);
+        if( supported_values != null ) {
+            int selected_value2 = CameraMetadata.CONTROL_EFFECT_MODE_OFF;
+            switch(supported_values.selected_value) {
+                case "aqua":
+                    selected_value2 = CameraMetadata.CONTROL_EFFECT_MODE_AQUA;
+                    break;
+                case "blackboard":
+                    selected_value2 = CameraMetadata.CONTROL_EFFECT_MODE_BLACKBOARD;
+                    break;
+                case "mono":
+                    selected_value2 = CameraMetadata.CONTROL_EFFECT_MODE_MONO;
+                    break;
+                case "negative":
+                    selected_value2 = CameraMetadata.CONTROL_EFFECT_MODE_NEGATIVE;
+                    break;
+                case "none":
+                    selected_value2 = CameraMetadata.CONTROL_EFFECT_MODE_OFF;
+                    break;
+                case "posterize":
+                    selected_value2 = CameraMetadata.CONTROL_EFFECT_MODE_POSTERIZE;
+                    break;
+                case "sepia":
+                    selected_value2 = CameraMetadata.CONTROL_EFFECT_MODE_SEPIA;
+                    break;
+                case "solarize":
+                    selected_value2 = CameraMetadata.CONTROL_EFFECT_MODE_SOLARIZE;
+                    break;
+                case "whiteboard":
+                    selected_value2 = CameraMetadata.CONTROL_EFFECT_MODE_WHITEBOARD;
+                    break;
+                default:
+                    if (MyDebug.LOG)
+                        Log.d(TAG, "unknown selected_value: " + supported_values.selected_value);
+                    break;
+            }
+
+            camera_settings.color_effect = selected_value2;
+            if( camera_settings.setColorEffect(previewBuilder) ) {
+                try {
+                    setRepeatingRequest();
+                }
+                catch(CameraAccessException e) {
+                    if( MyDebug.LOG ) {
+                        Log.e(TAG, "failed to set color effect");
+                        Log.e(TAG, "reason: " + e.getReason());
+                        Log.e(TAG, "message: " + e.getMessage());
+                    }
+                    e.printStackTrace();
+                }
+            }
+        }
+        return supported_values;
+    }
+
+    @Override
+    public String getColorEffect() {
+        if( previewBuilder.get(CaptureRequest.CONTROL_EFFECT_MODE) == null )
+            return null;
+        int value2 = previewBuilder.get(CaptureRequest.CONTROL_EFFECT_MODE);
+        return convertColorEffect(value2);
+    }
+*/
     @Override
     protected void onResume() {
         super.onResume();
