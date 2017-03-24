@@ -6,8 +6,7 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
+import android.support.annotation.NonNull; //import is used
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -15,8 +14,6 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -29,7 +26,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -52,13 +48,17 @@ public class loginActivity extends Activity {
 
     public static String email;
     public static String password;
+    private String firstnameAtGivenUser;
+    private String lastnameAtGivenUser;
+    private String birthdayAtGivenUser;
+    private String emailAtGivenUser;
 
 
     Button button1;
     ImageButton button2;
     ImageButton undoButton1;
     ImageButton undoButton2;
-    Button passwordreset;
+    Button passwordReset;
 
     boolean isEditText1Empty = true;
     boolean isEditText2Empty = true;
@@ -75,7 +75,7 @@ public class loginActivity extends Activity {
 
         //Create GUI references for this activity
         button1 = (Button)findViewById(R.id.loginButton);
-        passwordreset = ((Button)findViewById(R.id.passwordHelp));
+        passwordReset = ((Button)findViewById(R.id.passwordHelp));
         undoButton1 = ((ImageButton)findViewById(R.id.undoButton1));
         undoButton2 = ((ImageButton)findViewById(R.id.undoButton2));
         mEmailView = ((EditText)findViewById(R.id.emailTextField));
@@ -307,18 +307,8 @@ public class loginActivity extends Activity {
                     return;
                 }
 
-                //User entered an text, but we need to check if text is valid email pattern
-                wasEmailValid = isValidEmail(email);
-                if (!(wasEmailValid)){
-                    //email text is INVALID email pattern
-                    Toast.makeText(getApplicationContext(), "Please enter a valid EMAIL", Toast.LENGTH_SHORT).show();
-                    //stopping the function from executing further
-                    return;
-                }
-                //email text was valid email pattern
-                //Both text fields were filled, so we allow user to continue
-                //place logic here to do login action
-                attemptLogin2(email,password);
+                //Both text fields were filled, so we allow attempt to login user
+                attemptLogin();
             }
         });
 
@@ -331,8 +321,8 @@ public class loginActivity extends Activity {
         });
 
         //passwordreset is the text 'Password help?'
-        passwordreset = ((Button)findViewById(R.id.passwordHelp));
-        passwordreset.setOnClickListener(new View.OnClickListener() {
+        passwordReset = ((Button)findViewById(R.id.passwordHelp));
+        passwordReset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //declare where you intend to go
                 Intent intent = new Intent(loginActivity.this, resetPasswordActivity.class);
@@ -366,20 +356,103 @@ public class loginActivity extends Activity {
 
     /**
      * attemptLogin
-     *
+     * Fetches strings from input fields and checks if email string was a username (instead of having email-syntax)
+     * and aquires corresponding email from user's profile in DB if username exists.
+     * Else the email string is validated for proper email-syntax.
+     * Once proper email is aquired for this user (either from DB-fetching or from validated direct input), the string
+     * is used for userLogin method call to authenticate this user.
      */
     private void attemptLogin()
     {
         String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+        final String password = mPasswordView.getText().toString();
 
-        mAuth.signInWithEmailAndPassword(email, password)
+        Boolean wasInputEmail = email.contains("@");
+        if (!wasInputEmail){
+            //CHECK DATABASE TO GET EMAIL VALUE FOR THIS USERNAME
+            // Get an instance to our database
+            FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
+            // Get a reference to our userInfo node
+            final DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
+
+            currentSkoovyUsers.orderByChild("username").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    // do some stuff once
+                    //database has returned dataSnapshot, so we can
+
+                    if(dataSnapshot.exists()){
+                        //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email  in Firebase DB", Toast.LENGTH_SHORT).show();
+                        //HERE WE GET THE EMAIL FROM THE USER'S PROFILE FOR PURPOSE OF AUTH
+
+                        for (DataSnapshot snap : dataSnapshot.getChildren()) {
+                            emailAtGivenUser = (String) snap.child("email").getValue();
+                            firstnameAtGivenUser = (String) snap.child("firstname").getValue();
+                            lastnameAtGivenUser = (String) snap.child("lastname").getValue();
+                            birthdayAtGivenUser = (String) snap.child("birthday").getValue();
+                            Log.d("User", " emailAtGivenUser= "+  emailAtGivenUser);
+                        }
+
+                        //SEND THE AQUIRED EMAIL (FROM USER'S PROFILE) FOR AUTHENICATION
+                        userLogin(emailAtGivenUser,password);
+                    }
+                    else{
+                        Log.d("User", "USER DOES NOT EXIST" );
+                        Toast.makeText(getApplicationContext(), "User not found.  PLEASE SIGN-UP.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                }
+            });
+        }
+        else {
+            wasEmailValid = isValidEmail(email);
+            if (wasEmailValid) {
+                userLogin(email,password);
+            }
+            else {
+                Toast.makeText(getApplicationContext(), "PLEASE ENTER A VALID USERNAME OR EMAIL", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+    }
+
+    /**
+     * userLogin
+     * Method checks email and password for authentication
+     * @param loginString
+     * @param password
+     */
+    private void userLogin(String loginString, final String password) {
+        mAuth.signInWithEmailAndPassword(loginString, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
+                        Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
+                        //USER IS NOW AUTHENTICATED!!!
+                        //Create User instance for this user
+                        User user = new User();
+                        user.setFirstname(firstnameAtGivenUser);
+                        user.setLastname(lastnameAtGivenUser);
+                        user.setBirthday(birthdayAtGivenUser);
+                        user.setUsername(email);
+                        user.setEmail(emailAtGivenUser);
+                        user.setPassword(password);
+                        Log.d("User", "Current Skoovy " + user.toString());
+                        //WELCOME TO SKOOVY
+                        //declare where you intend to go
+                        Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+                        //now make it happen
+// *******************************************************************************
+//                PROBABLY WANT TO PASS THE USER OBJECT TO THE NEXT INTENT HERE
+// *******************************************************************************
+                        startActivity(intent6);
+
                         if (!task.isSuccessful())
                         {
+                            Log.d("User", "signInWithEmail:onComplete: USER NOT AUTHENTICATED" );
                             Log.w("ContentValues", "signInWithEmail", task.getException());
                             Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
                                     .show();
@@ -388,76 +461,6 @@ public class loginActivity extends Activity {
                 });
     }
 
-
-
-    private void attemptLogin2(String emailString, final String passwordString) {
-        //CHECK DATABASE IF REQUESTED USERNAME IS TAKEN
-        // Get an instance to our database
-        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
-        // Get a reference to our userInfo node
-        final DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
-
-        currentSkoovyUsers.orderByChild("email").equalTo(emailString).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // do some stuff once
-                //database has returned dataSnapshot, so we can
-
-                if(dataSnapshot.exists()){
-                    Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email  in Firebase DB", Toast.LENGTH_SHORT).show();
-                    //NOW WE NEED TO CHECK THAT THE SUPPLIED PASSWORD MATCHES THIS EMAIL
-                    String key = dataSnapshot.getKey();
-                    String value = dataSnapshot.getValue().toString();
-                    Log.d("User", "skoovyUser key: "+key.toString());
-                    Log.d("User", "skoovyUser value: "+value);
-                    SkoovyUser skoovyUser = dataSnapshot.getValue(SkoovyUser.class);
-                    //String dbPassword = skoovyUser.getSkoovyUserPassword();
-                    Log.d("User", "skoovyUser objectpassword: "+skoovyUser.getSkoovyUserPassword());
-
-                    Toast.makeText(getApplicationContext(), dataSnapshot.getValue(SkoovyUser.class).toString(), Toast.LENGTH_SHORT).show();
-                    //if (dbPassword == passwordString){
-                   //     Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email and Password match", Toast.LENGTH_LONG).show();
-                   // }
-                    //IF PASSWORD IS OKAY THEN DO SOMETHING HERE
-                    //...
-
-                    //IF PASSWORD IS NOT OKAY THEN DO SOMETHING ELSE HERE
-                    //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email supplied matches an email in Firebase DB, HOWEVER PASSWORD DOESN'T MATCH FOR THIS USER", Toast.LENGTH_LONG).show();
-                }
-                else{
-                    //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: USER DOES NOT EXIST", Toast.LENGTH_SHORT).show();
-
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
-                        Toast.makeText(loginActivity.this, "login successful",
-                                Toast.LENGTH_SHORT).show();
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            //Log.w(TAG, "signInWithEmail:failed", task.getException());
-                            Toast.makeText(loginActivity.this, "login failed",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                        // ...
-                    }
-                });
-    }
 
     /**
      * isValidEmail

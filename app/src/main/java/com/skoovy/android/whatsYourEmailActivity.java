@@ -10,16 +10,28 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.skoovy.android.R.id.spinnerView;
 
 
 public class whatsYourEmailActivity extends AppCompatActivity {
@@ -31,6 +43,11 @@ public class whatsYourEmailActivity extends AppCompatActivity {
     ImageButton button2;
     Button button3;
     ImageButton undobutton1;
+
+    TextView userTaken;
+
+    FrameLayout animationContainer;
+    ImageView mySpinner;
 
     Boolean isEditText1Empty = true;
     Boolean wasEmailValid = false;
@@ -50,12 +67,17 @@ public class whatsYourEmailActivity extends AppCompatActivity {
         button3 = (Button) findViewById(R.id.signUpWithMobile);
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
         editTextEmail =  (EditText) findViewById(R.id.registerYourEmail);
+        mySpinner = (ImageView) findViewById(R.id.rotate_image);
+        userTaken = (TextView) findViewById(R.id.userTaken);
 
         //set font on button
         button1.setTypeface(centuryGothic);
 
         //hide undo buttons at activty startup
         undobutton1.setVisibility(View.INVISIBLE);
+
+        //hide spinner at activity startup
+        mySpinner.setVisibility(View.INVISIBLE);
 
         //Listen for text on editTextFirstName input field
         editTextEmail.addTextChangedListener(new TextWatcher(){
@@ -141,8 +163,14 @@ public class whatsYourEmailActivity extends AppCompatActivity {
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //hide undo text field button
+                undobutton1.setVisibility(View.INVISIBLE);
+                updateTextView("");
                 //get text from values entered and trim whitespace
                 email = editTextEmail.getText().toString().trim();
+
+                //find spinnerView
+                final View spinnerView = findViewById(R.id.spinnerView);
 
                 //Detect empty fields before allowing user to continue to next activity
                 if (TextUtils.isEmpty(email)) {
@@ -161,19 +189,70 @@ public class whatsYourEmailActivity extends AppCompatActivity {
                     return;
                 }
 
-                Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + signupCreateUsernameActivity.userName + "\nUSER EMAIL: " + email, Toast.LENGTH_LONG).show();
+                //at this point, text field was NOT empty.
+                //so we display the spinner and start spin
+                animationContainer = (FrameLayout)findViewById(R.id.animationHoldingFrame);
+                animationContainer.setVisibility(View.VISIBLE);
+             //   startRotatingImage(spinnerView);
+                startRotatingImage(spinnerView);
 
-                //User satisfied email requirement
-                Intent intent3 = getIntent();
-                User user = (User)intent3.getSerializableExtra("user");
-                //User meets the username requirement
-                user.setEmail(email);
+                //CHECK DATABASE IF REQUESTED EMAIL IS TAKEN
+                // Get an instance to our database
+                FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
+                // Get a  reference to our userInfo node
+                DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
 
-                //declare where you intend to go
-                Intent intent5 = new Intent(whatsYourEmailActivity.this, setUpPasswordActivity.class);
-                //now make it happen
-                intent5.putExtra("user", user);
-                startActivity(intent5);
+                currentSkoovyUsers.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // do some stuff once
+                        //database has returned dataSnapshot, so we can stop mySpinner
+                        animationContainer.setVisibility(View.INVISIBLE);
+
+                        if(dataSnapshot.exists()){
+                            //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Selected Username is ALREADY in use", Toast.LENGTH_SHORT).show();
+                            updateTextView(" " + email + " is already taken. Try again.");
+                            undobutton1.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Username selection is new", Toast.LENGTH_SHORT).show();
+                            updateTextView("");
+                            Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + signupCreateUsernameActivity.userName + "\nUSER EMAIL: " + email, Toast.LENGTH_LONG).show();
+
+                            //User entered an un-used email requirement
+                            Intent intent3 = getIntent();
+                            User user = (User)intent3.getSerializableExtra("user");
+                            //User meets the username requirement
+                            user.setEmail(email);
+                            //declare where you intend to go
+                            Intent intent5 = new Intent(whatsYourEmailActivity.this, setUpPasswordActivity.class);
+                            //now make it happen
+                            intent5.putExtra("user", user);
+                            startActivity(intent5);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //database has returned dataSnapshot, so we can stop mySpinner
+                        mySpinner.setVisibility(View.INVISIBLE);
+                    }
+                });
+
+//                Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + signupCreateUsernameActivity.userName + "\nUSER EMAIL: " + email, Toast.LENGTH_LONG).show();
+//
+//                //User satisfied email requirement
+//                Intent intent3 = getIntent();
+//                User user = (User)intent3.getSerializableExtra("user");
+//                //User meets the username requirement
+//                user.setEmail(email);
+//
+//                //declare where you intend to go
+//                Intent intent5 = new Intent(whatsYourEmailActivity.this, setUpPasswordActivity.class);
+//                //now make it happen
+//                intent5.putExtra("user", user);
+//                startActivity(intent5);
 
             }
         });
@@ -233,5 +312,29 @@ public class whatsYourEmailActivity extends AppCompatActivity {
             button1.setBackgroundResource(R.drawable.roundedgreybutton);
             return false;
         }
+    }
+
+
+    /**
+     * updateTextView
+     * When user name exists in database, methos is called to update the text view
+     * @param toThis string text to display in text view
+     *
+     */
+    public void updateTextView(String toThis) {
+        TextView textView = (TextView) findViewById(R.id.userTaken);
+        textView.setText(toThis);
+    }
+
+
+    /**
+     * startRotatingImage
+     * @param view
+     * Called to rotate spinner while database is checked for existing username
+     */
+    public void startRotatingImage(View view) {
+        mySpinner = (ImageView) findViewById(R.id.rotate_image);
+        Animation startRotateAnimation = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.android_rotate_animation);
+        mySpinner.startAnimation(startRotateAnimation);
     }
 }

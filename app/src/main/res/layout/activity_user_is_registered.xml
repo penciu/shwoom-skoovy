@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_user_is_registered"
     android:layout_width="fill_parent"
@@ -28,7 +29,7 @@
         android:textStyle="normal|bold"
         android:textSize="22sp"
         android:layout_marginTop="5dp"
-        android:text="User is now registered"
+        android:text="Find your friends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView5"
@@ -39,25 +40,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:text="COMING SOON..."
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            app:srcCompat="@drawable/beans"
+            android:layout_below="@+id/textView11"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="136dp"
-            android:id="@+id/textView14"
-            android:textSize="40sp"
-            android:textColor="#FF7F00"/>
+            android:layout_marginTop="48dp"
+            android:id="@+id/beanCharacters"
+            android:backgroundTint="@android:color/transparent" />
 
-        <TextView
-            android:text="Skoovy App Features"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView14"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="23dp"
-            android:id="@+id/textView15" />
+
+
+
 
         <Button
             android:text="back to start screen"
@@ -65,7 +60,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/button1"
             android:background="@drawable/buttonwithshadow"
-            android:layout_below="@+id/textView15"
+            android:layout_below="@+id/beanCharacters"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="56dp"
             android:paddingLeft="15dp"
@@ -84,6 +79,18 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="21dp"
             android:id="@+id/button2" />
+
+        <TextView
+            android:text="Connect with friends already on skoovy."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView11"
+            android:gravity="center_horizontal"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/button1"
+            android:layout_alignStart="@+id/button1" />
+
     </RelativeLayout>
 
 </LinearLayout>

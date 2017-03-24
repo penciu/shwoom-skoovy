@@ -230,6 +230,10 @@ public class signupCreateUsernameActivity extends Activity{
                         mySpinner.setVisibility(View.INVISIBLE);
                     }
                 });
+
+
+
+
             }
         });
 

@@ -80,9 +80,23 @@
         android:textSize="14dp"
         android:layout_gravity="center_horizontal" />
 
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerView" >
+
+        <EditText
+            android:layout_width="257dp"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:ems="10"
+            android:id="@+id/registerYourEmail"
+            android:backgroundTint="#888888"
+            android:minWidth="280dp"
+            android:layout_gravity="center_horizontal"
+            android:textColor="#FF7F00"
+            android:layout_centerHorizontal="true" />
 
 
         <ImageButton
@@ -96,32 +110,40 @@
             android:layout_marginTop="0dp"
             android:layout_marginRight="-17dp" />
 
-        <EditText
-            android:layout_width="257dp"
+        <FrameLayout
+            android:id="@+id/animationHoldingFrame"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:ems="10"
-            android:id="@+id/registerYourEmail"
-            android:backgroundTint="#888888"
-            android:textSize="17sp"
-            android:textColor="#FF7F00"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/undoButton1"
+            android:layout_alignWithParentIfMissing="true"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/refresh_icon"
+                android:id="@+id/rotate_image"
+                android:layout_marginTop="-1dp" />
+
+        </FrameLayout>
 
     </RelativeLayout>
     <TextView
         android:text=""
         android:textColor="#FF7F00"
-        android:layout_width="278dp"
+        android:layout_width="257dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/registerUsername"
-        android:layout_alignStart="@+id/registerUsername"
+        android:layout_below="@+id/registerYourEmail"
+        android:layout_alignStart="@+id/registerYourEmail"
         android:textSize="16sp"
-        android:id="@+id/userTaken" />
+        android:id="@+id/userTaken"
+        android:layout_gravity="center_horizontal" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <Button
             android:text="@string/next"
             android:layout_width="190dp"
@@ -131,10 +153,11 @@
             android:textAllCaps="false"
             android:textSize="25sp"
             android:id="@+id/signupButton"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="44dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal" />
+
     </RelativeLayout>
 
 </LinearLayout>

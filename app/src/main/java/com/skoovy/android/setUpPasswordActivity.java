@@ -3,6 +3,8 @@ package com.skoovy.android;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,6 +24,10 @@ import android.widget.Toast;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -29,13 +36,15 @@ import com.google.firebase.database.ValueEventListener;
 
 public class setUpPasswordActivity extends AppCompatActivity {
 
+    private FirebaseAuth mAuth;
+
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
 
     private EditText editTextPassword;
     private static String password;
 
-    ImageButton button1;        //go on to next activity
+    Button button1;        //go on to next activity
     ImageButton button2;        //go back to previous screen
     ImageButton undobutton1;    //undo input text in edit text field
 
@@ -50,17 +59,25 @@ public class setUpPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up_password);
 
+        //get font asset
+        Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
+
         //Set up database reference, and reference the location we write to
         mDatabase = FirebaseDatabase
                 .getInstance()
                 .getReference()
                 .child("userInfo");//to send data to correct child
 
+        mAuth = FirebaseAuth.getInstance();
+
         //Create widget references on this activity
-        button1 = (ImageButton) findViewById(R.id.signupButton);
+        button1 = (Button) findViewById(R.id.signupButton);
         button2 = (ImageButton) findViewById(R.id.backButton);
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
         editTextPassword = (EditText) findViewById(R.id.setapasswordinput);
+
+        //set font on button
+        button1.setTypeface(centuryGothic);
 
         //hide undo buttons at activty startup
         undobutton1.setVisibility(View.INVISIBLE);
@@ -82,13 +99,20 @@ public class setUpPasswordActivity extends AppCompatActivity {
                     //so we display the undo button
                     undobutton1.setVisibility(View.VISIBLE);
                     isEditText1Empty = false;
-                    isFieldsSet();
+                    //isFieldsSet();
+                    if (password.length() > 7){
+                        button1.setBackgroundResource(R.drawable.roundedorangebutton);
+                    }
+                    else {
+                        button1.setBackgroundResource(R.drawable.roundedgreybutton);
+                    }
                 }
                 if (password.length() == 0) {
                     //there is text in the first name text field
                     undobutton1.setVisibility(View.INVISIBLE);
                     isEditText1Empty = true;
-                    isFieldsSet();
+                   // isFieldsSet();
+                    button1.setBackgroundResource(R.drawable.roundedgreybutton);
                 }
             }
         });
@@ -195,6 +219,9 @@ public class setUpPasswordActivity extends AppCompatActivity {
                 mDatabase.push().setValue(user);  //User registration data is now pushed to Firebase DB in node 'userInfo'
                 isUserRegistered();
 
+                String email = user.getEmail();
+                createAccount(email, password);
+
                 //declare where you intend to go
                 Intent intent6 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
                 //now make it happen
@@ -221,15 +248,34 @@ public class setUpPasswordActivity extends AppCompatActivity {
      * isFieldsSet
      * Switches signup button image if field are set
      */
-    public void isFieldsSet() {
-        if (!(isEditText1Empty)) {
-            //switch image on signup button
-            button1.setImageResource(R.drawable.next);
-        } else {
-            button1.setImageResource(R.drawable.signupgrey);
-        }
-    }
+//    public void isFieldsSet() {
+//        if (!(isEditText1Empty)) {
+//            //switch image on signup button
+//            button1.setImageResource(R.drawable.next);
+//        } else {
+//            button1.setImageResource(R.drawable.signupgrey);
+//        }
+//    }
 
+    private void createAccount(String email, String password) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("User", "AUTHcreateUserWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(setUpPasswordActivity.this, R.string.auth_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });
+    }
 
     /**
      * isUserRegistered
