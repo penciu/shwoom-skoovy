@@ -13,6 +13,13 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="choose_password">Choose a password</string>
+    <string name="set_password">Set a password</string>
+    <string name="password_at_least">Your password should be at least 8</string>
+    <string name="characters">characters</string>
+    <string name="reset_method_below">reset method below</string>
+    <string name="email_reset">Email Reset</string>
+    <string name="mobile_reset">Mobile Reset</string>
     <string name="title_activity_login">Sign in</string>
     <string name="start_screen_title">Discover Your World</string>
     <string name="first_last_name_screen_title">What\'s your name?</string>
@@ -23,13 +30,32 @@
     <string name="phone_number_screen_title">phone number?</string>
     <string name="verify_mobile_number">Verify mobile number</string>
     <string name="verification_code_screen_title">Verification Code</string>
+    <string name="select_your_country_code">Select your Country Code</string>
     <string name="login_screen_title">Log In</string>
+    <string name="find_your_friends">Find your friends</string>
+    <string name="connect_with_friends">Connect with friends already on skoovy.</string>
+    <string name="default_country_code">US +1</string>
 
     <string name="login">login</string>
     <string name="sign_up">sign up</string>
     <string name="next">next</string>
     <string name="send_sms">Send an SMS</string>
     <string name="cancel">CANCEL</string>
+    <string name="back">Back Arrow Button</string>
+    <string name="undo">Undo Text Button</string>
+    <string name="flash">Flash Settings Button</string>
+    <string name="camera_roll">Camera Roll</string>
+    <string name="switch_camera">Switch Camera</string>
+    <string name="shutter_button">Shutter Button</string>
+    <string name="image_filters">Image Filters</string>
+    <string name="image_layers">Image Layers</string>
+    <string name="gallery_view">Gallery View</string>
+    <string name="content_stories">Stories Button</string>
+    <string name="content_chat">Chat Button</string>
+    <string name="refresh_icon">Refresh Spinner</string>
+    <string name="launch_camera">Launch Camera</string>
+    <string name="back_to_start_screen">back to start screen</string>
+    <string name="skoovy_beans">Skoovy Beans Characters</string>
 
     <string name="first_name">FIRST NAME</string>
     <string name="last_name">LAST NAME</string>
@@ -52,4 +78,5 @@
     <string name="password">PASSWORD</string>
     <string name="password_help"><a href="#">Password help?</a></string>
     <string name="auth_failed">Authentication failed</string>
+    <string name="verification_process">Starting verification process &#8230;</string>
 </resources>

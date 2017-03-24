@@ -422,8 +422,8 @@ public class loginActivity extends Activity {
     /**
      * userLogin
      * Method checks email and password for authentication
-     * @param loginString
-     * @param password
+     * @param loginString Either username or email strings.  (At this point username has fetched the corresponding email for this user)
+     * @param password password string entered by user
      */
     private void userLogin(String loginString, final String password) {
         mAuth.signInWithEmailAndPassword(loginString, password)
@@ -470,16 +470,16 @@ public class loginActivity extends Activity {
     /**
      * isValidEmail
      * Checks for valid email pattern
-     * @param target
-     * @return boolean
+     * @param target email string entered by user
+     * @return boolean true if syntax matches email syntax, else false
      */
     public final  boolean isValidEmail(String target) {
         String regExpn =
-                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]{1}|[\\w-]{2,}))@"
+                "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]|[\\w-]{2,}))@"
                         +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
                         +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
                         +"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])){1}|"
+                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9]))|"
                         +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
 
         CharSequence inputStr = target;

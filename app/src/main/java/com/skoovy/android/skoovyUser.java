@@ -4,6 +4,7 @@ import android.util.Log;
 
 /**
  * Created by Rudi Wever on 3/19/2017.
+ * Class currently not used
  */
 
 public class SkoovyUser {

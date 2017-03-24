@@ -19,11 +19,12 @@
         android:src="@drawable/flash"
         android:id="@+id/imageButtonFlash"
         android:backgroundTint="@android:color/transparent"
-        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:baselineAlignBottom="false"
         android:layout_alignBottom="@+id/imageViewSkoovyLogo"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="6dp" />
+        android:layout_marginBottom="6dp"
+        android:contentDescription="@string/flash" />
 
     <ImageButton
         android:layout_width="36dp"
@@ -33,7 +34,8 @@
         android:backgroundTint="@android:color/transparent"
         android:layout_marginStart="21dp"
         android:layout_alignTop="@+id/imageButtonFlash"
-        android:layout_toEndOf="@+id/imageButtonFlash" />
+        android:layout_toEndOf="@+id/imageButtonFlash"
+        android:contentDescription="@string/camera_roll" />
 
     <ImageView
         android:layout_width="90dp"
@@ -41,7 +43,8 @@
         android:src="@drawable/skoovylogo"
         android:id="@+id/imageViewSkoovyLogo"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/app_name" />
 
     <ImageButton
         android:layout_width="35dp"
@@ -51,7 +54,8 @@
         android:backgroundTint="@android:color/transparent"
         android:layout_alignTop="@+id/imageButtonLibrary"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp" />
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/switch_camera" />
 
 
     <ImageButton
@@ -63,7 +67,8 @@
         android:backgroundTint="@android:color/transparent"
         android:foregroundGravity="fill_vertical|fill_horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/shutter_button" />
 
     <ImageButton
         android:layout_width="35dp"
@@ -72,7 +77,8 @@
         android:id="@+id/imageButtonFilters"
         android:backgroundTint="@android:color/transparent"
         android:layout_above="@+id/imageButtonUseCamera"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:contentDescription="@string/image_filters" />
 
     <TextView
         android:text=""
@@ -89,7 +95,8 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/galleryImageView"
-        android:layout_alignWithParentIfMissing="true" />
+        android:layout_alignWithParentIfMissing="true"
+        android:contentDescription="@string/gallery_view" />
 
     <ImageButton
         android:layout_width="35dp"
@@ -97,10 +104,11 @@
         android:src="@drawable/share"
         android:id="@+id/imageButtonShare"
         android:backgroundTint="@android:color/transparent"
-        android:layout_marginLeft="25dp"
+        android:layout_marginStart="25dp"
         android:layout_marginBottom="22dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/imageButtonFlash" />
+        android:layout_alignStart="@+id/imageButtonFlash"
+        android:contentDescription="@string/content_stories" />
 
     <ImageButton
         android:layout_width="35dp"
@@ -108,9 +116,9 @@
         android:src="@drawable/chat"
         android:id="@+id/imageButtonChat"
         android:backgroundTint="@android:color/transparent"
-        android:layout_marginRight="25dp"
         android:layout_marginEnd="23dp"
         android:layout_alignTop="@+id/imageButtonShare"
-        android:layout_alignEnd="@+id/imageButtonSwitchCamera" />
+        android:layout_alignEnd="@+id/imageButtonSwitchCamera"
+        android:contentDescription="@string/content_chat" />
 
 </RelativeLayout>

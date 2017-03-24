@@ -22,8 +22,9 @@
         android:id="@+id/backButton"
         android:backgroundTint="@android:color/transparent"
         android:padding="10dp"
-        android:layout_marginLeft="-15dp"
-        android:layout_marginTop="0dp" />
+        android:layout_marginStart="-15dp"
+        android:layout_marginTop="0dp"
+        android:contentDescription="@string/back" />
 
     <ImageView
         android:layout_width="170dp"
@@ -34,7 +35,8 @@
         android:id="@+id/imageButton"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@android:color/transparent"
-        android:layout_marginTop="-40dp" />
+        android:layout_marginTop="-40dp"
+        android:contentDescription="@string/app_name" />
 
     <TextView
         android:layout_gravity="center_horizontal"
@@ -56,8 +58,6 @@
         android:layout_marginTop="17dp"
         android:textColor="#888888"
         android:id="@+id/textView3"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:textSize="16sp" />
 
     <RelativeLayout
@@ -87,7 +87,8 @@
             android:backgroundTint="@android:color/transparent"
             android:layout_gravity="end"
             android:layout_marginTop="0dp"
-            android:layout_marginRight="-17dp" />
+            android:layout_marginEnd="-17dp"
+            android:contentDescription="@string/undo" />
 
     </RelativeLayout>
 
@@ -99,8 +100,6 @@
         android:layout_marginTop="0dp"
         android:textColor="#888888"
         android:id="@+id/textView4"
-        android:layout_below="@+id/editText"
-        android:layout_alignStart="@+id/editText"
         android:textSize="16sp" />
 
     <RelativeLayout
@@ -130,7 +129,8 @@
             android:layout_alignEnd="@+id/lastName"
             android:backgroundTint="@android:color/transparent"
             android:layout_gravity="end"
-            android:layout_marginRight="-17dp" />
+            android:layout_marginEnd="-17dp"
+            android:contentDescription="@string/undo" />
     </RelativeLayout>
 
     <RelativeLayout

@@ -22,8 +22,9 @@
         android:id="@+id/backToEmailButton"
         android:backgroundTint="@android:color/transparent"
         android:padding="10dp"
-        android:layout_marginLeft="-15dp"
-        android:layout_marginTop="0dp" />
+        android:layout_marginStart="-15dp"
+        android:layout_marginTop="0dp"
+        android:contentDescription="@string/back" />
 
     <ImageView
         android:layout_width="170dp"
@@ -33,7 +34,8 @@
         android:src="@drawable/skoovylogo"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@android:color/transparent"
-        android:layout_marginTop="-40dp" />
+        android:layout_marginTop="-40dp"
+        android:contentDescription="@string/app_name" />
 
     <TextView
         android:layout_gravity="center_horizontal"
@@ -87,9 +89,7 @@
         android:layout_height="wrap_content"
         android:textColor="#888888"
         android:id="@+id/textView4"
-        android:layout_below="@+id/editText"
-        android:layout_alignStart="@+id/countrycode"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="1dp"
         android:layout_marginTop="5dp" />
@@ -112,7 +112,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:focusable="false"
             android:background="@drawable/textlines"
-            android:text="US +1"
+            android:text="@string/default_country_code"
             android:layout_alignParentTop="true"
             android:layout_alignParentStart="true"
             android:layout_marginStart="11dp"
@@ -131,9 +131,10 @@
             android:textSize="18sp"
             android:textColor="#FF7F00"
             android:layout_toEndOf="@+id/countrycode"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:textStyle="normal|bold"
-            android:paddingStart="12dp" />
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"/>
 
         <ImageButton
             android:layout_width="17dp"
@@ -144,7 +145,8 @@
             android:backgroundTint="@android:color/transparent"
             android:layout_gravity="end"
             android:layout_marginTop="0dp"
-            android:layout_marginRight="-20dp" />
+            android:layout_marginEnd="-20dp"
+            android:contentDescription="@string/undo" />
 
     </RelativeLayout>
 
@@ -153,10 +155,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView"
-        android:layout_alignParentTop="true"
         android:textSize="14sp"
         android:gravity="center_horizontal"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="-1dp" />
 
     <TextView
@@ -167,21 +167,18 @@
         android:autoLink="web"
         android:linksClickable="true"
         android:textColorLink="#1F1FFF"
-        android:layout_alignParentStart="true"
         android:textSize="14sp"
         android:gravity="center_horizontal" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true">
+            android:gravity="center_horizontal" >
 
 
 
             <Button
-                android:text="next"
+                android:text="@string/next"
                 android:layout_width="190dp"
                 android:layout_height="42dp"
                 android:background="@drawable/roundedgreybutton"

@@ -5,10 +5,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.view.ContextThemeWrapper;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.TextView;
 
 import com.skoovy.android.R;
@@ -270,7 +268,7 @@ public class SingleChoiceDialogFragment extends DialogFragment {
 
     //Dialog interface back to calling activity
     public interface MyDialogFragmentListener {
-        public void onReturnValue(String foo);
+        void onReturnValue(String foo);
     }
 
 
@@ -281,8 +279,8 @@ public class SingleChoiceDialogFragment extends DialogFragment {
 
         builder.setIcon(R.drawable.backbuttonsmall);
         TextView title = new TextView(getActivity());
-        title.setGravity(Gravity.LEFT);
-        title.setText("Select your Country Code" );
+        title.setGravity(Gravity.START);
+        title.setText(R.string.select_your_country_code);
 
         title.setTextSize(22);
 
@@ -297,7 +295,7 @@ public class SingleChoiceDialogFragment extends DialogFragment {
 
         // NOTE: setMessage doesn't work here because the list takes up the content
         // area. Use the setTitle method to set a descriptive prompt
-        builder.setTitle("Select Your Country Code");
+        builder.setTitle(R.string.select_your_country_code);
 
         // The setItems function is used to create a list of content
         builder.setItems(displayStrings, new DialogInterface.OnClickListener() {
@@ -315,5 +313,5 @@ public class SingleChoiceDialogFragment extends DialogFragment {
         // auto-dismiss when the user makes a choice
 
         return builder.create();
-    };
+    }
 }

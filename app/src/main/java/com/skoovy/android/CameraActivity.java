@@ -1,6 +1,5 @@
 package com.skoovy.android;
 
-import android.*;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,7 +14,7 @@ import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraCharacteristics;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.CameraMetadata;
+import android.hardware.camera2.CameraMetadata; //will probably be used
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
@@ -68,7 +67,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private ImageButton flashButton;
 
-    private static enum FlashState{
+    private enum FlashState{
         FLASHAUTOMATIC, FLASHON, TORCH, FLASHOFF;
         public FlashState getNext() {
             return values()[(ordinal()+1)%values().length];
@@ -210,7 +209,6 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
     private MediaRecorder mMediaRecorder;
-    private Chronometer mChronometer;
     private int mTotalRotation;
     private CameraCaptureSession mPreviewCaptureSession;
     private CameraCaptureSession.CaptureCallback mPreviewCaptureCallback = new
@@ -270,15 +268,12 @@ public class CameraActivity extends AppCompatActivity {
             };
     private CaptureRequest.Builder mCaptureRequestBuilder;
 
-    TextView screenText;
     ImageButton shutterButton;
 
     long down,up;
 
     private boolean runMe = true;
 
-    private ImageButton mRecordImageButton;
-    private ImageButton mStillImageButton;
     private boolean mIsRecording = false;
     private boolean mIsTimelapse = false;
 
@@ -1122,15 +1117,11 @@ public class CameraActivity extends AppCompatActivity {
             int secs = (int) (updateTime/1000);
             int mins = secs/60;
             secs %=60;
-            int milliseconds = (int) (updateTime % 1000);
             int tenthsseconds = (int) (updateTime % 10);
             if (secs < 10){
                 String seconds = "0" + secs;
                 txtTimer.setText("" + mins + ":"+ seconds + ":" + tenthsseconds);
             } else {
-                // int milliseconds = (int) (updateTime % 1000);
-                // int tenthsseconds = (int) (updateTime % 10);
-                //txtTimer.setText("" + mins + ":"+ String.format("%2d",secs) + ":" + String.format("%3d",milliseconds));
                 txtTimer.setText("" + mins + ":" + String.format("%2d", secs) + ":" + tenthsseconds);
             }
             customHandler.postDelayed(this,0);

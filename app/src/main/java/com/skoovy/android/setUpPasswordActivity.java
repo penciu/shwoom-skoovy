@@ -20,10 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -49,10 +45,8 @@ public class setUpPasswordActivity extends AppCompatActivity {
     ImageButton undobutton1;    //undo input text in edit text field
 
     Boolean isEditText1Empty = true;
-    Boolean wasPasswordValid = false;
 
     Boolean isRegistered = false;
-    Boolean amIRegistered = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,8 +245,8 @@ public class setUpPasswordActivity extends AppCompatActivity {
     /**
      * createAccount
      * Creates email/password account for FIREBASE AUTH
-     * @param email
-     * @param password
+     * @param email email string
+     * @param password password string
      */
     private void createAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)

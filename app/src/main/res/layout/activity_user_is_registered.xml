@@ -22,14 +22,15 @@
         android:scaleType="fitCenter"
         android:src="@drawable/skoovylogo"
         android:layout_gravity="center_horizontal"
-        android:backgroundTint="@android:color/transparent" />
+        android:backgroundTint="@android:color/transparent"
+        android:contentDescription="@string/app_name" />
 
     <TextView
         android:layout_gravity="center_horizontal"
         android:textStyle="normal|bold"
         android:textSize="22sp"
         android:layout_marginTop="5dp"
-        android:text="Find your friends"
+        android:text="@string/find_your_friends"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/textView5"
@@ -48,14 +49,15 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"
             android:id="@+id/beanCharacters"
-            android:backgroundTint="@android:color/transparent" />
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/skoovy_beans" />
 
 
 
 
 
         <Button
-            android:text="back to start screen"
+            android:text="@string/back_to_start_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/button1"
@@ -67,7 +69,7 @@
             android:paddingRight="15dp" />
 
         <Button
-            android:text="Launch Camera"
+            android:text="@string/launch_camera"
             android:layout_width="190dp"
             android:layout_height="42dp"
             android:adjustViewBounds="true"
@@ -81,7 +83,7 @@
             android:id="@+id/button2" />
 
         <TextView
-            android:text="Connect with friends already on skoovy."
+            android:text="@string/connect_with_friends"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView11"
