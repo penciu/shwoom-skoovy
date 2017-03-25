@@ -188,7 +188,7 @@ public class whatsYourBirthdayActivity extends AppCompatActivity {
                 user.setBirthday(birthdate);
 
                 //Toast.makeText(getApplicationContext(), "YEAH! YOU ARE OF AGE", Toast.LENGTH_LONG).show();
-                Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + birthdate, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + birthdate, Toast.LENGTH_LONG).show();
 
                 //declare where you intend to go
                 Intent intent2 = new Intent(whatsYourBirthdayActivity.this, signupCreateUsernameActivity.class);

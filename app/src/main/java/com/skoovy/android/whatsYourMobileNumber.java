@@ -25,7 +25,7 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
     EditText mobilePhoneNumber;
 
     public static String phoneNumber;
-    public static String countryAbrv;
+    public static String countryAbrv = "US";
     public static String countryCode = "(+1)"; //Set to default
 
     Button button1;
@@ -242,14 +242,19 @@ public class whatsYourMobileNumber extends AppCompatActivity implements View.OnC
                 //User satisfied phone number requirement
                 Intent intent5 = getIntent();
                 User user = (User)intent5.getSerializableExtra("user");
-                Log.d("User", user.toString());
-                Log.d("User", "user's phoneNumber: "+ phoneNumber);
-                Log.d("User", "user's countryCode: "+ countryCode);
+//                Log.d("User", user.toString());
+//                Log.d("User", "user's country: "+ countryAbrv);
+//                Log.d("User", "user's phoneprefix: "+ phoneNumber);
+//                Log.d("User", "user's countryCode: "+ countryCode);
+
                 //User meets the username requirement
-                user.setPhoneCountryCode(countryCode);
-                user.setPhoneNumber(phoneNumber);
+
+                user.setPhoneCountryCode(countryAbrv);
+                user.setPhonePrefixCode(countryCode);
+                user.setPhoneNumber(phoneNumber.substring(1,4) + phoneNumber.substring(6,9) + phoneNumber.substring(10,14));
 
                 user.getNexmoPhoneNumber();
+//                Log.d("User", user.toString());
 
                 //place logic here to do login action
                 //declare where you intend to go

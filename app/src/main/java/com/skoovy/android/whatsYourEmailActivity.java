@@ -215,7 +215,7 @@ public class whatsYourEmailActivity extends AppCompatActivity {
                         else{
                             //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Username selection is new", Toast.LENGTH_SHORT).show();
                             updateTextView("");
-                            Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + signupCreateUsernameActivity.userName + "\nUSER EMAIL: " + email, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + signupActivity.firstName + "\nUSER LAST NAME: " + signupActivity.lastName + "\nUSER BIRTHDATE: " + whatsYourBirthdayActivity.birthdate + "\nUSER USERNAME: " + signupCreateUsernameActivity.userName + "\nUSER EMAIL: " + email, Toast.LENGTH_LONG).show();
 
                             //User entered an un-used email requirement
                             Intent intent3 = getIntent();

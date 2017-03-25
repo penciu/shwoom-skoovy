@@ -203,7 +203,7 @@ public class signupActivity extends Activity {
                 User user = new User();
                 user.setFirstname(firstName);
                 user.setLastname(lastName);
-                Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + firstName + "\r\nUSER LAST NAME: " + lastName, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "USER FIRST NAME: " + firstName + "\r\nUSER LAST NAME: " + lastName, Toast.LENGTH_LONG).show();
                 Intent intent1 = new Intent(signupActivity.this, whatsYourBirthdayActivity.class);
                 intent1.putExtra("user", user);
                 //now make it happen

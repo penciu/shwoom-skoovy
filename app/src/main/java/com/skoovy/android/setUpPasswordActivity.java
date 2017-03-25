@@ -35,7 +35,9 @@ public class setUpPasswordActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     // [START declare_database_ref]
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseUserInfo;
+    private DatabaseReference mDatabasePhonenumbers;
+    private DatabaseReference mDatabaseUsernames;
 
     private EditText editTextPassword;
     private static String password;
@@ -56,11 +58,21 @@ public class setUpPasswordActivity extends AppCompatActivity {
         //get font asset
         Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
 
-        //Set up database reference, and reference the location we write to
-        mDatabase = FirebaseDatabase
+        //Set up database references, and reference the locations we write to
+        mDatabaseUserInfo = FirebaseDatabase
                 .getInstance()
                 .getReference()
-                .child("userInfo");//to send data to correct child
+                .child("userInfo");//to send user profile data to userInfo node
+
+        mDatabasePhonenumbers = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("phonenumbers");//to send user phone number data to phonenumbers node
+
+        mDatabaseUsernames = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("usernames");//to send user user name data to usernames node
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -188,23 +200,6 @@ public class setUpPasswordActivity extends AppCompatActivity {
 
 
 
-
-
-                //CODE BELOW IS TO SEND DATA TO FIREBASE ABOUT USER //MAYBE NEEDED ELSEWHERE
-
-
-                //this is where you want to send first name, last name, birthdate, unique user name, and either email or mobile phone number, along with password to firebase database
-
-                //Call method to write to database
-                //             registerUserToDatabase(personsFirstLastUserName);
-                //    String key = mDatabase.push().child(signupActivity.firstName).child(signupActivity.lastName).child(userName).setValue();
-                //   Toast.makeText(getApplicationContext(), "Your UID is: " + key, Toast.LENGTH_SHORT).show();
-                //declare where you intend to go
-                //Intent intent4 = new Intent(signupCreateUsernameActivity.this, signupCreateUsernameActivity.class);
-                //now make it happen
-                //startActivity(intent4);
-                //    registerUserToDatabase();
-
                 Intent intent5 = getIntent();
                 User user = (User)intent5.getSerializableExtra("user");
                 user.setPassword(password);
@@ -213,11 +208,16 @@ public class setUpPasswordActivity extends AppCompatActivity {
                 }
                 Log.d("User", user.toString());
 
-                mDatabase.push().setValue(user);  //User registration data is now pushed to Firebase DB in node 'userInfo'
+                String key = mDatabaseUserInfo.push().getKey(); //Aquire key for node that will contain this user's data
+                user.setUid(key);
+                mDatabaseUserInfo.child(key).setValue(user);  //User registration data is now pushed to Firebase DB in node 'userInfo'
+
+                mDatabaseUsernames.child(user.getUsername()).setValue(key);
+                mDatabasePhonenumbers.child(user.getPhoneCountryCode()+user.getPhoneNumber()).setValue(key);
                 isUserRegistered();
 
                 String email = user.getEmail();
-                createAccount(email, password);
+                createAccount(email, password);  //User's FIREBASE AUTH account is created here with email and password.
 
                 //declare where you intend to go
                 Intent intent6 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
@@ -263,7 +263,6 @@ public class setUpPasswordActivity extends AppCompatActivity {
                                     Toast.LENGTH_SHORT).show();
                         }
 
-                        // ...
                     }
                 });
     }
@@ -274,7 +273,7 @@ public class setUpPasswordActivity extends AppCompatActivity {
      */
     public void isUserRegistered () {
         Log.d("User", "REG STATUS IS GETTING CHECKED");
-        mDatabase.orderByChild("username").equalTo(signupCreateUsernameActivity.userName).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabaseUserInfo.orderByChild("username").equalTo(signupCreateUsernameActivity.userName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("User", "DB DATA CHANGED");

@@ -9,19 +9,25 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    private String birthday;
+    public String email;
+
     public String firstname;
     private String lastname;
-    private String birthday;
-    private String username;
-    public String email;
-    private String phoneCountryCode;
-    private String phoneNumber;
-    private String password;
-
     private String nexmoPhoneNumber;
+    private String password;
+    private String phonePrefix;
+    public String phoneCountryCode;
+    private String phoneNumber;
+    public String uid;
+    private String username;
 
     public User() {
         //Default constructor
+    }
+
+    public String getUid() {
+        return this.uid;
     }
 
     public String getFirstname() {
@@ -48,6 +54,10 @@ public class User implements Serializable {
         return this.phoneCountryCode;
     }
 
+    public String getPhonePrefixCode() {
+        return this.phonePrefix;
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }
@@ -58,6 +68,11 @@ public class User implements Serializable {
 
     public String getNexmoPhoneNumber() {
         return nexmoPhoneNumber;
+    }
+
+    public void setUid(String userUID) {
+        this.uid = userUID;
+        Log.d("User", "UID WAS SET");
     }
 
     public void setFirstname(String userFirstName) {
@@ -85,14 +100,18 @@ public class User implements Serializable {
         Log.d("User", "EMAIL WAS SET");
     }
 
-    public void setPhoneCountryCode(String userCountryCode) {
-        this.phoneCountryCode = userCountryCode;
+    public void setPhoneCountryCode(String userCountry){
+        this.phoneCountryCode = userCountry;
+        Log.d("User", "PHONECOUNTRY WAS SET");
+    }
+
+    public void setPhonePrefixCode(String userCountryCode) {
+        this.phonePrefix = userCountryCode;
         Log.d("User", "COUNTRY-CODE WAS SET");
     }
 
     public void setPhoneNumber(String userPhoneNumber) {
         this.phoneNumber = userPhoneNumber;
-      //  setNexmoPhoneNumber();
         Log.d("User", "PHONE NUMBER WAS SET");
         setNexmoPhoneNumber();
     }
@@ -103,14 +122,14 @@ public class User implements Serializable {
     }
 
     private void setNexmoPhoneNumber(){
-        String phoneNumberData = getPhoneCountryCode().substring(2,getPhoneCountryCode().length()-1) + getPhoneNumber().substring(1,4) + getPhoneNumber().substring(6,9) + getPhoneNumber().substring(10,14);
+        String phoneNumberData = getPhonePrefixCode().substring(2,getPhonePrefixCode().length()-1) + getPhoneNumber();
         nexmoPhoneNumber = phoneNumberData.replaceAll(" ", ""); //remove any remaining spaces
         Log.d("User", "NEXMO_PHONE_NUBMER (string):" + nexmoPhoneNumber);
     }
 
     @Override
     public String toString() {
-        return "user [firstname=" + firstname + ", lastname=" + lastname + ", birthday=" + birthday + ", username=" + username + ", email=" + email + ", countrycode=" + phoneCountryCode + ", phonenumber=" + phoneNumber + ", password=" + password + "]";
+        return "user [firstname=" + firstname + ", lastname=" + lastname + ", birthday=" + birthday + ", username=" + username + ", email=" + email + ", countrycode=" + phoneCountryCode + ", prefix=" + phonePrefix+ ", phonenumber=" + phoneNumber + ", nexmoPhoneNumber=" + nexmoPhoneNumber + ", password=" + password + "]";
     }
 
 }
