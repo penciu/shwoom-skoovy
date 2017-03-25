@@ -129,7 +129,7 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "user [firstname=" + firstname + ", lastname=" + lastname + ", birthday=" + birthday + ", username=" + username + ", email=" + email + ", countrycode=" + phoneCountryCode + ", prefix=" + phonePrefix+ ", phonenumber=" + phoneNumber + ", nexmoPhoneNumber=" + nexmoPhoneNumber + ", password=" + password + "]";
+        return "user [firstname=" + firstname + ", lastname=" + lastname + ", birthday=" + birthday + ", username=" + username + ", email=" + email + ", countrycode=" + phoneCountryCode + ", prefix=" + phonePrefix+ ", phonenumber=" + phoneNumber + ", nexmoPhoneNumber=" + nexmoPhoneNumber + ", password=" + password + ", uid=" + uid + "]";
     }
 
 }

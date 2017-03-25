@@ -52,6 +52,10 @@ public class loginActivity extends Activity {
     private String lastnameAtGivenUser;
     private String birthdayAtGivenUser;
     private String emailAtGivenUser;
+    private String countrycodeAtGivenUser;
+    private String prefixAtGivenUser;
+    private String phonenumberAtGivenUser;
+    private String uidAtGivenUser;
 
 
     Button button1;
@@ -390,6 +394,11 @@ public class loginActivity extends Activity {
                             firstnameAtGivenUser = (String) snap.child("firstname").getValue();
                             lastnameAtGivenUser = (String) snap.child("lastname").getValue();
                             birthdayAtGivenUser = (String) snap.child("birthday").getValue();
+                            countrycodeAtGivenUser = (String) snap.child("phoneCountryCode").getValue();
+                            prefixAtGivenUser = (String) snap.child("phonePrefixCode").getValue();
+                            phonenumberAtGivenUser = (String) snap.child("phoneNumber").getValue();
+                            uidAtGivenUser = (String) snap.child("uid").getValue();
+
                             Log.d("User", " emailAtGivenUser= "+  emailAtGivenUser);
                         }
 
@@ -444,7 +453,12 @@ public class loginActivity extends Activity {
                         } else {
                             user.setEmail(emailAtGivenUser);
                         }
+
+                        user.setPhoneCountryCode(countrycodeAtGivenUser);
+                        user.setPhonePrefixCode(prefixAtGivenUser);
+                        user.setPhoneNumber(phonenumberAtGivenUser);
                         user.setPassword(password);
+                        user.setUid(uidAtGivenUser);
                         Log.d("User", "Current Skoovy " + user.toString());
                         //WELCOME TO SKOOVY
                         //declare where you intend to go
