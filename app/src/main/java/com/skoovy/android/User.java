@@ -122,9 +122,14 @@ public class User implements Serializable {
     }
 
     private void setNexmoPhoneNumber(){
-        String phoneNumberData = getPhonePrefixCode().substring(2,getPhonePrefixCode().length()-1) + getPhoneNumber();
-        nexmoPhoneNumber = phoneNumberData.replaceAll(" ", ""); //remove any remaining spaces
-        Log.d("User", "NEXMO_PHONE_NUBMER (string):" + nexmoPhoneNumber);
+        if (phoneNumber != null) {
+            String phoneNumberData = getPhonePrefixCode().substring(2,getPhonePrefixCode().length()-1) + getPhoneNumber();
+            nexmoPhoneNumber = phoneNumberData.replaceAll(" ", ""); //remove any remaining spaces
+            Log.d("User", "NEXMO_PHONE_NUBMER (string):" + nexmoPhoneNumber);
+        }
+        else {
+            Log.d("User", "NEXMO_PHONE_NUBMER (string): NO PHONE # IN PROFILE");
+        }
     }
 
     @Override

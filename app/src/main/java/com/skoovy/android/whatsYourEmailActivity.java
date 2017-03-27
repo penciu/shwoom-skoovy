@@ -188,6 +188,11 @@ public class whatsYourEmailActivity extends AppCompatActivity {
                 }
 
                 //at this point, text field was NOT empty.
+
+                //HIDE THE SOFT KEYBOARD
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editTextEmail.getWindowToken(), 0);
+
                 //so we display the spinner and start spin
                 animationContainer = (FrameLayout)findViewById(R.id.animationHoldingFrame);
                 animationContainer.setVisibility(View.VISIBLE);

@@ -15,6 +15,16 @@
     android:focusableInTouchMode="true"
     tools:context="com.skoovy.android.userIsRegisteredActivity">
 
+    <Button
+        android:text="@string/skip"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:id="@+id/skipButton"
+        android:layout_gravity="right"
+        android:background="@android:color/transparent"
+        android:layout_marginEnd="-16dp"
+        android:textColor="?android:attr/textColorTertiary" />
+
     <ImageView
         android:layout_width="170dp"
         android:layout_height="wrap_content"
@@ -23,7 +33,8 @@
         android:src="@drawable/skoovylogo"
         android:layout_gravity="center_horizontal"
         android:backgroundTint="@android:color/transparent"
-        android:contentDescription="@string/app_name" />
+        android:contentDescription="@string/app_name"
+        android:layout_marginTop="-20dp" />
 
     <TextView
         android:layout_gravity="center_horizontal"

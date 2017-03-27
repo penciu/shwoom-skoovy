@@ -198,6 +198,10 @@ public class signupActivity extends Activity {
                 }
 
                 //Both text fields were filled, so we allow user to continue to next activity
+                //HIDE THE SOFT KEYBOARD
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editTextLastName.getWindowToken(), 0);
+
                 //place logic here to do registration action
                 //declare where you intend to go
                 User user = new User();

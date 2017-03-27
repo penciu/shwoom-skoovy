@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Skoovy</string>
 
+    <!-- Strings Related to Nexmo -->
+    <string name="nexmo_application_id"> 1c9b5586</string>
+    <string name="nexmo_shared_secret"> 85dfafe8ae479665 </string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -56,6 +60,7 @@
     <string name="launch_camera">Launch Camera</string>
     <string name="back_to_start_screen">back to start screen</string>
     <string name="skoovy_beans">Skoovy Beans Characters</string>
+    <string name="skip">SKIP</string>
 
     <string name="first_name">FIRST NAME</string>
     <string name="last_name">LAST NAME</string>

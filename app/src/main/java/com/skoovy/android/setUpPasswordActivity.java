@@ -198,6 +198,9 @@ public class setUpPasswordActivity extends AppCompatActivity {
                     return;
                 }
 
+                //HIDE THE SOFT KEYBOARD
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editTextPassword.getWindowToken(), 0);
 
 
                 Intent intent5 = getIntent();

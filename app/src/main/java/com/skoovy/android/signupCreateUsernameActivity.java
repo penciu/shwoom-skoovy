@@ -62,6 +62,7 @@ public class signupCreateUsernameActivity extends Activity{
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
         mySpinner = (ImageView) findViewById(R.id.rotate_image);
         userTaken = (TextView) findViewById(R.id.userTaken);
+        editTextUserName =  (EditText) findViewById(R.id.registerUsername);
 
         //set font on button
         button1.setTypeface(centuryGothic);
@@ -72,8 +73,6 @@ public class signupCreateUsernameActivity extends Activity{
         //hide spinner at activity startup
         mySpinner.setVisibility(View.INVISIBLE);
 
-        //Retrieve text values entered for first name and last name
-        editTextUserName =  (EditText) findViewById(R.id.registerUsername);
 
         //Listen for text on editTextFirstName input field
         editTextUserName.addTextChangedListener(new TextWatcher(){
@@ -183,6 +182,10 @@ public class signupCreateUsernameActivity extends Activity{
                 }
 
                 //at this point, text field was NOT empty.
+                //HIDE THE SOFT KEYBOARD
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(editTextUserName.getWindowToken(), 0);
+
                 //so we display the spinner and start spin
                 animationContainer = (FrameLayout)findViewById(R.id.animationHoldingFrame);
                 animationContainer.setVisibility(View.VISIBLE);

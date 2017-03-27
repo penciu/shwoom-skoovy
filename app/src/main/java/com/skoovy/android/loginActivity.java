@@ -311,6 +311,10 @@ public class loginActivity extends Activity {
                     return;
                 }
 
+                //HIDE THE SOFT KEYBOARD
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
+
                 //Both text fields were filled, so we allow attempt to login user
                 attemptLogin();
             }
