@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class userIsRegisteredActivity extends AppCompatActivity {
 
     Button button1;
-    Button button2;
+    Button nextButton;
     Button button3;
 
     @Override
@@ -19,7 +20,7 @@ public class userIsRegisteredActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_is_registered);
         button1 = (Button) findViewById(R.id.button1);
-        button2 = (Button) findViewById(R.id.button2);
+        nextButton = (Button) findViewById(R.id.button2);
         button3 = (Button) findViewById(R.id.skipButton);
 
         //get font asset
@@ -27,7 +28,7 @@ public class userIsRegisteredActivity extends AppCompatActivity {
 
 
         button1.setTypeface(centuryGothic);
-        button2.setTypeface(centuryGothic);
+        nextButton.setTypeface(centuryGothic);
 
         //Tell my buttons to listen up!
         addListenerOnButton();
@@ -49,14 +50,16 @@ public class userIsRegisteredActivity extends AppCompatActivity {
             }
         });
 
-        button2.setOnClickListener(new View.OnClickListener() {
+        nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "TODO ITEM", Toast.LENGTH_SHORT).show();
 
+                //TODO ITEM : make findYourFriends.java and activity_find_your_friends.xml
                 //declare where you intend to go
-                Intent intent2 = new Intent(userIsRegisteredActivity.this, CameraActivity.class);
+                //Intent intent2 = new Intent(userIsRegisteredActivity.this, findYourFriends.class);
                 //now make it happen
-                startActivity(intent2);
+                //startActivity(intent2);
             }
         });
 
@@ -67,8 +70,6 @@ public class userIsRegisteredActivity extends AppCompatActivity {
                 Intent intent6 = getIntent();
                 SkoovyUser skoovyuser = (SkoovyUser)intent6.getSerializableExtra("SkoovyUser");
 
-                Log.d("User", "userIsRegisteredActivity can see this many folllowers:"+skoovyuser.getSkoovyUserFollowers() );
-               // skoovyuser.setSkoovyUserFollowers(6);
                 //declare where you intend to go
                 Intent intent3 = new Intent(userIsRegisteredActivity.this, UserProfile.class);
                 intent3.putExtra("SkoovyUser", skoovyuser);

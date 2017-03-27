@@ -447,92 +447,95 @@ public class loginActivity extends Activity {
      * @param password password string entered by user
      */
     private void userLogin(String loginString, final String password) {
-        mAuth.signInWithEmailAndPassword(loginString, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(loginString, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
-                        //USER IS NOW AUTHENTICATED!!!
-                        //Create User instance for this user
-                        User user = new User();
-                        user.setFirstname(firstnameAtGivenUser);
-                        user.setLastname(lastnameAtGivenUser);
-                        user.setBirthday(birthdayAtGivenUser);
-                        user.setUsername(email);
-                        if (emailAtGivenUser.contains("@skoovy.com")){ //user registered via mobile number instead of via email
-                            //user has not updated email in their Skoovy profile, so we continue to set their email to null.
-                            user.setEmail(null);
-                        } else {
-                            user.setEmail(emailAtGivenUser);
-                        }
+                        if (task.isSuccessful()){
+                            Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
+                            //USER IS NOW AUTHENTICATED!!!
+                            //Create User instance for this user
+                            User user = new User();
+                            user.setFirstname(firstnameAtGivenUser);
+                            user.setLastname(lastnameAtGivenUser);
+                            user.setBirthday(birthdayAtGivenUser);
+                            user.setUsername(email);
+                            if (emailAtGivenUser.contains("@skoovy.com")){ //user registered via mobile number instead of via email
+                                //user has not updated email in their Skoovy profile, so we continue to set their email to null.
+                                user.setEmail(null);
+                            } else {
+                                user.setEmail(emailAtGivenUser);
+                            }
 
-                        user.setPhoneCountryCode(countrycodeAtGivenUser);
-                        user.setPhonePrefixCode(prefixAtGivenUser);
-                        user.setPhoneNumber(phonenumberAtGivenUser);
-                        user.setPassword(password);
-                        user.setUid(uidAtGivenUser);
-                        Log.d("User", "Current Skoovy " + user.toString());
+                            user.setPhoneCountryCode(countrycodeAtGivenUser);
+                            user.setPhonePrefixCode(prefixAtGivenUser);
+                            user.setPhoneNumber(phonenumberAtGivenUser);
+                            user.setPassword(password);
+                            user.setUid(uidAtGivenUser);
+                            Log.d("User", "Current Skoovy " + user.toString());
 
-                        //Since the user is authenticated, we also need their profile stats
-                        skoovyUserName = user.getUsername();
+                            //Since the user is authenticated, we also need their profile stats
+                            skoovyUserName = user.getUsername();
 //                        findSkoovyUserFollowers();
-                        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
-                        // Get a reference to our Followers node
-                        final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
-                        currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
-                            @Override
-                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                if (dataSnapshot.getKey().equals(skoovyUserName)){
-                                    Log.d("User", "found a follower(s) for you");
-                                    currentSkoovyUsersFollowersReference.child(skoovyUserName).addValueEventListener(new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                            int followers = 0;
-                                            for(DataSnapshot child : dataSnapshot.getChildren() ){
-                                                Log.d("User", "FOLLOWER");
-                                                followers++;
-                                            }
-                                            Log.d("User", "followers:"+followers);
-                                            SkoovyUser skoovyuser = new SkoovyUser();
-                                            skoovyuser.setSkoovyUserFollowers(followers);
-                                            //WELCOME TO SKOOVY
-                                            //declare where you intend to go
-                                            Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
-                                            //now make it happen
+                            FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
+                            // Get a reference to our Followers node
+                            final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
+                            currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
+                                @Override
+                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                    if (dataSnapshot.getKey().equals(skoovyUserName)){
+                                        Log.d("User", "found a follower(s) for you");
+                                        currentSkoovyUsersFollowersReference.child(skoovyUserName).addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                                int followers = 0;
+                                                for(DataSnapshot child : dataSnapshot.getChildren() ){
+                                                    Log.d("User", "FOLLOWER");
+                                                    followers++;
+                                                }
+                                                Log.d("User", "followers:"+followers);
+                                                SkoovyUser skoovyuser = new SkoovyUser();
+                                                skoovyuser.setSkoovyUserFollowers(followers);
+                                                //WELCOME TO SKOOVY
+                                                //declare where you intend to go
+                                                Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+                                                //now make it happen
 // *******************************************************************************
 //                PROBABLY WANT TO PASS THE USER OBJECT TO THE NEXT INTENT HERE
-                                            intent6.putExtra("SkoovyUser", skoovyuser);
+                                                intent6.putExtra("SkoovyUser", skoovyuser);
 // *******************************************************************************
-                                            startActivity(intent6);
-                                        }
+                                                startActivity(intent6);
+                                            }
 
-                                        @Override
-                                        public void onCancelled(DatabaseError databaseError) {
+                                            @Override
+                                            public void onCancelled(DatabaseError databaseError) {
 
-                                        }
-                                    });
+                                            }
+                                        });
+                                    }
                                 }
-                            }
 
-                            @Override
-                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                                @Override
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                                @Override
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                                @Override
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
-                            }
+                                }
 
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                            }
-                        });
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+                        }
+                        //Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
+
 
 
                         if (!task.isSuccessful())
