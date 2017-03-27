@@ -221,12 +221,14 @@ public class setUpPasswordActivity extends AppCompatActivity {
 
                 String email = user.getEmail();
                 createAccount(email, password);  //User's FIREBASE AUTH account is created here with email and password.
+                SkoovyUser skoovyuser = new SkoovyUser();
 
                 //declare where you intend to go
                 Intent intent6 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
                 //now make it happen
 // *******************************************************************************
 //                PROBABLY WANT TO PASS THE USER OBJECT TO THE NEXT INTENT HERE
+                intent6.putExtra("SkoovyUser", skoovyuser);
 // *******************************************************************************
                 startActivity(intent6);
 
@@ -256,7 +258,11 @@ public class setUpPasswordActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        Log.d("User", "AUTHcreateUserWithEmail:onComplete:" + task.isSuccessful());
+
+                        if (task.isSuccessful()) {
+                            Log.d("User", "AUTHcreateUserWithEmail:onComplete:" + task.isSuccessful());
+
+                        }
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
