@@ -12,11 +12,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 public class UserProfile extends AppCompatActivity {
 
     private ImageButton cameraIconButton;
     private ImageButton mapMarkerIconButton;
+
+    private TextView usersFollowers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +34,12 @@ public class UserProfile extends AppCompatActivity {
         //Create GUI references
         cameraIconButton    = (ImageButton) findViewById(R.id.cameraIconButton);
         mapMarkerIconButton = (ImageButton) findViewById(R.id.mapMarkerIconButton);
+        usersFollowers = (TextView) findViewById(R.id.skoovyUsersFollowers);
 
+        Intent intent3 = getIntent();
+        SkoovyUser skoovyuser = (SkoovyUser)intent3.getSerializableExtra("SkoovyUser");
+        //now able to access SkoovyUser class with skoovyuser methods
+        usersFollowers.setText(String.valueOf(skoovyuser.getSkoovyUserFollowers()));
 
         //Tell my buttons to listen up!
         addListenerOnButton();

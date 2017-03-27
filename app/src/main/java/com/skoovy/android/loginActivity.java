@@ -31,7 +31,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.ChildEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,6 +59,7 @@ public class loginActivity extends Activity {
     private String phonenumberAtGivenUser;
     private String uidAtGivenUser;
 
+    private String skoovyUserName;
 
     Button button1;
     ImageButton button2;
@@ -69,10 +72,15 @@ public class loginActivity extends Activity {
 
     Boolean wasEmailValid = false;
 
+
+    Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+
 
         //get font asset
         Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
@@ -464,14 +472,68 @@ public class loginActivity extends Activity {
                         user.setPassword(password);
                         user.setUid(uidAtGivenUser);
                         Log.d("User", "Current Skoovy " + user.toString());
-                        //WELCOME TO SKOOVY
-                        //declare where you intend to go
-                        Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
-                        //now make it happen
+
+                        //Since the user is authenticated, we also need their profile stats
+                        skoovyUserName = user.getUsername();
+//                        findSkoovyUserFollowers();
+                        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
+                        // Get a reference to our Followers node
+                        final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
+                        currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                if (dataSnapshot.getKey().equals(skoovyUserName)){
+                                    Log.d("User", "found a follower(s) for you");
+                                    currentSkoovyUsersFollowersReference.child(skoovyUserName).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(DataSnapshot dataSnapshot) {
+                                            int followers = 0;
+                                            for(DataSnapshot child : dataSnapshot.getChildren() ){
+                                                Log.d("User", "FOLLOWER");
+                                                followers++;
+                                            }
+                                            Log.d("User", "followers:"+followers);
+                                            SkoovyUser skoovyuser = new SkoovyUser();
+                                            skoovyuser.setSkoovyUserFollowers(followers);
+                                            //WELCOME TO SKOOVY
+                                            //declare where you intend to go
+                                            Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+                                            //now make it happen
 // *******************************************************************************
 //                PROBABLY WANT TO PASS THE USER OBJECT TO THE NEXT INTENT HERE
+                                            intent6.putExtra("SkoovyUser", skoovyuser);
 // *******************************************************************************
-                        startActivity(intent6);
+                                            startActivity(intent6);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(DatabaseError databaseError) {
+
+                                        }
+                                    });
+                                }
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+
 
                         if (!task.isSuccessful())
                         {
@@ -513,5 +575,58 @@ public class loginActivity extends Activity {
             //Toast.makeText(getApplicationContext(), " BAD EMAIL", Toast.LENGTH_SHORT).show();
             return false;
         }
+    }
+
+    private void findSkoovyUserFollowers() {
+        // Get an instance to our database
+//        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
+//        // Get a reference to our Followers node
+//        final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
+//        currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                if (dataSnapshot.getKey().equals(skoovyUserName)){
+//                    Log.d("User", "found a follower(s) for you");
+//                    currentSkoovyUsersFollowersReference.child(skoovyUserName).addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            int followers = 0;
+//                            for(DataSnapshot child : dataSnapshot.getChildren() ){
+//                                Log.d("User", "FOLLOWER");
+//                                followers++;
+//                            }
+//                            Log.d("User", "followers:"+followers);
+//                            skoovyuser.setSkoovyUserFollowers(followers);
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
+//                }
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//            }
+//        });
+
     }
 }

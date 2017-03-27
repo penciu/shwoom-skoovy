@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -63,9 +64,14 @@ public class userIsRegisteredActivity extends AppCompatActivity {
         button3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent6 = getIntent();
+                SkoovyUser skoovyuser = (SkoovyUser)intent6.getSerializableExtra("SkoovyUser");
 
+                Log.d("User", "userIsRegisteredActivity can see this many folllowers:"+skoovyuser.getSkoovyUserFollowers() );
+               // skoovyuser.setSkoovyUserFollowers(6);
                 //declare where you intend to go
                 Intent intent3 = new Intent(userIsRegisteredActivity.this, UserProfile.class);
+                intent3.putExtra("SkoovyUser", skoovyuser);
                 //now make it happen
                 startActivity(intent3);
             }

@@ -169,20 +169,18 @@
                     android:text="3,200"
                     android:layout_width="wrap_content"
                     android:id="@+id/skoovyUsersPoints"
-                    android:layout_weight="1"
                     android:layout_gravity="start"
-                    android:layout_height="20dp"
+                    android:layout_height="wrap_content"
                     android:textStyle="normal|bold" />
 
                 <TextView
                     android:text="points"
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
-                    android:id="@+id/textView22"
-                    android:layout_weight="1"
                     android:textSize="14sp"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center" />
+                    android:layout_gravity="bottom"
+                    android:paddingBottom="7dp"
+                    android:gravity="center_vertical" />
 
             </LinearLayout>
 
