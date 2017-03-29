@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -106,10 +107,9 @@ public class setUpPasswordActivity extends AppCompatActivity {
                     undobutton1.setVisibility(View.VISIBLE);
                     isEditText1Empty = false;
                     //isFieldsSet();
-                    if (password.length() > 7){
+                    if (password.length() > 7) {
                         button1.setBackgroundResource(R.drawable.roundedorangebutton);
-                    }
-                    else {
+                    } else {
                         button1.setBackgroundResource(R.drawable.roundedgreybutton);
                     }
                 }
@@ -117,7 +117,7 @@ public class setUpPasswordActivity extends AppCompatActivity {
                     //there is text in the first name text field
                     undobutton1.setVisibility(View.INVISIBLE);
                     isEditText1Empty = true;
-                   // isFieldsSet();
+                    // isFieldsSet();
                     button1.setBackgroundResource(R.drawable.roundedgreybutton);
                 }
             }
@@ -199,15 +199,15 @@ public class setUpPasswordActivity extends AppCompatActivity {
                 }
 
                 //HIDE THE SOFT KEYBOARD
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editTextPassword.getWindowToken(), 0);
 
 
                 Intent intent5 = getIntent();
-                User user = (User)intent5.getSerializableExtra("user");
+                User user = (User) intent5.getSerializableExtra("user");
                 user.setPassword(password);
-                if(user.getEmail()==null){
-                    user.setEmail(user.getUsername()+"@skoovy.com");
+                if (user.getEmail() == null) {
+                    user.setEmail(user.getUsername() + "@skoovy.com");
                 }
                 Log.d("User", user.toString());
 
@@ -216,22 +216,19 @@ public class setUpPasswordActivity extends AppCompatActivity {
                 mDatabaseUserInfo.child(key).setValue(user);  //User registration data is now pushed to Firebase DB in node 'userInfo'
 
                 mDatabaseUsernames.child(user.getUsername()).setValue(key);
-                mDatabasePhonenumbers.child(user.getPhoneCountryCode()+user.getPhoneNumber()).setValue(key);
+                mDatabasePhonenumbers.child(user.getPhoneCountryCode() + user.getPhoneNumber()).setValue(key);
                 isUserRegistered();
 
                 String email = user.getEmail();
-                createAccount(email, password);  //User's FIREBASE AUTH account is created here with email and password.
+                createAuthenticationAccount(email, password);  //User's FIREBASE AUTH account is created here with email and password.
                 SkoovyUser skoovyuser = new SkoovyUser();
 
                 //declare where you intend to go
                 Intent intent6 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
                 //now make it happen
-// *******************************************************************************
-//                PROBABLY WANT TO PASS THE USER OBJECT TO THE NEXT INTENT HERE
+                // PASS THE skoovyuser OBJECT TO THE NEXT INTENT HERE
                 intent6.putExtra("SkoovyUser", skoovyuser);
-// *******************************************************************************
                 startActivity(intent6);
-
             }
         });
 
@@ -248,12 +245,13 @@ public class setUpPasswordActivity extends AppCompatActivity {
 
 
     /**
-     * createAccount
+     * createAuthenticationAccount
      * Creates email/password account for FIREBASE AUTH
-     * @param email email string
+     *
+     * @param email    email string
      * @param password password string
      */
-    private void createAccount(String email, String password) {
+    private void createAuthenticationAccount(String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -280,7 +278,7 @@ public class setUpPasswordActivity extends AppCompatActivity {
      * isUserRegistered
      * Confirms if user push to DB was successful
      */
-    public void isUserRegistered () {
+    public void isUserRegistered() {
         Log.d("User", "REG STATUS IS GETTING CHECKED");
         mDatabaseUserInfo.orderByChild("username").equalTo(signupCreateUsernameActivity.userName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

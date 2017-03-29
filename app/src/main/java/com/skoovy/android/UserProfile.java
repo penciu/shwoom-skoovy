@@ -25,6 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * UserProfile
  * Creates the UserProfile page of the app.  UserProfile page is also made up of Profile_Content_Images &
@@ -40,13 +43,31 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
     private TextView usersFollowers;
 
     private String skoovyUserName;
+    private String skoovyUID;
+    private String skoovyAvatar;
+
+    private DatabaseReference fbDatabase;
+    FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        //WE NEED user OBJECT HERE
+        Intent intent3 = getIntent();
+        User user = (User) intent3.getSerializableExtra("User");
+        //Since the user is authenticated, we also need their profile stats
+        skoovyAvatar = user.getAvatar();
+        skoovyUserName = user.getUsername();
+        skoovyUID = user.getUid();
+        Log.d("User", "AVATAR FETCHED: " + skoovyAvatar);
+        Log.d("User", "USERNAME FETCHED: " + skoovyUserName);
+        //FETCH DASHBOARD DATA FOR THIS SKOOVY USER
+        //fetchSkoovyUsersAvatar();
         fetchSkoovyUsersFollower();
+
+
         setContentView(R.layout.activity_user_profile);
+        fetchSkoovyUsersAvatar();
 
         final android.app.FragmentManager fragmentManager = getFragmentManager();
         final AvatarFragment avatarFragment = new AvatarFragment();
@@ -63,13 +84,6 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         profileAvatarButton = (ImageButton) findViewById(R.id.profile_avatar);
         usersFollowers = (TextView) findViewById(R.id.skoovyUsersFollowers);
 
-
-//        Intent intent3 = getIntent();
-//        SkoovyUser skoovyuser = (SkoovyUser)intent3.getSerializableExtra("SkoovyUser");
-        //now able to access SkoovyUser class with skoovyuser methods
-        //THIS LINE SETS THE NUMBER OF FOLLOWERS ON THE PROFILE PAGE
-
-
         //AVATAR CLICKED, NOW OPEN AVATAR SELECTION FRAGMENT
         profileAvatarButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,6 +96,7 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         //Tell my buttons to listen up!
         addListenerOnButton();
     }
+
 
     /**
      * addListenerOnButton
@@ -114,19 +129,25 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
 
     }
 
-    private void fetchSkoovyUsersFollower() {
-        //WE NEED user OBJECT HERE
-        Intent intent3 = getIntent();
-        User user = (User) intent3.getSerializableExtra("User");
-        //Since the user is authenticated, we also need their profile stats
-        skoovyUserName = user.getUsername();
-        //Create new SkoovyUser to hold profile stats
-        SkoovyUser skoovyuser = new SkoovyUser();
+    private void fetchSkoovyUsersAvatar() {
+        if (skoovyAvatar == null) {
+            //user still has not set an avatar
+            return;
+        }
+        //Show user's avatar for start of this activity
+        TypedArray imgs = getResources().obtainTypedArray(R.array.avatar_imgs);
+        profileAvatarButton = (ImageButton) findViewById(R.id.profile_avatar);
+        int imgID = Integer.parseInt(skoovyAvatar);
+        profileAvatarButton.setImageResource(imgs.getResourceId(imgID, -1));
+    }
 
-        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
+    private void fetchSkoovyUsersFollower() {
         // Get a reference to our Followers node
         final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
         currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
+            //Create new SkoovyUser to hold profile stats
+            SkoovyUser skoovyuser = new SkoovyUser();
+
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 if (dataSnapshot.getKey().equals(skoovyUserName)) {
@@ -136,13 +157,13 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             int followers = 0;
                             for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                Log.d("User", "FOLLOWER");
+//                                Log.d("User", "FOLLOWER");
                                 followers++;
                             }
-                            Log.d("User", "followers:" + followers);
-                            SkoovyUser skoovyuser = new SkoovyUser();
+//                            Log.d("User", "followers:" + followers);
                             skoovyuser.setSkoovyUserFollowers(followers);
                             //NUMBER OF FOLLOWERS HAS BEEN FETCHED AND SET IN THE SKOOVYUSER CLASS
+                            //now update user profile dashboard
                             usersFollowers.setText(String.valueOf(skoovyuser.getSkoovyUserFollowers()));
                         }
 
@@ -178,13 +199,26 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
     /**
      * onFragmentInteraction
      * This is the interface to receive data from the AvatarFragment
+     * In this interaction we also save the users avatar choice in the Firebase DB ->> 'userInfo' node
      *
      * @param position int value of the avatar's index in the avatar_imgs array
      */
     @Override
     public void onFragmentInteraction(int position) {
-        //Log.d("User", "Activity Log ->>> Item: " + position + "selected");
+        Log.d("User", "Activity Log ->>> Item: " + position + "selected");
         TypedArray imgs = getResources().obtainTypedArray(R.array.avatar_imgs);
+        //now update user profile dashboard
         profileAvatarButton.setImageResource(imgs.getResourceId(position, -1));
+
+        fbDatabase = FirebaseDatabase
+                .getInstance()
+                .getReference()
+                .child("userInfo")
+                .child(skoovyUID);//to send user's profile data to user's userInfo node
+
+        //update avatar data for user
+        Map<String, Object> userUpdates = new HashMap<String, Object>();
+        userUpdates.put("avatar", Integer.toString(position));
+        fbDatabase.updateChildren(userUpdates);
     }
 }

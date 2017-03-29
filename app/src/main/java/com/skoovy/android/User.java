@@ -12,6 +12,7 @@ public class User implements Serializable {
     private String birthday;
     public String email;
 
+    public String avatar;
     public String firstname;
     private String lastname;
     private String nexmoPhoneNumber;
@@ -24,10 +25,11 @@ public class User implements Serializable {
 
     public User() {
         //Default constructor
+        Log.d("User", "User default constructor used");
     }
 
-    public String getUid() {
-        return this.uid;
+    public String getAvatar() {
+        return this.avatar;
     }
 
     public String getFirstname() {
@@ -70,9 +72,13 @@ public class User implements Serializable {
         return nexmoPhoneNumber;
     }
 
-    public void setUid(String userUID) {
-        this.uid = userUID;
-        Log.d("User", "UID WAS SET");
+    public String getUid() {
+        return this.uid;
+    }
+
+    public void setAvatar(String userAvatar) {
+        this.avatar = userAvatar;
+        Log.d("User", "AVATAR WAS SET");
     }
 
     public void setFirstname(String userFirstName) {
@@ -131,9 +137,26 @@ public class User implements Serializable {
         }
     }
 
+    public void setUid(String userUID) {
+        this.uid = userUID;
+        Log.d("User", "UID WAS SET");
+    }
+
     @Override
     public String toString() {
-        return "user [firstname=" + firstname + ", lastname=" + lastname + ", birthday=" + birthday + ", username=" + username + ", email=" + email + ", countrycode=" + phoneCountryCode + ", prefix=" + phonePrefix + ", phonenumber=" + phoneNumber + ", nexmoPhoneNumber=" + nexmoPhoneNumber + ", password=" + password + ", uid=" + uid + "]";
+        return "user [avatar= " + avatar +
+                ", firstname=" + firstname +
+                ", lastname=" + lastname +
+                ", birthday=" + birthday +
+                ", username=" + username +
+                ", email=" + email +
+                ", countrycode=" + phoneCountryCode +
+                ", prefix=" + phonePrefix +
+                ", phonenumber=" + phoneNumber +
+                ", nexmoPhoneNumber=" + nexmoPhoneNumber +
+                ", password=" + password +
+                ", uid=" + uid +
+                "]";
     }
 
 }

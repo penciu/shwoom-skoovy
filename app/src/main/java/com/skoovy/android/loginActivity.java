@@ -60,6 +60,7 @@ public class loginActivity extends Activity {
     private String phonenumberAtGivenUser;
     private String uidAtGivenUser;
 
+    private String avatarAtGivenUser;
 
     Button button1;
     ImageButton button2;
@@ -407,8 +408,9 @@ public class loginActivity extends Activity {
                             prefixAtGivenUser = (String) snap.child("phonePrefixCode").getValue();
                             phonenumberAtGivenUser = (String) snap.child("phoneNumber").getValue();
                             uidAtGivenUser = (String) snap.child("uid").getValue();
-
+                            avatarAtGivenUser = (String) snap.child("avatar").getValue();
                             Log.d("User", " emailAtGivenUser= " + emailAtGivenUser);
+                            Log.d("User", " avatarAtGivenUser= " + avatarAtGivenUser);
                         }
 
                         //SEND THE AQUIRED EMAIL (FROM USER'S PROFILE) FOR AUTHENICATION
@@ -465,7 +467,8 @@ public class loginActivity extends Activity {
                     user.setPhoneNumber(phonenumberAtGivenUser);
                     user.setPassword(password);
                     user.setUid(uidAtGivenUser);
-                    Log.d("User", "Current Skoovy " + user.toString());
+                    user.setAvatar(avatarAtGivenUser);
+                    Log.d("User", "Login by user: " + user.toString());
 
                     //WELCOME TO SKOOVY
                     //declare where you intend to go
