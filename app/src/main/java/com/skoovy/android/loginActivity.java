@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -59,7 +60,6 @@ public class loginActivity extends Activity {
     private String phonenumberAtGivenUser;
     private String uidAtGivenUser;
 
-    private String skoovyUserName;
 
     Button button1;
     ImageButton button2;
@@ -81,17 +81,16 @@ public class loginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
 
-
         //get font asset
         Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
 
         //Create GUI references for this activity
-        button1 = (Button)findViewById(R.id.loginButton);
-        passwordReset = ((Button)findViewById(R.id.passwordHelp));
-        undoButton1 = ((ImageButton)findViewById(R.id.undoButton1));
-        undoButton2 = ((ImageButton)findViewById(R.id.undoButton2));
-        mEmailView = ((EditText)findViewById(R.id.emailTextField));
-        mPasswordView = ((EditText)findViewById(R.id.passwordTextField));
+        button1 = (Button) findViewById(R.id.loginButton);
+        passwordReset = ((Button) findViewById(R.id.passwordHelp));
+        undoButton1 = ((ImageButton) findViewById(R.id.undoButton1));
+        undoButton2 = ((ImageButton) findViewById(R.id.undoButton2));
+        mEmailView = ((EditText) findViewById(R.id.emailTextField));
+        mPasswordView = ((EditText) findViewById(R.id.passwordTextField));
 
         //set font on button and initial background
         button1.setTypeface(centuryGothic);
@@ -115,7 +114,7 @@ public class loginActivity extends Activity {
         });
 
         //Listen for text on email text field
-        mEmailView.setOnTouchListener(new View.OnTouchListener(){
+        mEmailView.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View arg0, MotionEvent arg1) {
                 email = mEmailView.getText().toString().trim();
                 if (email.length() > 0) {
@@ -144,14 +143,17 @@ public class loginActivity extends Activity {
         });
 
         //Listen for text on email input field
-        mEmailView.addTextChangedListener(new TextWatcher(){
-            public void afterTextChanged(Editable s) {}
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
+        mEmailView.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 email = mEmailView.getText().toString().trim();
 
-                if(TextUtils.isEmpty(password)) {
+                if (TextUtils.isEmpty(password)) {
                     return;
                 }
                 if (email.length() > 0) {
@@ -162,12 +164,11 @@ public class loginActivity extends Activity {
                     undoButton1.setVisibility(View.VISIBLE);
                     areBothFieldsSet();
                 }
-                if (email.length() > 0 && password.length() >= 8){
+                if (email.length() > 0 && password.length() >= 8) {
                     button1.setBackgroundResource(R.drawable.roundedorangebutton);   //fields are NOT empty
                     button1.setTextColor(0xFFFFFFFF);
                 }
-                if (email.length() == 0)
-                {
+                if (email.length() == 0) {
                     //there is NO text in the email text field
                     //so we trip the empty flag, HIDE the undo button,
                     //and call a check to switch image on login button
@@ -181,17 +182,19 @@ public class loginActivity extends Activity {
         });
 
         //Listen for text on password input field
-        mPasswordView.addTextChangedListener(new TextWatcher(){
-            public void afterTextChanged(Editable s) {}
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
+        mPasswordView.addTextChangedListener(new TextWatcher() {
+            public void afterTextChanged(Editable s) {
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!(mEmailView.hasFocus())) {
                     undoButton1.setVisibility(View.INVISIBLE);
                 }
                 password = mPasswordView.getText().toString().trim();
-                if (password.length() > 0)
-                {
+                if (password.length() > 0) {
                     //there is password in the email text field
                     //so we trip the empty flag, DISPLAY the undo button,
                     //and call a check to switch image on login button
@@ -199,13 +202,12 @@ public class loginActivity extends Activity {
                     undoButton2.setVisibility(View.VISIBLE);
                     areBothFieldsSet();
                 }
-                if (password.length() == 0)
-                {
+                if (password.length() == 0) {
                     //there is NO password in the email text field
                     //so we trip the empty flag, HIDE the undo button,
                     //and call a check to switch image on login button
                     isEditText2Empty = true;
-                   // button1.setTextColor(0xFF000000);
+                    // button1.setTextColor(0xFF000000);
                     undoButton2.setVisibility(View.INVISIBLE);
                     areBothFieldsSet();
                 }
@@ -213,7 +215,7 @@ public class loginActivity extends Activity {
                     button1.setBackgroundResource(R.drawable.roundedorangebutton);   //fields are NOT empty
                     button1.setTextColor(0xFFFFFFFF);
                 }
-                if (password.length() < 8){
+                if (password.length() < 8) {
                     button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);
                     button1.setTextColor(0xFF000000);
                 }
@@ -233,7 +235,7 @@ public class loginActivity extends Activity {
                     // code to execute when EditText loses focus
                     undoButton1.setVisibility(View.INVISIBLE);
                 }
-                if (hasFocus && (mEmailView.length() > 0 )) {
+                if (hasFocus && (mEmailView.length() > 0)) {
                     // code to execute when EditText has focus
                     undoButton1.setVisibility(View.VISIBLE);
                 }
@@ -242,12 +244,11 @@ public class loginActivity extends Activity {
 
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener()
-        {
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth)
-            {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {}
+                if (user != null) {
+                }
             }
         };
         mAuth.addAuthStateListener(mAuthListener);
@@ -265,7 +266,7 @@ public class loginActivity extends Activity {
                     mPasswordView.clearFocus();
 
                     View view = findViewById(R.id.activity_login);
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
                 }
                 return false;
@@ -281,8 +282,7 @@ public class loginActivity extends Activity {
      * addListenerOnButton
      * Listens to the buttons of this activity
      */
-    public void addListenerOnButton()
-    {
+    public void addListenerOnButton() {
         //undoButton1 is the undo text for email text field
         undoButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -306,13 +306,13 @@ public class loginActivity extends Activity {
                 password = mPasswordView.getText().toString().trim();
 
                 //Detect empty fields before allowing user to continue to next activity
-                if(TextUtils.isEmpty(email)){
+                if (TextUtils.isEmpty(email)) {
                     //firstName is empty
                     Toast.makeText(getApplicationContext(), "Please enter EMAIL", Toast.LENGTH_SHORT).show();
                     //stopping the function from executing further
                     return;
                 }
-                if(TextUtils.isEmpty(password)){
+                if (TextUtils.isEmpty(password)) {
                     //lastName is empty
                     Toast.makeText(getApplicationContext(), "Please enter PASSWORD", Toast.LENGTH_SHORT).show();
                     //stopping the function from executing further
@@ -320,7 +320,7 @@ public class loginActivity extends Activity {
                 }
 
                 //HIDE THE SOFT KEYBOARD
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);
 
                 //Both text fields were filled, so we allow attempt to login user
@@ -329,7 +329,7 @@ public class loginActivity extends Activity {
         });
 
         //button2 is the BACK ARROW button
-        button2 = ((ImageButton)findViewById(R.id.backtToStartButton));
+        button2 = ((ImageButton) findViewById(R.id.backtToStartButton));
         button2.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 finish();
@@ -337,7 +337,7 @@ public class loginActivity extends Activity {
         });
 
         //passwordreset is the text 'Password help?'
-        passwordReset = ((Button)findViewById(R.id.passwordHelp));
+        passwordReset = ((Button) findViewById(R.id.passwordHelp));
         passwordReset.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 //declare where you intend to go
@@ -353,17 +353,15 @@ public class loginActivity extends Activity {
      * areBothFieldsSet
      * Switches LOGIN button image if both fields are set
      */
-    public boolean areBothFieldsSet()
-    {
+    public boolean areBothFieldsSet() {
         if ((!(isEditText1Empty)) && (!(isEditText2Empty))) {
 
             return true;
         } else {
-            if(TextUtils.isEmpty(password)) {
+            if (TextUtils.isEmpty(password)) {
                 button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);  //fields ARE empty
 
-            }
-            else if (password.length() < 8) {
+            } else if (password.length() < 8) {
                 button1.setBackgroundResource(R.drawable.roundedwhitebuttonblackborder);  //fields ARE empty
             }
             return false;
@@ -378,13 +376,12 @@ public class loginActivity extends Activity {
      * Once proper email is aquired for this user (either from DB-fetching or from validated direct input), the string
      * is used for userLogin method call to authenticate this user.
      */
-    private void attemptLogin()
-    {
+    private void attemptLogin() {
         String email = mEmailView.getText().toString();
         final String password = mPasswordView.getText().toString();
 
         Boolean wasInputEmail = email.contains("@");
-        if (!wasInputEmail){
+        if (!wasInputEmail) {
             //CHECK DATABASE TO GET EMAIL VALUE FOR THIS USERNAME
             // Get an instance to our database
             FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
@@ -397,7 +394,7 @@ public class loginActivity extends Activity {
                     // do some stuff once
                     //database has returned dataSnapshot, so we can
 
-                    if(dataSnapshot.exists()){
+                    if (dataSnapshot.exists()) {
                         //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email  in Firebase DB", Toast.LENGTH_SHORT).show();
                         //HERE WE GET THE EMAIL FROM THE USER'S PROFILE FOR PURPOSE OF AUTH
 
@@ -411,14 +408,13 @@ public class loginActivity extends Activity {
                             phonenumberAtGivenUser = (String) snap.child("phoneNumber").getValue();
                             uidAtGivenUser = (String) snap.child("uid").getValue();
 
-                            Log.d("User", " emailAtGivenUser= "+  emailAtGivenUser);
+                            Log.d("User", " emailAtGivenUser= " + emailAtGivenUser);
                         }
 
                         //SEND THE AQUIRED EMAIL (FROM USER'S PROFILE) FOR AUTHENICATION
-                        userLogin(emailAtGivenUser,password);
-                    }
-                    else{
-                        Log.d("User", "USER DOES NOT EXIST" );
+                        userLogin(emailAtGivenUser, password);
+                    } else {
+                        Log.d("User", "USER DOES NOT EXIST");
                         Toast.makeText(getApplicationContext(), "User not found.  PLEASE SIGN-UP.", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -427,13 +423,11 @@ public class loginActivity extends Activity {
                 public void onCancelled(DatabaseError databaseError) {
                 }
             });
-        }
-        else {
+        } else {
             wasEmailValid = isValidEmail(email);
             if (wasEmailValid) {
-                userLogin(email,password);
-            }
-            else {
+                userLogin(email, password);
+            } else {
                 Toast.makeText(getApplicationContext(), "PLEASE ENTER A VALID USERNAME OR EMAIL", Toast.LENGTH_SHORT).show();
             }
         }
@@ -443,136 +437,74 @@ public class loginActivity extends Activity {
     /**
      * userLogin
      * Method checks email and password for authentication
+     *
      * @param loginString Either username or email strings.  (At this point username has fetched the corresponding email for this user)
-     * @param password password string entered by user
+     * @param password    password string entered by user
      */
     private void userLogin(String loginString, final String password) {
         mAuth.signInWithEmailAndPassword(loginString, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                            //USER IS NOW AUTHENTICATED!!!
-                            //Create User instance for this user
-                            User user = new User();
-                            user.setFirstname(firstnameAtGivenUser);
-                            user.setLastname(lastnameAtGivenUser);
-                            user.setBirthday(birthdayAtGivenUser);
-                            user.setUsername(email);
-                            if (emailAtGivenUser.contains("@skoovy.com")){ //user registered via mobile number instead of via email
-                                //user has not updated email in their Skoovy profile, so we continue to set their email to null.
-                                user.setEmail(null);
-                            } else {
-                                user.setEmail(emailAtGivenUser);
-                            }
-
-                            user.setPhoneCountryCode(countrycodeAtGivenUser);
-                            user.setPhonePrefixCode(prefixAtGivenUser);
-                            user.setPhoneNumber(phonenumberAtGivenUser);
-                            user.setPassword(password);
-                            user.setUid(uidAtGivenUser);
-                            Log.d("User", "Current Skoovy " + user.toString());
-
-                            //Since the user is authenticated, we also need their profile stats
-                            skoovyUserName = user.getUsername();
-//                        findSkoovyUserFollowers();
-                            FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
-                            // Get a reference to our Followers node
-                            final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
-                            currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                    if (dataSnapshot.getKey().equals(skoovyUserName)){
-                                        Log.d("User", "found a follower(s) for you");
-                                        currentSkoovyUsersFollowersReference.child(skoovyUserName).addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                int followers = 0;
-                                                for(DataSnapshot child : dataSnapshot.getChildren() ){
-                                                    Log.d("User", "FOLLOWER");
-                                                    followers++;
-                                                }
-                                                Log.d("User", "followers:"+followers);
-                                                SkoovyUser skoovyuser = new SkoovyUser();
-                                                skoovyuser.setSkoovyUserFollowers(followers);
-                                                //WELCOME TO SKOOVY
-                                                //declare where you intend to go
-                                                Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
-                                                //now make it happen
-// *******************************************************************************
-//                PROBABLY WANT TO PASS THE USER OBJECT TO THE NEXT INTENT HERE
-                                                intent6.putExtra("SkoovyUser", skoovyuser);
-// *******************************************************************************
-                                                startActivity(intent6);
-                                            }
-
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
-
-                                            }
-                                        });
-                                    }
-                                }
-
-                                @Override
-                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                }
-
-                                @Override
-                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                }
-                            });
-                        }
-                        //Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
-
-
-
-                        if (!task.isSuccessful())
-                        {
-                            Log.d("User", "signInWithEmail:onComplete: USER NOT AUTHENTICATED" );
-                            Log.w("ContentValues", "signInWithEmail", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
-                        }
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    //USER IS NOW AUTHENTICATED!!!
+                    //Create User instance for this user
+                    User user = new User();
+                    user.setFirstname(firstnameAtGivenUser);
+                    user.setLastname(lastnameAtGivenUser);
+                    user.setBirthday(birthdayAtGivenUser);
+                    user.setUsername(email);
+                    if (emailAtGivenUser.contains("@skoovy.com")) { //user registered via mobile number instead of via email
+                        //user has not updated email in their Skoovy profile, so we continue to set their email to null.
+                        user.setEmail(null);
+                    } else {
+                        user.setEmail(emailAtGivenUser);
                     }
-                });
+
+                    user.setPhoneCountryCode(countrycodeAtGivenUser);
+                    user.setPhonePrefixCode(prefixAtGivenUser);
+                    user.setPhoneNumber(phonenumberAtGivenUser);
+                    user.setPassword(password);
+                    user.setUid(uidAtGivenUser);
+                    Log.d("User", "Current Skoovy " + user.toString());
+
+                    //WELCOME TO SKOOVY
+                    //declare where you intend to go
+                    Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+                    //now make it happen
+                    // PASS THE USER OBJECT TO THE NEXT INTENT HERE
+                    intent6.putExtra("User", user);
+                    startActivity(intent6);
+                }
+            }
+        });
     }
 
 
     /**
      * isValidEmail
      * Checks for valid email pattern
+     *
      * @param target email string entered by user
      * @return boolean true if syntax matches email syntax, else false
      */
-    public final  boolean isValidEmail(String target) {
+    public final boolean isValidEmail(String target) {
         String regExpn =
                 "^(([\\w-]+\\.)+[\\w-]+|([a-zA-Z]|[\\w-]{2,}))@"
-                        +"((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
-                        +"([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
-                        +"[0-9]{1,2}|25[0-5]|2[0-4][0-9]))|"
-                        +"([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
+                        + "((([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\."
+                        + "([0-1]?[0-9]{1,2}|25[0-5]|2[0-4][0-9])\\.([0-1]?"
+                        + "[0-9]{1,2}|25[0-5]|2[0-4][0-9]))|"
+                        + "([a-zA-Z]+[\\w-]+\\.)+[a-zA-Z]{2,4})$";
 
         CharSequence inputStr = target;
 
-        Pattern pattern = Pattern.compile(regExpn,Pattern.CASE_INSENSITIVE);
+        Pattern pattern = Pattern.compile(regExpn, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(inputStr);
 
-        if(matcher.matches()) {
+        if (matcher.matches()) {
             //Toast.makeText(getApplicationContext(), " VALID EMAIL", Toast.LENGTH_SHORT).show();
             return true;
-        }
-        else {
+        } else {
             //Toast.makeText(getApplicationContext(), " BAD EMAIL", Toast.LENGTH_SHORT).show();
             return false;
         }

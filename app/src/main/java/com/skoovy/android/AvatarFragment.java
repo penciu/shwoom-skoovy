@@ -1,25 +1,23 @@
 package com.skoovy.android;
 
-import android.app.DialogFragment;
-import android.content.Context;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.Toast;
-
 /**
  * Author:  Rudi Wever
  * Date:    3/27/2017
  */
+
+import android.app.DialogFragment;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.annotation.Nullable; //import is used
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.GridView;
+import android.widget.Toast;
+
 
 public class AvatarFragment extends DialogFragment{
 
@@ -74,8 +72,7 @@ public class AvatarFragment extends DialogFragment{
             public void onItemClick(AdapterView<?> a, View v, int position, long id) {
                 //Toast.makeText(getActivity(), images[position], Toast.LENGTH_LONG).show();
                 if (mListener != null){
-                    Log.d("User", "Fragment Log ->>> Item: " + position + "selected");
-
+                    //Log.d("User", "Fragment Log ->>> Item: " + position + "selected");
                     mListener.onFragmentInteraction(position);
                 }
                 dismiss();

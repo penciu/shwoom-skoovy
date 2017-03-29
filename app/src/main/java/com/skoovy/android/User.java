@@ -62,7 +62,7 @@ public class User implements Serializable {
         return phoneNumber;
     }
 
-    public String getPassword(){
+    public String getPassword() {
         return this.password;
     }
 
@@ -100,7 +100,7 @@ public class User implements Serializable {
         Log.d("User", "EMAIL WAS SET");
     }
 
-    public void setPhoneCountryCode(String userCountry){
+    public void setPhoneCountryCode(String userCountry) {
         this.phoneCountryCode = userCountry;
         Log.d("User", "PHONECOUNTRY WAS SET");
     }
@@ -121,20 +121,19 @@ public class User implements Serializable {
         Log.d("User", "PASSWORD WAS SET");
     }
 
-    private void setNexmoPhoneNumber(){
+    private void setNexmoPhoneNumber() {
         if (phoneNumber != null) {
-            String phoneNumberData = getPhonePrefixCode().substring(2,getPhonePrefixCode().length()-1) + getPhoneNumber();
+            String phoneNumberData = getPhonePrefixCode().substring(2, getPhonePrefixCode().length() - 1) + getPhoneNumber();
             nexmoPhoneNumber = phoneNumberData.replaceAll(" ", ""); //remove any remaining spaces
             Log.d("User", "NEXMO_PHONE_NUBMER (string):" + nexmoPhoneNumber);
-        }
-        else {
+        } else {
             Log.d("User", "NEXMO_PHONE_NUBMER (string): NO PHONE # IN PROFILE");
         }
     }
 
     @Override
     public String toString() {
-        return "user [firstname=" + firstname + ", lastname=" + lastname + ", birthday=" + birthday + ", username=" + username + ", email=" + email + ", countrycode=" + phoneCountryCode + ", prefix=" + phonePrefix+ ", phonenumber=" + phoneNumber + ", nexmoPhoneNumber=" + nexmoPhoneNumber + ", password=" + password + ", uid=" + uid + "]";
+        return "user [firstname=" + firstname + ", lastname=" + lastname + ", birthday=" + birthday + ", username=" + username + ", email=" + email + ", countrycode=" + phoneCountryCode + ", prefix=" + phonePrefix + ", phonenumber=" + phoneNumber + ", nexmoPhoneNumber=" + nexmoPhoneNumber + ", password=" + password + ", uid=" + uid + "]";
     }
 
 }

@@ -68,11 +68,10 @@ public class userIsRegisteredActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent6 = getIntent();
-                SkoovyUser skoovyuser = (SkoovyUser)intent6.getSerializableExtra("SkoovyUser");
-
+                User user = (User)intent6.getSerializableExtra("User");
                 //declare where you intend to go
                 Intent intent3 = new Intent(userIsRegisteredActivity.this, UserProfile.class);
-                intent3.putExtra("SkoovyUser", skoovyuser);
+                intent3.putExtra("User", user);
                 //now make it happen
                 startActivity(intent3);
             }
