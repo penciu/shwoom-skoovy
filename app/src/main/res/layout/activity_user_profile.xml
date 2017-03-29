@@ -25,9 +25,9 @@
             android:cropToPadding="true"
             android:scaleType="fitCenter"
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_width="50dp"
-            android:layout_height="40dp" />
+            android:layout_height="40dp"
+            android:contentDescription="cameraIconButton" />
 
         <ImageView
             android:layout_width="170dp"
@@ -63,7 +63,7 @@
         android:padding="8dp"
         android:layout_height="110dp">
 
-        <ImageView
+        <ImageButton
             app:srcCompat="@drawable/c8"
             android:layout_alignParentStart="true"
             android:id="@+id/profile_avatar"
@@ -71,7 +71,9 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="false"
             android:layout_width="50dp"
-            android:layout_height="75dp" />
+            android:layout_height="75dp"
+            android:backgroundTint="@android:color/transparent"
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -265,19 +267,28 @@
 
     </RelativeLayout>
 
-    <GridView
-        android:id="@+id/profile_images_table"
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="com.skoovy.android.Profile_Content_Images"
+        android:id="@+id/fragment"
         android:layout_below="@+id/profile_dashboard"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:numColumns="2"
-        android:verticalSpacing="1dp"
-        android:horizontalSpacing="2dp"
-        android:stretchMode="columnWidth"
-        android:gravity="center"
-        android:background="@color/colorSkoovy"
-        >
+        android:layout_alignParentStart="true"
+        tools:layout="@layout/profile_content_images" />
 
-    </GridView >
+
+    <!--    <GridView
+            android:id="@+id/profile_images_table"
+            android:layout_below="@+id/profile_dashboard"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:numColumns="2"
+            android:verticalSpacing="1dp"
+            android:horizontalSpacing="3dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            android:background="@color/colorSkoovy"
+            >
+        </GridView >-->
 
 </RelativeLayout>

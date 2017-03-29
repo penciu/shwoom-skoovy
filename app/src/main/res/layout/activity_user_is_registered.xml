@@ -62,8 +62,16 @@
             android:contentDescription="@string/skoovy_beans" />
 
 
-
-
+        <TextView
+            android:text="@string/connect_with_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView11"
+            android:gravity="center_horizontal"
+            android:layout_alignWithParentIfMissing="false"
+            android:layout_alignParentTop="true"
+            android:layout_alignEnd="@+id/button1"
+            android:layout_alignStart="@+id/button1" />
 
         <Button
             android:text="@string/back_to_start_screen"
@@ -92,15 +100,14 @@
             android:id="@+id/button2" />
 
         <TextView
-            android:text="@string/connect_with_friends"
+            android:text="@string/learn_more_in_our_pp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView11"
-            android:gravity="center_horizontal"
-            android:layout_alignWithParentIfMissing="false"
-            android:layout_alignParentTop="true"
-            android:layout_alignEnd="@+id/button1"
-            android:layout_alignStart="@+id/button1" />
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/textView15"
+            android:textSize="13sp"
+            android:textColorLink="#1F1FFF" />
 
     </RelativeLayout>
 

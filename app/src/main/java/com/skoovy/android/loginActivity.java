@@ -451,7 +451,6 @@ public class loginActivity extends Activity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
                             //USER IS NOW AUTHENTICATED!!!
                             //Create User instance for this user
                             User user = new User();
@@ -542,8 +541,7 @@ public class loginActivity extends Activity {
                         {
                             Log.d("User", "signInWithEmail:onComplete: USER NOT AUTHENTICATED" );
                             Log.w("ContentValues", "signInWithEmail", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
-                                    .show();
+                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

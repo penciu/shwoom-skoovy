@@ -75,6 +75,7 @@
     <string name="mobile_phone_number">MOBILE PHONE NUMBER</string>
     <string name="we_wont_share">We won\'t share your mobile number</string>
     <string name="read_our_pp_to_learn_more">Read our <a href="#">Privacy Policy</a> to learn more.</string>
+    <string name="learn_more_in_our_pp">Learn more in our <a href="#">Privacy Policy</a></string>
     <string name="email">EMAIL</string>
     <string name="need_to_send_verification_code">We need to send a verification code</string>
     <string name="to_complete">to complete your registration.</string>
@@ -84,4 +85,18 @@
     <string name="password_help"><a href="#">Password help?</a></string>
     <string name="auth_failed">Authentication failed</string>
     <string name="verification_process">Starting verification process &#8230;</string>
+    <string name="select_your_skoovy_avatar">Select your Skoovy Avatar</string>
+    <string name="_215">×</string>
+
+    <string-array name="avatar_images">
+        <item>@drawable/c8</item>
+        <item>@drawable/c8</item>
+        <item>@drawable/c8</item>
+        <item>@drawable/c8</item>
+        <item>@drawable/c8</item>
+        <item>@drawable/c8</item>
+        <item>@drawable/c8</item>
+        <item>@drawable/c8</item>
+        <item>@drawable/c8</item>
+    </string-array>
 </resources>

@@ -549,14 +549,11 @@ public class CameraActivity extends AppCompatActivity {
             if (mTextureView.isAvailable()) {
                 mCameraId = CAMERA_FRONT;
                 frontCamera = true;
-                Toast toast = Toast.makeText(getApplicationContext(),
-                        "frontCamera = true",
-                        Toast.LENGTH_SHORT);
+                //Toast toast = Toast.makeText(getApplicationContext(), "frontCamera = true", Toast.LENGTH_SHORT);
 
-                View toastView = toast.getView();
-                toastView.setBackgroundResource(R.drawable.toast_drawable);
-                toast.show();
-                // Toast.makeText(getApplicationContext(),"frontCamera = true", Toast.LENGTH_SHORT).show();
+                //View toastView = toast.getView();
+                //toastView.setBackgroundResource(R.drawable.toast_drawable);
+                //toast.show();
                 connectCamera();
                 mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler); //save image to file
             } else {
@@ -566,7 +563,7 @@ public class CameraActivity extends AppCompatActivity {
             if (mTextureView.isAvailable()) {
                 mCameraId = CAMERA_BACK;
                 frontCamera = false;
-                Toast.makeText(getApplicationContext(),"rearCamera = true", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"rearCamera = true", Toast.LENGTH_SHORT).show();
                 connectCamera();
                 mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler); //save image to file
             } else {
@@ -699,13 +696,11 @@ public class CameraActivity extends AppCompatActivity {
         startBackgroundThread();
 
         if(mTextureView.isAvailable()) {
-            Toast.makeText(getApplicationContext(),
-                    "Texture is  available", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Texture is  available", Toast.LENGTH_SHORT).show();
             setupCamera(mTextureView.getWidth(), mTextureView.getHeight());
             connectCamera();
         } else {
-            Toast.makeText(getApplicationContext(),
-                    "Texture is not available", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getApplicationContext(), "Texture is not available", Toast.LENGTH_SHORT).show();
             mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
         }
     }
