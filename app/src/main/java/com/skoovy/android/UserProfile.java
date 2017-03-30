@@ -1,16 +1,14 @@
 package com.skoovy.android;
 
 /**
- * Author:  Rudi Wever
+ * Author:  Rudi Wever, rwever@asu.edu
  * Date:    3/26/2017
  */
+
 import java.io.File;
-import android.app.AlertDialog;
+
 import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,10 +16,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -35,7 +30,6 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,24 +42,29 @@ import java.util.Map;
 public class UserProfile extends AppCompatActivity implements AvatarFragment.OnFragmentInterationListener {
 
     //DECLARATIONS
+    //GUI
     ImageButton cameraIconButton;
     ImageButton mapMarkerIconButton;
     ImageButton profileAvatarButton;
-
     private TextView usersFollowers;
 
+    //vars
     private String skoovyUserName;
     private String skoovyUID;
     private String skoovyAvatar;
+    private ArrayList imageArrayList = new ArrayList();
+    SkoovyUser skoovyuser = new SkoovyUser();
+    private int maxCount = 6; //max number of imageViews for gridview
 
+    //refs
     private DatabaseReference fbDatabase;
     FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
 
-    private ArrayList imageArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //WE NEED user OBJECT HERE
         Intent intent3 = getIntent();
         User user = (User) intent3.getSerializableExtra("User");
@@ -73,28 +72,30 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         skoovyAvatar = user.getAvatar();
         skoovyUserName = user.getUsername();
         skoovyUID = user.getUid();
-//        Log.d("User", "AVATAR FETCHED: " + skoovyAvatar);
-//        Log.d("User", "USERNAME FETCHED: " + skoovyUserName);
-        //FETCH DASHBOARD DATA FOR THIS SKOOVY USER
-        //fetchSkoovyUsersAvatar();
-//        fetchSkoovyUsersFollower();
-        imageArrayList = new ArrayList();
+
+        //Create Firebase storage reference
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
 
+
+//============>>> CURRENTLY ONLY ONE IMAGE IS BEING FETCHED.
+//                    NEED TO CONSIDER HOW TO FETCH MULTIPLE IMAGES.
+//                      PROBABLY IMPLEMENT WITH A WHILE LOOP THAT FETCHES UNTIL NULL VALUE
+//                          COMES BACK FROM STORAGE OR UNTIL MAXCOUNT IS REACHED.
+//
+//                 QUESTION:  WHAT HAPPENS WHEN NON-JPG IS FETCHED?
+
+        //Create pointer to file on cloud storage
         StorageReference sampleRef = storageRef.child("photos/sample_image-min.jpg");
 
 
-//        File localFile = createTempFile("images", "jpg");
+        //Create localFile here ↴
         final File localFile = new File(getFilesDir(), "image1.jpg");
         sampleRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
                 // Local temp file has been created
-                Log.d("User", "localFile created");
-                Log.d("User", "localFilename: " + localFile.toString());
-//                addToImageArrayList (localFile.toString());
-//                addToImageArrayList (localFile);
+                Log.d("User", "LOCALFILE CREATED.  FILENAME: " + localFile.toString());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -103,65 +104,44 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
             }
         });
         imageArrayList.add(localFile);
-//        StorageReference sampleRef = storage.getReferenceFromUrl("gs://skoovy-b4e40.appspot.com/photos").child("sample_image-min.jpg");
 
-/*        final long ONE_MEGABYTE = 1024 * 1024;
-        sampleRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                // Data for "images/island.jpg" is returns, use this as needed
-                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                Log.d("User", "BITMAP: " + bitmap);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
-            }
-        });*/
 
         setContentView(R.layout.activity_user_profile);
-        fetchSkoovyUsersFollower();
-        fetchSkoovyUsersAvatar();
 
+        //set user profile dashboard stats
+        setSkoovyUsersFollower();
+        setSkoovyUsersAvatar();
+
+        //Create fragment for popup avatar selection
         final android.app.FragmentManager fragmentManager = getFragmentManager();
         final AvatarFragment avatarFragment = new AvatarFragment();
 
-/*        Integer[] mProfilePics = {
-                R.drawable.no_image_placeholder, R.drawable.no_image_placeholder,
-                R.drawable.no_image_placeholder, null //R.drawable.no_image_placeholder,
-                //R.drawable.no_image_placeholder, R.drawable.no_image_placeholder
-        };
-        // Step 2
-        int count = 0;
-        for (Integer i : mProfilePics) {
-            if (i != null) {
-                count++;
+
+        //THIS FILLING IN OF EMPTY ELEMENTS MIGHT NOT BE NEEDED..............
+        //Fill in any empty elements in imageArrayList with placehoder
+        Log.d("User", "imageArrayList: " + imageArrayList.size());
+        //if the imageArrayList only has 1 image then we want to show at full size
+        //however if the imageArrayList has more than 2 or more, but less than maxCount,
+        //then we want to fill in the rest of the elements with a blank placeholder.
+        if (imageArrayList.size() != 1) {
+            if (imageArrayList.size() < maxCount){
+                int missingElements = maxCount - imageArrayList.size();
+                for (int i = 0; i < missingElements; i++){
+                    imageArrayList.add(R.drawable.no_image_placeholder);
+                }
             }
         }
 
-        // Step 3
-        Integer[] newArray = new Integer[count];
 
-        // Step 4
-        int index = 0;
-        for (Integer i : mProfilePics) {
-            if (i != null) {
-                newArray[index++] = i;
-            }
-        }*/
         //Create GridView container for ImageViews being populated by ProfileImageAdapter.java
         //Image sources are designated in ProfileImageAdapter.java
         GridView gridview = (GridView) findViewById(R.id.profile_images_table);
-        Log.d("User", "imageArrayList: " + imageArrayList.size());
-        if (imageArrayList.size() < 6){
-            int missingElements = 6 - imageArrayList.size();
-            for (int i = 0; i < missingElements; i++){
-                imageArrayList.add(R.drawable.no_image_placeholder);
-            }
+        if (imageArrayList.size() == 1) {
+            gridview.setNumColumns(1);
         }
         gridview.setAdapter(new ProfileImageAdapter(this, imageArrayList));
-        gridview.setPadding(1, 1, 1, 1);
+        //if you want to hava a border around the gridview, use this...
+        //gridview.setPadding(1, 1, 1, 1);
 
         //Create GUI references
         cameraIconButton = (ImageButton) findViewById(R.id.cameraIconButton);
@@ -177,32 +157,12 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
             }
         });
 
-
         //Tell my buttons to listen up!
         addListenerOnButton();
 
-
-    }
-
-//    public void addToImageArrayList (String file) {
-    public void addToImageArrayList (File file) {
-/*
-        File imgFile = new File(file);
-
-        if (imgFile.exists()) {
-            Log.d("User", "AbsolutePath: " + imgFile.getAbsolutePath());
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-
-            ImageView myImage = (ImageView) findViewById(R.id.imageViewTEST);
-
-//            myImage.setImageBitmap(myBitmap);
-*/
-
-            imageArrayList.add(file);
+    } //END OF onCreate
 
 
-       // }
-    }
     /**
      * addListenerOnButton
      * Container for OnClickListeners
@@ -234,7 +194,7 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
 
     }
 
-    private void fetchSkoovyUsersAvatar() {
+    private void setSkoovyUsersAvatar() {
         if (skoovyAvatar == null) {
             //user still has not set an avatar
             return;
@@ -246,12 +206,12 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         profileAvatarButton.setImageResource(imgs.getResourceId(imgID, -1));
     }
 
-    private void fetchSkoovyUsersFollower() {
+    private void setSkoovyUsersFollower() {
         // Get a reference to our Followers node
         final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
         currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
             //Create new SkoovyUser to hold profile stats
-            SkoovyUser skoovyuser = new SkoovyUser();
+
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -262,7 +222,6 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             int followers = 0;
                             for (DataSnapshot child : dataSnapshot.getChildren()) {
-//                                Log.d("User", "FOLLOWER");
                                 followers++;
                             }
 //                            Log.d("User", "followers:" + followers);
@@ -303,7 +262,7 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
 
     /**
      * onFragmentInteraction
-     * This is the interface to receive data from the AvatarFragment
+     * This is the interface to receive interaction data from the AvatarFragment
      * In this interaction we also save the users avatar choice in the Firebase DB ->> 'userInfo' node
      *
      * @param position int value of the avatar's index in the avatar_imgs array
@@ -314,14 +273,16 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         TypedArray imgs = getResources().obtainTypedArray(R.array.avatar_imgs);
         //now update user profile dashboard
         profileAvatarButton.setImageResource(imgs.getResourceId(position, -1));
+        //garbage collection: return TypedArray object to cache
+        imgs.recycle();
 
         fbDatabase = FirebaseDatabase
                 .getInstance()
                 .getReference()
                 .child("userInfo")
-                .child(skoovyUID);//to send user's profile data to user's userInfo node
+                .child(skoovyUID);//pointer to user's profile data to user's userInfo node
 
-        //update avatar data for user
+        //update avatar data for user in Firebase DB
         Map<String, Object> userUpdates = new HashMap<String, Object>();
         userUpdates.put("avatar", Integer.toString(position));
         fbDatabase.updateChildren(userUpdates);
