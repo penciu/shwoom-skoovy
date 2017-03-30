@@ -47,6 +47,7 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
     ImageButton mapMarkerIconButton;
     ImageButton profileAvatarButton;
     private TextView usersFollowers;
+    private TextView usersFollowing;
 
     //vars
     private String skoovyUserName;
@@ -64,6 +65,34 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+/*
+        //CODE TO MAKE NEW NODE IN FIREBASE DB!!!
+        //(not needed for activity, but needed until nodes are created for db access)
+        DatabaseReference fbdbRef = skoovyDatabase.getReference().child("Following").child("foo");
+        Map<String, Object> hopperUpdates = new HashMap<String, Object>();
+        hopperUpdates.put("0", "Farmer Brown");
+        fbdbRef.updateChildren(hopperUpdates);
+
+*/
+
+/*
+        //CODE TO ADD NEW FOLLOWER TO A SPECIFIC USER (in this example user=rewever, .put are the followers of rwever)
+        DatabaseReference fbdbRef = skoovyDatabase.getReference().child("Following").child("rwever");
+        Map<String, Object> hopperUpdates = new HashMap<String, Object>();
+        hopperUpdates.put("0", "kowal");
+        hopperUpdates.put("1", "lilyfair");
+        hopperUpdates.put("2", "super_blah12");
+        hopperUpdates.put("3", "rick8");
+        hopperUpdates.put("4", "Samuel L. Jackson");
+        hopperUpdates.put("5", "Gabriel Macht");
+        hopperUpdates.put("6", "Steve Carell");
+        hopperUpdates.put("7", "Ben Stiller");
+        hopperUpdates.put("8", "Brittany Snow");
+        hopperUpdates.put("9", "Michelle Monaghan");
+        hopperUpdates.put("10", "Chris Pratt");
+        hopperUpdates.put("11", "Vanessa Hudgens");
+        fbdbRef.updateChildren(hopperUpdates);
+*/
 
         //WE NEED user OBJECT HERE
         Intent intent3 = getIntent();
@@ -84,6 +113,9 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
 //                          COMES BACK FROM STORAGE OR UNTIL MAXCOUNT IS REACHED.
 //
 //                 QUESTION:  WHAT HAPPENS WHEN NON-JPG IS FETCHED?
+//
+//                 QUESTION:  INSTEAD OF FETCHING AND HOLDING THE RESOURCE IN DEVICE MEMORY,
+//                            CAN WE JUST LOAD IMAGE DIRECTLY TO IMAGE VIEW (RAM)?
 
         //Create pointer to file on cloud storage
         StorageReference sampleRef = storageRef.child("photos/sample_image-min.jpg");
@@ -110,6 +142,7 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
 
         //set user profile dashboard stats
         setSkoovyUsersFollower();
+        setSkoovyUsersFollowing();
         setSkoovyUsersAvatar();
 
         //Create fragment for popup avatar selection
@@ -148,6 +181,7 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         mapMarkerIconButton = (ImageButton) findViewById(R.id.mapMarkerIconButton);
         profileAvatarButton = (ImageButton) findViewById(R.id.profile_avatar);
         usersFollowers = (TextView) findViewById(R.id.skoovyUsersFollowers);
+        usersFollowing = (TextView) findViewById(R.id.skoovyUsersFollowing);
 
         //AVATAR CLICKED, NOW OPEN AVATAR SELECTION FRAGMENT
         profileAvatarButton.setOnClickListener(new View.OnClickListener() {
@@ -204,14 +238,14 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         profileAvatarButton = (ImageButton) findViewById(R.id.profile_avatar);
         int imgID = Integer.parseInt(skoovyAvatar);
         profileAvatarButton.setImageResource(imgs.getResourceId(imgID, -1));
+        //garbage collection: return TypedArray object to cache
+        imgs.recycle();
     }
 
     private void setSkoovyUsersFollower() {
         // Get a reference to our Followers node
         final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
         currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
-            //Create new SkoovyUser to hold profile stats
-
 
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -260,6 +294,60 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         });
     }
 
+
+    private void setSkoovyUsersFollowing() {
+        // Get a reference to our Followers node
+        final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Following");
+        currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
+
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.getKey().equals(skoovyUserName)) {
+//                    Log.d("User", "found a follower(s) for you");
+                    currentSkoovyUsersFollowersReference.child(skoovyUserName).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            int following = 0;
+                            for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                following++;
+                            }
+//                            Log.d("User", "followers:" + followers);
+                            skoovyuser.setSkoovyUserFollowers(following);
+                            //NUMBER OF FOLLOWERS HAS BEEN FETCHED AND SET IN THE SKOOVYUSER CLASS
+                            //now update user profile dashboard
+                            usersFollowing.setText(String.valueOf(skoovyuser.getSkoovyUserFollowers()));
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+    }
+
+
     /**
      * onFragmentInteraction
      * This is the interface to receive interaction data from the AvatarFragment
@@ -283,7 +371,7 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
                 .child(skoovyUID);//pointer to user's profile data to user's userInfo node
 
         //update avatar data for user in Firebase DB
-        Map<String, Object> userUpdates = new HashMap<String, Object>();
+        Map<String, Object> userUpdates = new HashMap<>();
         userUpdates.put("avatar", Integer.toString(position));
         fbDatabase.updateChildren(userUpdates);
     }
