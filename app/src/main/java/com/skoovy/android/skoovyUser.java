@@ -7,6 +7,7 @@ import java.io.Serializable;
 /**
  * Created by Rudi Wever on 3/19/2017.
  * Class holds profile stats for logged in Skoovy user.
+ * CURRENTLY NOT USED
  */
 
 public class SkoovyUser implements Serializable {
@@ -39,7 +40,7 @@ public class SkoovyUser implements Serializable {
         return skoovyUserPosts;
     }
 
-    public int getSkoovyUserFollowers() {
+    public int getSkoovyUserFollowersS() {
         return skoovyUserFollowers;
     }
 
@@ -58,7 +59,7 @@ public class SkoovyUser implements Serializable {
     public void setSkoovyUserFollowers(int skoovyUserFollowers) {
         this.skoovyUserFollowers = skoovyUserFollowers;
         Log.d("User", "SKOOVYUSERFOLLOWERS WAS SET");
-        Log.d("User", "SkoovyUser Class shows "+ getSkoovyUserFollowers()+" followers for this user.");
+   //     Log.d("User", "SkoovyUser Class shows "+ getSkoovyUserFollowersS()+" followers for this user.");
     }
 
     public void setSkoovyUserFollowing(int skoovyUserFollowing) {

@@ -2,23 +2,34 @@ package com.skoovy.android;
 
 
 import android.app.Activity;
+import android.app.Dialog;
+
 import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.annotation.NonNull; //import is used
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
@@ -39,7 +50,9 @@ import java.util.regex.Pattern;
 
 
 public class loginActivity extends Activity {
-
+    private TransparentProgressDialog pd;
+    private Handler h;
+    private Runnable r;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -80,6 +93,16 @@ public class loginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        h = new Handler();
+        pd = new TransparentProgressDialog(this, R.drawable.spinner);
+        r = new Runnable() {
+            @Override
+            public void run() {
+                if (pd.isShowing()) {
+                    pd.dismiss();
+                }
+            }
+        };
 
         //get font asset
         Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
@@ -448,6 +471,8 @@ public class loginActivity extends Activity {
      * @param password    password string entered by user
      */
     private void userLogin(String loginString, final String password) {
+        pd.show();
+        h.postDelayed(r, 5000);
         mAuth.signInWithEmailAndPassword(loginString, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -518,4 +543,41 @@ public class loginActivity extends Activity {
         }
     }
 
+
+    /**
+     * TransparentProgressDialog
+     * shows spinner dialog after pressing 'next' for user to wait for next activity
+     */
+    private class TransparentProgressDialog extends Dialog {
+
+        private ImageView imageview;
+
+        public TransparentProgressDialog(Context context, int resourceIdOfImage) {
+            super(context, R.style.TransparentProgressDialog);
+            WindowManager.LayoutParams wlmp = getWindow().getAttributes();
+            wlmp.gravity = Gravity.CENTER_HORIZONTAL;
+            getWindow().setAttributes(wlmp);
+            setTitle(null);
+            setCancelable(false);
+            setOnCancelListener(null);
+            LinearLayout layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            imageview = new ImageView(context);
+            imageview.setImageResource(resourceIdOfImage);
+            layout.addView(imageview, params);
+            addContentView(layout, params);
+        }
+
+        @Override
+        public void show() {
+            super.show();
+            RotateAnimation anim = new RotateAnimation(0.0f, 12600.0f, Animation.RELATIVE_TO_SELF, .5f, Animation.RELATIVE_TO_SELF, .5f);
+            anim.setInterpolator(new LinearInterpolator());
+            anim.setRepeatCount(Animation.INFINITE);
+            anim.setDuration(30000);
+            imageview.setAnimation(anim);
+            imageview.startAnimation(anim);
+        }
+    }
 }
