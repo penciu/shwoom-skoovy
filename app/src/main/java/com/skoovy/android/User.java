@@ -20,6 +20,7 @@ public class User implements Serializable {
     private String phonePrefix;
     public String phoneCountryCode;
     private String phoneNumber;
+    private int points;
     public String uid;
     private String username;
 
@@ -66,6 +67,10 @@ public class User implements Serializable {
 
     public String getPassword() {
         return this.password;
+    }
+
+    public int getPoints() {
+        return this.points;
     }
 
     public String getNexmoPhoneNumber() {
@@ -127,6 +132,11 @@ public class User implements Serializable {
         Log.d("User", "PASSWORD WAS SET");
     }
 
+    public void setPoints(int userPoints) {
+        this.points = userPoints;
+        Log.d("User", "POINTS WAS SET");
+    }
+
     private void setNexmoPhoneNumber() {
         if (phoneNumber != null) {
             String phoneNumberData = getPhonePrefixCode().substring(2, getPhonePrefixCode().length() - 1) + getPhoneNumber();
@@ -155,6 +165,7 @@ public class User implements Serializable {
                 ", phonenumber=" + phoneNumber +
                 ", nexmoPhoneNumber=" + nexmoPhoneNumber +
                 ", password=" + password +
+                ", points=" + points +
                 ", uid=" + uid +
                 "]";
     }

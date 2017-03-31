@@ -32,9 +32,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.ChildEventListener;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -58,6 +56,7 @@ public class loginActivity extends Activity {
     private String countrycodeAtGivenUser;
     private String prefixAtGivenUser;
     private String phonenumberAtGivenUser;
+    private int pointsAtGivenUser;
     private String uidAtGivenUser;
 
     private String avatarAtGivenUser;
@@ -407,10 +406,14 @@ public class loginActivity extends Activity {
                             countrycodeAtGivenUser = (String) snap.child("phoneCountryCode").getValue();
                             prefixAtGivenUser = (String) snap.child("phonePrefixCode").getValue();
                             phonenumberAtGivenUser = (String) snap.child("phoneNumber").getValue();
+                            Log.d("User", " pointsAtGivenUser= " +  snap.child("points").getValue());
+
+                            pointsAtGivenUser = (int)(long) snap.child("points").getValue();
                             uidAtGivenUser = (String) snap.child("uid").getValue();
                             avatarAtGivenUser = (String) snap.child("avatar").getValue();
                             Log.d("User", " emailAtGivenUser= " + emailAtGivenUser);
                             Log.d("User", " avatarAtGivenUser= " + avatarAtGivenUser);
+                            Log.d("User", " pointsAtGivenUser= " + pointsAtGivenUser);
                         }
 
                         //SEND THE AQUIRED EMAIL (FROM USER'S PROFILE) FOR AUTHENICATION
@@ -419,6 +422,7 @@ public class loginActivity extends Activity {
                         Log.d("User", "USER DOES NOT EXIST");
                         Toast.makeText(getApplicationContext(), "User not found.  PLEASE SIGN-UP.", Toast.LENGTH_SHORT).show();
                     }
+                    currentSkoovyUsers.removeEventListener(this);
                 }
 
                 @Override
@@ -466,6 +470,7 @@ public class loginActivity extends Activity {
                     user.setPhonePrefixCode(prefixAtGivenUser);
                     user.setPhoneNumber(phonenumberAtGivenUser);
                     user.setPassword(password);
+                    user.setPoints(pointsAtGivenUser);
                     user.setUid(uidAtGivenUser);
                     user.setAvatar(avatarAtGivenUser);
                     Log.d("User", "Login by user: " + user.toString());
@@ -513,56 +518,4 @@ public class loginActivity extends Activity {
         }
     }
 
-    private void findSkoovyUserFollowers() {
-        // Get an instance to our database
-//        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
-//        // Get a reference to our Followers node
-//        final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
-//        currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                if (dataSnapshot.getKey().equals(skoovyUserName)){
-//                    Log.d("User", "found a follower(s) for you");
-//                    currentSkoovyUsersFollowersReference.child(skoovyUserName).addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            int followers = 0;
-//                            for(DataSnapshot child : dataSnapshot.getChildren() ){
-//                                Log.d("User", "FOLLOWER");
-//                                followers++;
-//                            }
-//                            Log.d("User", "followers:"+followers);
-//                            skoovyuser.setSkoovyUserFollowers(followers);
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
-//                }
-//            }
-//
-//            @Override
-//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//            }
-//        });
-
-    }
 }
