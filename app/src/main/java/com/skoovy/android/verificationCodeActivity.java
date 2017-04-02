@@ -28,7 +28,7 @@ import com.nexmo.sdk.verify.event.VerifyError;
 
 import java.io.IOException;
 
-import static com.skoovy.android.R.string.nexmo_application_id;
+import static com.skoovy.android.R.string.application_id;
 import static com.skoovy.android.R.string.username_or_email;
 
 public class verificationCodeActivity extends AppCompatActivity {
