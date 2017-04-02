@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -51,10 +50,18 @@ public class setUpPasswordActivity extends AppCompatActivity {
 
     Boolean isRegistered = false;
 
+    //Need to initialize this guy outside for this to work
+    User user;
+
+    private int newUserFreePoints = 100; //new user default points
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_up_password);
+
+        Intent intent5 = getIntent();
+        user = (User)intent5.getSerializableExtra("user");
 
         //get font asset
         Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
@@ -107,9 +114,10 @@ public class setUpPasswordActivity extends AppCompatActivity {
                     undobutton1.setVisibility(View.VISIBLE);
                     isEditText1Empty = false;
                     //isFieldsSet();
-                    if (password.length() > 7) {
+                    if (password.length() > 7){
                         button1.setBackgroundResource(R.drawable.roundedorangebutton);
-                    } else {
+                    }
+                    else {
                         button1.setBackgroundResource(R.drawable.roundedgreybutton);
                     }
                 }
@@ -199,36 +207,22 @@ public class setUpPasswordActivity extends AppCompatActivity {
                 }
 
                 //HIDE THE SOFT KEYBOARD
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editTextPassword.getWindowToken(), 0);
 
-
-                Intent intent5 = getIntent();
-                User user = (User) intent5.getSerializableExtra("user");
                 user.setPassword(password);
-                if (user.getEmail() == null) {
-                    user.setEmail(user.getUsername() + "@skoovy.com");
+                if(user.getEmail()==null){
+                    user.setEmail(user.getUsername()+"@skoovy.com");
                 }
                 Log.d("User", user.toString());
 
-                String key = mDatabaseUserInfo.push().getKey(); //Aquire key for node that will contain this user's data
-                user.setUid(key);
-                mDatabaseUserInfo.child(key).setValue(user);  //User registration data is now pushed to Firebase DB in node 'userInfo'
-
-                mDatabaseUsernames.child(user.getUsername()).setValue(key);
-                mDatabasePhonenumbers.child(user.getPhoneCountryCode() + user.getPhoneNumber()).setValue(key);
-                isUserRegistered();
-
                 String email = user.getEmail();
-                createAuthenticationAccount(email, password);  //User's FIREBASE AUTH account is created here with email and password.
-                SkoovyUser skoovyuser = new SkoovyUser();
 
-                //declare where you intend to go
-                Intent intent6 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
-                //now make it happen
-                // PASS THE skoovyuser OBJECT TO THE NEXT INTENT HERE
-                intent6.putExtra("SkoovyUser", skoovyuser);
-                startActivity(intent6);
+                //Because the mAuth Create User function gets run in a seperate thread
+                //I pretty much had to shove the rest of the code inside of it to ensure
+                //that the UID got passed to the database.
+                createAccount(email, password);  //User's FIREBASE AUTH account is created here with email and password.
+
             }
         });
 
@@ -245,61 +239,61 @@ public class setUpPasswordActivity extends AppCompatActivity {
 
 
     /**
-     * createAuthenticationAccount
+     * createAccount
      * Creates email/password account for FIREBASE AUTH
-     *
-     * @param email    email string
+     * @param email email string
      * @param password password string
      */
-    private void createAuthenticationAccount(String email, String password) {
-        mAuth.createUserWithEmailAndPassword(email, password)
+    private void createAccount(String email, String password) {
+        final String eml = email;
+        mAuth.createUserWithEmailAndPassword(eml, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                        if (task.isSuccessful()) {
-                            Log.d("User", "AUTHcreateUserWithEmail:onComplete:" + task.isSuccessful());
-
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d("CreateUser", "onComplete:" + task.isSuccessful());
+                                    if(!eml.contains("@skoovy.com"))
+                                        mAuth.getCurrentUser().sendEmailVerification();
+                                    String key = mAuth.getCurrentUser().getUid();
+                                    user.setUid(key);
+                                    user.setPoints(newUserFreePoints);  //starter points for the user
+                                    mDatabaseUserInfo.child(key).setValue(user);  //User registration data is now pushed to Firebase DB in node 'userInfo'
+                                    mDatabaseUsernames.child(user.getUsername()).setValue(key);
+                                    mDatabasePhonenumbers.child(user.getPhoneCountryCode()+user.getPhoneNumber()).setValue(key);
+                                    isUserRegistered();
+//                                    SkoovyUser skoovyuser = new SkoovyUser();
+//                                    Log.d("User", "AUTHcreateUserWithEmail:onComplete:" + skoovyuser.toString());
+                                    //declare where you intend to go
+                                    Intent intent6 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
+                                    intent6.putExtra("User", user);
+                                    //now make it happen
+                                    startActivity(intent6);
+                                } else {
+                                    Log.d("User", "AUTHcreateUserWithEmail:onComplete:" + task.isSuccessful());
+                                }
+                            }
                         }
-
-                        // If sign in fails, display a message to the user. If sign in succeeds
-                        // the auth state listener will be notified and logic to handle the
-                        // signed in user can be handled in the listener.
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(setUpPasswordActivity.this, R.string.auth_failed,
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
+                );
     }
 
     /**
      * isUserRegistered
      * Confirms if user push to DB was successful
      */
-    public void isUserRegistered() {
+    public void isUserRegistered () {
         Log.d("User", "REG STATUS IS GETTING CHECKED");
         mDatabaseUserInfo.orderByChild("username").equalTo(signupCreateUsernameActivity.userName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("User", "DB DATA CHANGED");
                 //database has returned a changed dataSnapshot, so do some stuff once
-
-//                if(dataSnapshot.exists()){
-//                }
-//                else{
-//                }
                 Toast.makeText(getApplicationContext(), "USER REGISTERED", Toast.LENGTH_LONG).show();
                 isRegistered = true;
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(getApplicationContext(), "REGISTERATION FAILED", Toast.LENGTH_LONG).show();
                 isRegistered = false;
-
             }
         });
     }

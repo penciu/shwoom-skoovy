@@ -87,6 +87,7 @@
     <string name="verification_process">Starting verification process &#8230;</string>
     <string name="select_your_skoovy_avatar">Select your Skoovy Avatar</string>
     <string name="_215">×</string>
+    <string name="zero">0</string>
 
     <string-array name="avatar_images">
         <item>@drawable/c8</item>

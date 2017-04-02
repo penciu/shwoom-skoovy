@@ -331,17 +331,22 @@ public class loginActivity extends Activity {
                 //Detect empty fields before allowing user to continue to next activity
                 if (TextUtils.isEmpty(email)) {
                     //firstName is empty
-                    Toast.makeText(getApplicationContext(), "Please enter EMAIL", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please enter EMAIL", Toast.LENGTH_LONG).show();
                     //stopping the function from executing further
                     return;
                 }
                 if (TextUtils.isEmpty(password)) {
                     //lastName is empty
-                    Toast.makeText(getApplicationContext(), "Please enter PASSWORD", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please enter PASSWORD", Toast.LENGTH_LONG).show();
                     //stopping the function from executing further
                     return;
                 }
-
+                if (password.length() < 8) {
+                    //lastName is empty
+                    Toast.makeText(getApplicationContext(), "Something is not quite right... \r\nPlease re-enter PASSWORD", Toast.LENGTH_LONG).show();
+                    //stopping the function from executing further
+                    return;
+                }
                 //HIDE THE SOFT KEYBOARD
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mPasswordView.getWindowToken(), 0);

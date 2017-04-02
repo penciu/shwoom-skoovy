@@ -235,7 +235,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/skoovyUsersFollowers"
-                        android:textStyle="normal|bold" />
+                        android:textStyle="normal|bold"
+                        tools:text="@string/zero" />
 
                     <TextView
                         android:text="followers"
@@ -260,7 +261,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/skoovyUsersFollowing"
-                        android:textStyle="normal|bold" />
+                        android:textStyle="normal|bold"
+                        tools:text="@string/zero" />
 
                     <TextView
                         android:text="following"

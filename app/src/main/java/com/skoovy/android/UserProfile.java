@@ -61,6 +61,8 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
     private ArrayList imageArrayList = new ArrayList();
     SkoovyUser skoovyuser = new SkoovyUser();
     private int maxCount = 6; //max number of imageViews for gridview
+    private int followers;
+    private int following;
 
     //refs
     private DatabaseReference fbDatabase;
@@ -343,7 +345,8 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
 
                             //NUMBER OF FOLLOWERS HAS BEEN FETCHED AND SET IN THE SKOOVYUSER CLASS
                             //now update user profile dashboard
-                            usersFollowers.setText(String.valueOf((int) dataSnapshot.getChildrenCount()));
+                            followers = (int) dataSnapshot.getChildrenCount();
+                            usersFollowers.setText(String.valueOf(followers));
                         }
 
                         @Override
@@ -373,6 +376,9 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+        if (followers < 1){
+            usersFollowers.setText("0");
+        }
     }
 
 
@@ -390,7 +396,8 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
 
                             //NUMBER OF FOLLOWING HAS BEEN FETCHED
                             //now update user profile dashboard
-                            usersFollowing.setText(String.valueOf((int) dataSnapshot.getChildrenCount()));
+                            following = (int) dataSnapshot.getChildrenCount();
+                            usersFollowing.setText(String.valueOf(following));
                         }
 
                         @Override
@@ -420,6 +427,9 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+        if (following < 1){
+            usersFollowing.setText("0");
+        }
     }
 
 
