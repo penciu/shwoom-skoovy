@@ -9,6 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nexmo.sdk.verify.event.SearchListener;
+import com.nexmo.sdk.verify.event.UserStatus;
+import com.nexmo.sdk.verify.event.VerifyError;
+
+import java.io.IOException;
+
 
 public class verifyMobileNumberActivity extends AppCompatActivity {
 
@@ -18,6 +24,7 @@ public class verifyMobileNumberActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_mobile_number);
 
@@ -50,22 +57,16 @@ public class verifyMobileNumberActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-
-
-
-
-
-                Toast.makeText(getApplicationContext(), "THIS IS WHERE THE NEXMO API WOULD SEND PIN VIA SMS TO USER", Toast.LENGTH_LONG).show();
                 Intent intent6 = getIntent();
-                User user = (User)intent6.getSerializableExtra("user");
+                final User user = (User)intent6.getSerializableExtra("user");
+
                 //declare where you intend to go
                 Intent intent5 = new Intent(verifyMobileNumberActivity.this, verificationCodeActivity.class);
                 //now make it happen
                 intent5.putExtra("user", user);
                 startActivity(intent5);
-
-            }
-        });
+    }
+});
 
         //button2 is the CANCEL button
         button2.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +79,5 @@ public class verifyMobileNumberActivity extends AppCompatActivity {
 
 
     }
-
-
-
 
 }

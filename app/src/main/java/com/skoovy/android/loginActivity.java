@@ -34,7 +34,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.ChildEventListener;
+import com.nexmo.sdk.NexmoClient;
+import com.nexmo.sdk.core.client.ClientBuilderException;
+import com.nexmo.sdk.verify.client.VerifyClient;
+import com.nexmo.sdk.verify.event.SearchListener;
+import com.nexmo.sdk.verify.event.UserObject;
+import com.nexmo.sdk.verify.event.UserStatus;
+import com.nexmo.sdk.verify.event.VerifyClientListener;
+import com.nexmo.sdk.verify.event.VerifyError;
 
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,7 +51,7 @@ import java.util.regex.Pattern;
 public class loginActivity extends Activity {
 
 
-    private FirebaseAuth mAuth;
+    public static FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private EditText mEmailView;
@@ -58,8 +67,11 @@ public class loginActivity extends Activity {
     private String prefixAtGivenUser;
     private String phonenumberAtGivenUser;
     private String uidAtGivenUser;
+    private String nexmoPhoneNumberAtGivenUser;
 
     private String skoovyUserName;
+
+    String TAG = "loginActivity";
 
     Button button1;
     ImageButton button2;
@@ -72,15 +84,48 @@ public class loginActivity extends Activity {
 
     Boolean wasEmailValid = false;
 
+    NexmoClient nexmoClient = null;
+    VerifyClient verifyClient = null;
 
-    Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+    Intent intent6;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+         intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
 
+        try {
+            nexmoClient = new NexmoClient.NexmoClientBuilder()
+                    .context(getApplicationContext())
+                    .applicationId(getString(R.string.application_id)) //your App key
+                    .sharedSecretKey(getString(R.string.shared_secret)) //your App secret
+                    .build();
+        } catch (ClientBuilderException e) {
+            e.printStackTrace();
+        }
 
+        verifyClient = new VerifyClient(nexmoClient);
+
+        verifyClient.addVerifyListener(new VerifyClientListener() {
+            @Override
+            public void onVerifyInProgress(final VerifyClient verifyClient, UserObject user) {
+                Log.d(TAG, "onVerifyInProgress for number: " + user.getPhoneNumber());
+            }
+
+            @Override
+            public void onUserVerified(final VerifyClient verifyClient, UserObject user) {
+                Log.d(TAG, "onUserVerified for number: " + user.getPhoneNumber());
+            }
+
+            @Override
+            public void onError(final VerifyClient verifyClient, final com.nexmo.sdk.verify.event.VerifyError errorCode, UserObject user) {
+                Log.d(TAG, "onError: " + errorCode + " for number: " + user.getPhoneNumber());
+            }
+
+            @Override
+            public void onException(final IOException exception) {}
+        });
 
         //get font asset
         Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
@@ -409,6 +454,7 @@ public class loginActivity extends Activity {
                             countrycodeAtGivenUser = (String) snap.child("phoneCountryCode").getValue();
                             prefixAtGivenUser = (String) snap.child("phonePrefixCode").getValue();
                             phonenumberAtGivenUser = (String) snap.child("phoneNumber").getValue();
+                            nexmoPhoneNumberAtGivenUser = (String) snap.child("nexmoPhoneNumber").getValue();
                             uidAtGivenUser = (String) snap.child("uid").getValue();
 
                             Log.d("User", " emailAtGivenUser= "+  emailAtGivenUser);
@@ -451,7 +497,7 @@ public class loginActivity extends Activity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
-                            Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
+                                                        Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
                             //USER IS NOW AUTHENTICATED!!!
                             //Create User instance for this user
                             User user = new User();
@@ -465,13 +511,46 @@ public class loginActivity extends Activity {
                             } else {
                                 user.setEmail(emailAtGivenUser);
                             }
-
+                            user.setNexmoPhoneNumber(nexmoPhoneNumberAtGivenUser);
                             user.setPhoneCountryCode(countrycodeAtGivenUser);
                             user.setPhonePrefixCode(prefixAtGivenUser);
                             user.setPhoneNumber(phonenumberAtGivenUser);
                             user.setPassword(password);
                             user.setUid(uidAtGivenUser);
                             Log.d("User", "Current Skoovy " + user.toString());
+
+                            //User signed up with email and is not verified
+                            if(!emailAtGivenUser.contains("@skoovy.com") && !mAuth.getCurrentUser().isEmailVerified()) {
+                                Toast.makeText(getApplicationContext(), "Please check your email for a verification link", Toast.LENGTH_LONG);
+                                mAuth.getCurrentUser().sendEmailVerification();
+                                mAuth.signOut();
+                                return;
+                            } else if (emailAtGivenUser.contains("@skoovy.com")) {
+                                verifyClient.getUserStatus(countrycodeAtGivenUser, nexmoPhoneNumberAtGivenUser, new SearchListener() {
+                                            @Override
+                                            public void onException(IOException exception) {
+
+                                            }
+
+                                            @Override
+                                            public void onUserStatus(UserStatus userStatus) {
+                                                String status = "";
+                                                switch (userStatus) {
+                                                    case USER_VERIFIED: {
+                                                        status = "USER_VERIFIED";
+                                                        break;
+                                                    }
+                                                }
+                                                Log.d(TAG, "UserStatus: " + status);
+                                                Toast.makeText(getApplicationContext(), "UserStatus: " + status, Toast.LENGTH_LONG);
+                                            }
+
+                                            @Override
+                                            public void onError(VerifyError errorCode, String errorMessage) {
+                                            }
+                                        }
+                                );
+                            }
 
                             //Since the user is authenticated, we also need their profile stats
                             skoovyUserName = user.getUsername();
@@ -499,10 +578,7 @@ public class loginActivity extends Activity {
                                                 //declare where you intend to go
                                                 Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
                                                 //now make it happen
-// *******************************************************************************
-//                PROBABLY WANT TO PASS THE USER OBJECT TO THE NEXT INTENT HERE
                                                 intent6.putExtra("SkoovyUser", skoovyuser);
-// *******************************************************************************
                                                 startActivity(intent6);
                                             }
 
@@ -515,31 +591,18 @@ public class loginActivity extends Activity {
                                 }
 
                                 @Override
-                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                }
+                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
 
                                 @Override
-                                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                }
+                                public void onChildRemoved(DataSnapshot dataSnapshot) {}
 
                                 @Override
-                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                }
+                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
 
                                 @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                }
+                                public void onCancelled(DatabaseError databaseError) {}
                             });
-                        }
-                        //Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
-
-
-
-                        if (!task.isSuccessful())
-                        {
+                        } else {
                             Log.d("User", "signInWithEmail:onComplete: USER NOT AUTHENTICATED" );
                             Log.w("ContentValues", "signInWithEmail", task.getException());
                             Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)

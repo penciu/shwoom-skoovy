@@ -2,8 +2,8 @@
     <string name="app_name">Skoovy</string>
 
     <!-- Strings Related to Nexmo -->
-    <string name="nexmo_application_id"> 1c9b5586</string>
-    <string name="nexmo_shared_secret"> 85dfafe8ae479665 </string>
+    <string name="application_id">0cf5e4c6-5c3d-40ec-bec8-73d7f3e407a3</string>
+    <string name="shared_secret">c54f6997d23b48c </string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

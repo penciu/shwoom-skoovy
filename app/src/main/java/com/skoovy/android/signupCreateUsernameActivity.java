@@ -128,7 +128,7 @@ public class signupCreateUsernameActivity extends Activity{
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 //Toast.makeText(getBaseContext(), ((EditText) v).getId() + " has focus - " + hasFocus, Toast.LENGTH_LONG).show();
-                userName = editTextUserName.getText().toString().trim();
+                userName = editTextUserName.getText().toString().trim().toLowerCase();
                 if (editTextUserName.hasFocus() && userName.length() > 0){
                     //there is text in the username text field
                     //so we display the undo button
@@ -171,7 +171,7 @@ public class signupCreateUsernameActivity extends Activity{
                 final View spinnerView = findViewById(R.id.spinnerView);
 
                 //get text from values entered and trim whitespace
-                userName = editTextUserName.getText().toString().trim();
+                userName = editTextUserName.getText().toString().trim().toLowerCase();
 
                 //Detect empty fields before allowing user to continue to next activity
                 if (TextUtils.isEmpty(userName)) {

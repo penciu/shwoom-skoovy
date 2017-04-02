@@ -121,6 +121,11 @@ public class User implements Serializable {
         Log.d("User", "PASSWORD WAS SET");
     }
 
+    public void setNexmoPhoneNumber(String nexmoPhoneNumber){
+        this.nexmoPhoneNumber = nexmoPhoneNumber;
+        Log.d("User", "NEXMO PHONE MANUALY SET");
+    }
+
     private void setNexmoPhoneNumber(){
         if (phoneNumber != null) {
             String phoneNumberData = getPhonePrefixCode().substring(2,getPhonePrefixCode().length()-1) + getPhoneNumber();
