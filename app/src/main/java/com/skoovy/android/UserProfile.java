@@ -277,6 +277,8 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
                             if (dataSnapshot.exists()) {
+                                //...("points").getValue() will always have an int value,
+                                //so no need to worry about null value here
                                 pointsAtGivenUser = (int) (long) dataSnapshot.child("points").getValue();
 
                                 //NUMBER OF POINTS HAS BEEN FETCHED
