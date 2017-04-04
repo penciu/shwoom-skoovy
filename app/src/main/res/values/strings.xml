@@ -88,16 +88,19 @@
     <string name="select_your_skoovy_avatar">Select your Skoovy Avatar</string>
     <string name="_215">×</string>
     <string name="zero">0</string>
+    <string name="choose_an_avatar">Choose an Avatar</string>
+    <string name="avatars_define">Avatars define you on the map</string>
+    <string name="personality">by personality to ensure your privacy</string>
 
-    <string-array name="avatar_images">
-        <item>@drawable/c8</item>
-        <item>@drawable/c8</item>
-        <item>@drawable/c8</item>
-        <item>@drawable/c8</item>
-        <item>@drawable/c8</item>
-        <item>@drawable/c8</item>
-        <item>@drawable/c8</item>
-        <item>@drawable/c8</item>
-        <item>@drawable/c8</item>
-    </string-array>
+    <!--    <string-array name="avatar_images">
+            <item>@drawable/c8</item>
+            <item>@drawable/c8</item>
+            <item>@drawable/c8</item>
+            <item>@drawable/c8</item>
+            <item>@drawable/c8</item>
+            <item>@drawable/c8</item>
+            <item>@drawable/c8</item>
+            <item>@drawable/c8</item>
+            <item>@drawable/c8</item>
+        </string-array>-->
 </resources>

@@ -22,8 +22,8 @@ public class ProfileImageAdapter extends BaseAdapter {
     //DECLARATIONS
     //vars
     private Context mContext;
-    int counter = 0;
-    ArrayList filenames;
+    private int counter = 0;
+    private ArrayList filenames;
 
     //Constructor
     public ProfileImageAdapter(Context context, ArrayList names) {
@@ -72,6 +72,7 @@ public class ProfileImageAdapter extends BaseAdapter {
         } else {
             imageView = (ImageView) convertView;
             imageView.setLayoutParams(new GridView.LayoutParams(halfWidth, halfHeight));  //Over-rides any un-correct settings.
+
         }
 
         //load imageView with url

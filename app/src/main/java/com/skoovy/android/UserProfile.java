@@ -79,7 +79,6 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         Map<String, Object> childUpdates = new HashMap<String, Object>();
         childUpdates.put("0", "Farmer Brown");
         fbdbRef.updateChildren(childUpdates);
-
 */
 
 /*
@@ -110,7 +109,7 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         skoovyUserName = user.getUsername();
         skoovyUserPoints = user.getPoints();
         skoovyUID = user.getUid();
-        Log.d("User", "skoovyUserPoints" + skoovyUserPoints);
+        Log.d("User", "skoovyAvatar---------->" + skoovyAvatar);
 
 /*
 
@@ -168,11 +167,11 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         usersFollowers = (TextView) findViewById(R.id.skoovyUsersFollowers);
         usersFollowing = (TextView) findViewById(R.id.skoovyUsersFollowing);
 
-        //set user profile dashboard stats
-        setSkoovyUsersFollower();
-        setSkoovyUsersFollowing();
+        //set user profile dashboard avatar & stats
         setSkoovyUsersAvatar();
         setSkoovyUsersPoints();
+        setSkoovyUsersFollower();
+        setSkoovyUsersFollowing();
 
         //Create fragment for popup avatar selection
         final android.app.FragmentManager fragmentManager = getFragmentManager();
