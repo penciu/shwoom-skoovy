@@ -84,8 +84,6 @@
         <activity
             android:name=".UserProfile"
             android:screenOrientation="portrait"></activity>
-        <activity android:name=".verificationCodeActivity" />
-        <activity android:name=".userIsRegisteredActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -96,11 +94,9 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyAKj49o9PjBvAWjsdQlyAhnG0JpP5dUBTU" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+        <activity android:name=".MapsActivity"></activity>
     </application>
 
 </manifest>

@@ -12,15 +12,16 @@ public class User implements Serializable {
     private String birthday;
     public String email;
 
-    public String firstname;
+    private String firstname;
     private String lastname;
     private String nexmoPhoneNumber;
     private String password;
     private String phonePrefix;
-    public String phoneCountryCode;
+    private String phoneCountryCode;
     private String phoneNumber;
-    public String uid;
+    private String uid;
     private String username;
+    private int points;
 
     public User() {
         //Default constructor
@@ -69,6 +70,8 @@ public class User implements Serializable {
     public String getNexmoPhoneNumber() {
         return nexmoPhoneNumber;
     }
+
+    public int getPoints() {return points;}
 
     public void setUid(String userUID) {
         this.uid = userUID;
@@ -136,6 +139,8 @@ public class User implements Serializable {
             Log.d("User", "NEXMO_PHONE_NUBMER (string): NO PHONE # IN PROFILE");
         }
     }
+
+    public void setPoints(int points) {this.points = points;}
 
     @Override
     public String toString() {

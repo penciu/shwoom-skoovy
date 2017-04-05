@@ -59,6 +59,8 @@ public class loginActivity extends Activity {
 
     public static String email;
     public static String password;
+
+    //Database content
     private String firstnameAtGivenUser;
     private String lastnameAtGivenUser;
     private String birthdayAtGivenUser;
@@ -72,6 +74,8 @@ public class loginActivity extends Activity {
     private String skoovyUserName;
 
     String TAG = "loginActivity";
+
+    private int newUserFreePoints = 100; //new user default points
 
     Button button1;
     ImageButton button2;
@@ -435,17 +439,14 @@ public class loginActivity extends Activity {
             FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
             // Get a reference to our userInfo node
             final DatabaseReference currentSkoovyUsers = skoovyDatabase.getReference("userInfo");
-
             currentSkoovyUsers.orderByChild("username").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     // do some stuff once
                     //database has returned dataSnapshot, so we can
-
                     if(dataSnapshot.exists()){
                         //Toast.makeText(getApplicationContext(), "FIREBASE WAS CHECKED: Email  in Firebase DB", Toast.LENGTH_SHORT).show();
                         //HERE WE GET THE EMAIL FROM THE USER'S PROFILE FOR PURPOSE OF AUTH
-
                         for (DataSnapshot snap : dataSnapshot.getChildren()) {
                             emailAtGivenUser = (String) snap.child("email").getValue();
                             firstnameAtGivenUser = (String) snap.child("firstname").getValue();
@@ -456,11 +457,8 @@ public class loginActivity extends Activity {
                             phonenumberAtGivenUser = (String) snap.child("phoneNumber").getValue();
                             nexmoPhoneNumberAtGivenUser = (String) snap.child("nexmoPhoneNumber").getValue();
                             uidAtGivenUser = (String) snap.child("uid").getValue();
-
                             Log.d("User", " emailAtGivenUser= "+  emailAtGivenUser);
                         }
-
-                        //SEND THE AQUIRED EMAIL (FROM USER'S PROFILE) FOR AUTHENICATION
                         userLogin(emailAtGivenUser,password);
                     }
                     else{
@@ -494,122 +492,119 @@ public class loginActivity extends Activity {
      */
     private void userLogin(String loginString, final String password) {
         mAuth.signInWithEmailAndPassword(loginString, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()){
-                                                        Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
-                            //USER IS NOW AUTHENTICATED!!!
-                            //Create User instance for this user
-                            User user = new User();
-                            user.setFirstname(firstnameAtGivenUser);
-                            user.setLastname(lastnameAtGivenUser);
-                            user.setBirthday(birthdayAtGivenUser);
-                            user.setUsername(email);
-                            if (emailAtGivenUser.contains("@skoovy.com")){ //user registered via mobile number instead of via email
-                                //user has not updated email in their Skoovy profile, so we continue to set their email to null.
-                                user.setEmail(null);
-                            } else {
-                                user.setEmail(emailAtGivenUser);
-                            }
-                            user.setNexmoPhoneNumber(nexmoPhoneNumberAtGivenUser);
-                            user.setPhoneCountryCode(countrycodeAtGivenUser);
-                            user.setPhonePrefixCode(prefixAtGivenUser);
-                            user.setPhoneNumber(phonenumberAtGivenUser);
-                            user.setPassword(password);
-                            user.setUid(uidAtGivenUser);
-                            Log.d("User", "Current Skoovy " + user.toString());
-
-                            //User signed up with email and is not verified
-                            if(!emailAtGivenUser.contains("@skoovy.com") && !mAuth.getCurrentUser().isEmailVerified()) {
-                                Toast.makeText(getApplicationContext(), "Please check your email for a verification link", Toast.LENGTH_LONG);
-                                mAuth.getCurrentUser().sendEmailVerification();
-                                mAuth.signOut();
-                                return;
-                            } else if (emailAtGivenUser.contains("@skoovy.com")) {
-                                verifyClient.getUserStatus(countrycodeAtGivenUser, nexmoPhoneNumberAtGivenUser, new SearchListener() {
-                                            @Override
-                                            public void onException(IOException exception) {
-
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
+                    Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
+                    //USER IS NOW AUTHENTICATED!!!
+                    //User signed up with email and is not verified
+                    if(!emailAtGivenUser.contains("@skoovy.com") && !mAuth.getCurrentUser().isEmailVerified()) {
+                        Toast.makeText(getApplicationContext(), "Please check your email for a verification link", Toast.LENGTH_LONG);
+                        mAuth.getCurrentUser().sendEmailVerification();
+                        mAuth.signOut();
+                        return;
+                    } else if (emailAtGivenUser.contains("@skoovy.com")) {
+                        verifyClient.getUserStatus(countrycodeAtGivenUser, nexmoPhoneNumberAtGivenUser, new SearchListener() {
+                                    @Override
+                                    public void onException(IOException exception) {}
+                                    @Override
+                                    public void onUserStatus(UserStatus userStatus) {
+                                        switch (userStatus) {
+                                            case USER_VERIFIED: {
+                                                //Create User instance for this user
+                                                final User user = new User();
+                                                populateUser(user);
+                                                Log.d("User", "Current Skoovy " + user.toString());
+                                                continueLogin(user); //Anonymous function cannot return values outside scope
+                                                break;
                                             }
-
-                                            @Override
-                                            public void onUserStatus(UserStatus userStatus) {
-                                                String status = "";
-                                                switch (userStatus) {
-                                                    case USER_VERIFIED: {
-                                                        status = "USER_VERIFIED";
-                                                        break;
-                                                    }
-                                                }
-                                                Log.d(TAG, "UserStatus: " + status);
-                                                Toast.makeText(getApplicationContext(), "UserStatus: " + status, Toast.LENGTH_LONG);
-                                            }
-
-                                            @Override
-                                            public void onError(VerifyError errorCode, String errorMessage) {
+                                            default: { //User is not verified
+                                                break;
                                             }
                                         }
-                                );
-                            }
-
-                            //Since the user is authenticated, we also need their profile stats
-                            skoovyUserName = user.getUsername();
-//                        findSkoovyUserFollowers();
-                            FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
-                            // Get a reference to our Followers node
-                            final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
-                            currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                    if (dataSnapshot.getKey().equals(skoovyUserName)){
-                                        Log.d("User", "found a follower(s) for you");
-                                        currentSkoovyUsersFollowersReference.child(skoovyUserName).addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                                int followers = 0;
-                                                for(DataSnapshot child : dataSnapshot.getChildren() ){
-                                                    Log.d("User", "FOLLOWER");
-                                                    followers++;
-                                                }
-                                                Log.d("User", "followers:"+followers);
-                                                SkoovyUser skoovyuser = new SkoovyUser();
-                                                skoovyuser.setSkoovyUserFollowers(followers);
-                                                //WELCOME TO SKOOVY
-                                                //declare where you intend to go
-                                                Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
-                                                //now make it happen
-                                                intent6.putExtra("SkoovyUser", skoovyuser);
-                                                startActivity(intent6);
-                                            }
-
-                                            @Override
-                                            public void onCancelled(DatabaseError databaseError) {
-
-                                            }
-                                        });
                                     }
+                                    @Override
+                                    public void onError(VerifyError errorCode, String errorMessage) {}
                                 }
-
-                                @Override
-                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
-
-                                @Override
-                                public void onChildRemoved(DataSnapshot dataSnapshot) {}
-
-                                @Override
-                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {}
-                            });
-                        } else {
-                            Log.d("User", "signInWithEmail:onComplete: USER NOT AUTHENTICATED" );
-                            Log.w("ContentValues", "signInWithEmail", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
-                                    .show();
-                        }
+                        );
                     }
-                });
+                } else {
+                    Log.d("User", "signInWithEmail:onComplete: USER NOT AUTHENTICATED" );
+                    Log.w("ContentValues", "signInWithEmail", task.getException());
+                    Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                }
+            }
+        );
+    }
+
+    private void continueLogin(final User user){
+        //Since the user is authenticated, we also need their profile stats
+        skoovyUserName = user.getUsername();
+//                        findSkoovyUserFollowers();
+        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
+        // Get a reference to our Followers node
+        final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
+        currentSkoovyUsersFollowersReference.orderByKey().addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                if (dataSnapshot.getKey().equals(skoovyUserName)){
+                    Log.d("User", "found a follower(s) for you");
+                    currentSkoovyUsersFollowersReference.child(skoovyUserName).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            int followers = 0;
+                            for(DataSnapshot child : dataSnapshot.getChildren() ){
+                                Log.d("User", "FOLLOWER");
+                                followers++;
+                            }
+                            Log.d("User", "followers:"+followers);
+                            //WELCOME TO SKOOVY
+                            //declare where you intend to go
+                            Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+                            //now make it happen
+                            user.setPoints(newUserFreePoints);  //starter points for the user
+                            intent6.putExtra("User", user);
+                            startActivity(intent6);
+                        }
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {}
+                    });
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
+    }
+
+    private void populateUser(User newUser) {
+        newUser.setFirstname(firstnameAtGivenUser);
+        newUser.setLastname(lastnameAtGivenUser);
+        newUser.setBirthday(birthdayAtGivenUser);
+        newUser.setUsername(email);
+        if (emailAtGivenUser.contains("@skoovy.com")){ //user registered via mobile number instead of via email
+            //user has not updated email in their Skoovy profile, so we continue to set their email to null.
+            newUser.setEmail(null);
+        } else {
+            newUser.setEmail(emailAtGivenUser);
+        }
+        newUser.setNexmoPhoneNumber(nexmoPhoneNumberAtGivenUser);
+        newUser.setPhoneCountryCode(countrycodeAtGivenUser);
+        newUser.setPhonePrefixCode(prefixAtGivenUser);
+        newUser.setPhoneNumber(phonenumberAtGivenUser);
+        newUser.setPassword(password);
+        newUser.setUid(uidAtGivenUser);
     }
 
     /**
@@ -643,7 +638,7 @@ public class loginActivity extends Activity {
     }
 
     private void findSkoovyUserFollowers() {
-        // Get an instance to our database
+        /* Get an instance to our database
 //        FirebaseDatabase skoovyDatabase = FirebaseDatabase.getInstance();
 //        // Get a reference to our Followers node
 //        final DatabaseReference currentSkoovyUsersFollowersReference = skoovyDatabase.getReference("Followers");
@@ -691,7 +686,7 @@ public class loginActivity extends Activity {
 //            @Override
 //            public void onCancelled(DatabaseError databaseError) {
 //            }
-//        });
+       });*/
 
     }
 }
