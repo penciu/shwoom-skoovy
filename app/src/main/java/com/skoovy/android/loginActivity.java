@@ -612,7 +612,6 @@ public class loginActivity extends Activity {
                 });
     }
 
-
     /**
      * isValidEmail
      * Checks for valid email pattern
