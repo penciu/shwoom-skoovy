@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "572774456876-9dp2cjp978enotk89tgihlmjmllr2o8q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skoovy.android",
+            "certificate_hash": "193495db8f2ac79e967cb2281a67739c9f86a04d"
+          }
+        },
+        {
           "client_id": "572774456876-ifjnlsjfj2oeef6kc29sakrmg4ms133j.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -58,6 +66,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "572774456876-cs58ac5f8kumb9iuh7s9qgjbq94rp40u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "asuser421.edu.userregpart2",
+            "certificate_hash": "274a5d0130b110bb0c8bd6c7dbae69c09fd00ca7"
+          }
+        },
+        {
           "client_id": "572774456876-ifjnlsjfj2oeef6kc29sakrmg4ms133j.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -100,6 +116,14 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "572774456876-pb9h6nljsg0o7jprhsdlkmt64e4p17ia.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "android.skoovy.com.skoovy",
+            "certificate_hash": "193495db8f2ac79e967cb2281a67739c9f86a04d"
+          }
+        },
         {
           "client_id": "572774456876-ifjnlsjfj2oeef6kc29sakrmg4ms133j.apps.googleusercontent.com",
           "client_type": 3

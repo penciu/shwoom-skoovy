@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="true">
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check00min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check0min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check1min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check2min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check3min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check4min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check5min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check6min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check7min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check8min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check9min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check10min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check11min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check12min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check13min" />
+
+    <item
+        android:duration="25"
+        android:drawable="@drawable/check14min" />
+
+    <item
+        android:duration="2500"
+        android:drawable="@drawable/check15min" />
+</animation-list>

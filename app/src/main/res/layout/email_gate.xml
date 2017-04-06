@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    android:gravity="center"
+    android:background="@color/colorBackdrop"
+    android:backgroundTint="@color/colorBackdrop">
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:background="@drawable/roundborder"
+        android:padding="10dp"
+        android:layout_height="175dp">
+
+        <ImageView
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/skoovylogo"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/app_name"
+            android:layout_centerHorizontal="true"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="150dp"
+            android:id="@+id/logo"
+            android:layout_height="30dp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/logo">
+
+            <ImageView
+                android:id="@+id/checkbox"
+                android:layout_width="50dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/animation_list_filling"
+                android:layout_height="40dp" />
+
+            <TextView
+                android:layout_height="wrap_content"
+                android:id="@+id/textView19"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:text="@string/kindly"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:layout_alignParentBottom="false"
+                android:paddingBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_centerHorizontal="true" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -504,7 +504,10 @@ public class loginActivity extends Activity {
                     user.setUid(uidAtGivenUser);
                     user.setAvatar(avatarAtGivenUser);
                     Log.d("User", "Login by user: " + user.toString());
-
+                    FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                    if (firebaseUser.isEmailVerified()) {
+                        Log.d("User", "firebaseUser======================> is email verified");
+                    }
                     //WELCOME TO SKOOVY
                     //declare where you intend to go
                     Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);

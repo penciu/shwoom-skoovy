@@ -2,9 +2,14 @@ package com.skoovy.android;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimationDrawable;
+import android.net.wifi.p2p.WifiP2pManager;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,21 +23,27 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.skoovy.android.Dialogs.EmailGateDialog;
 
 public class setUpPasswordActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    FirebaseUser firebaseUser;
 
     // [START declare_database_ref]
     private DatabaseReference mDatabaseUserInfo;
@@ -40,20 +51,25 @@ public class setUpPasswordActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUsernames;
 
     private EditText editTextPassword;
-    private static String password;
+    private String password;
 
     Button button1;        //go on to next activity
     ImageButton button2;        //go back to previous screen
     ImageButton undobutton1;    //undo input text in edit text field
 
-    Boolean isEditText1Empty = true;
 
-    Boolean isRegistered = false;
-
+    boolean isEditText1Empty = true;
+    boolean userIsVerfied = false;
+    boolean isRegistered = false;
+    String eml;
     //Need to initialize this guy outside for this to work
     User user;
 
     private int newUserFreePoints = 100; //new user default points
+
+    private Handler mHandler;
+    private Handler mHandler2;
+    EmailGateDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +77,7 @@ public class setUpPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_set_up_password);
 
         Intent intent5 = getIntent();
-        user = (User)intent5.getSerializableExtra("user");
+        user = (User) intent5.getSerializableExtra("user");
 
         //get font asset
         Typeface centuryGothic = Typeface.createFromAsset(getAssets(), "fonts/Century Gothic.ttf");
@@ -89,7 +105,6 @@ public class setUpPasswordActivity extends AppCompatActivity {
         button2 = (ImageButton) findViewById(R.id.backButton);
         undobutton1 = (ImageButton) findViewById(R.id.undoButton1);
         editTextPassword = (EditText) findViewById(R.id.setapasswordinput);
-
         //set font on button
         button1.setTypeface(centuryGothic);
 
@@ -114,10 +129,9 @@ public class setUpPasswordActivity extends AppCompatActivity {
                     undobutton1.setVisibility(View.VISIBLE);
                     isEditText1Empty = false;
                     //isFieldsSet();
-                    if (password.length() > 7){
+                    if (password.length() > 7) {
                         button1.setBackgroundResource(R.drawable.roundedorangebutton);
-                    }
-                    else {
+                    } else {
                         button1.setBackgroundResource(R.drawable.roundedgreybutton);
                     }
                 }
@@ -207,12 +221,12 @@ public class setUpPasswordActivity extends AppCompatActivity {
                 }
 
                 //HIDE THE SOFT KEYBOARD
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editTextPassword.getWindowToken(), 0);
 
                 user.setPassword(password);
-                if(user.getEmail()==null){
-                    user.setEmail(user.getUsername()+"@skoovy.com");
+                if (user.getEmail() == null) {
+                    user.setEmail(user.getUsername() + "@skoovy.com");
                 }
                 Log.d("User", user.toString());
 
@@ -241,32 +255,40 @@ public class setUpPasswordActivity extends AppCompatActivity {
     /**
      * createAccount
      * Creates email/password account for FIREBASE AUTH
-     * @param email email string
+     *
+     * @param email    email string
      * @param password password string
      */
     private void createAccount(String email, String password) {
-        final String eml = email;
+        eml = email;
+        Log.d("CreateUser", "createAccount: with eml: " + eml + " called");
+        Log.d("CreateUser", "createAccount: with password: " + password + " called");
         mAuth.createUserWithEmailAndPassword(eml, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    firebaseUser = mAuth.getCurrentUser();
                                     Log.d("CreateUser", "onComplete:" + task.isSuccessful());
-                                    if(!eml.contains("@skoovy.com"))
-                                        mAuth.getCurrentUser().sendEmailVerification();
-                                    String key = mAuth.getCurrentUser().getUid();
+                                    if (!eml.contains("@skoovy.com")) {
+                                        //firebaseUser.sendEmailVerification();  // had to create new method to sendEmailVerification in order to use
+                                        //.addOnCompleteListener inside of if block
+                                        sendEmailVerificationToUser();
+                                    }
+
+                                    /*String key = firebaseUser.getUid();
                                     user.setUid(key);
                                     user.setPoints(newUserFreePoints);  //starter points for the user
                                     mDatabaseUserInfo.child(key).setValue(user);  //User registration data is now pushed to Firebase DB in node 'userInfo'
                                     mDatabaseUsernames.child(user.getUsername()).setValue(key);
-                                    mDatabasePhonenumbers.child(user.getPhoneCountryCode()+user.getPhoneNumber()).setValue(key);
+                                    mDatabasePhonenumbers.child(user.getPhoneCountryCode() + user.getPhoneNumber()).setValue(key);
                                     isUserRegistered();
 //                                    SkoovyUser skoovyuser = new SkoovyUser();
                                     //declare where you intend to go
-                                    Intent intent6 = new Intent(setUpPasswordActivity.this, signupAvatar.class);
+                                    *//*Intent intent6 = new Intent(setUpPasswordActivity.this, signupAvatar.class);
                                     intent6.putExtra("User", user);
                                     //now make it happen
-                                    startActivity(intent6);
+                                    startActivity(intent6);*/
                                 } else {
                                     Log.d("User", "AUTHcreateUserWithEmail:onComplete:" + task.isSuccessful());
                                 }
@@ -275,20 +297,88 @@ public class setUpPasswordActivity extends AppCompatActivity {
                 );
     }
 
+    private void sendEmailVerificationToUser() {
+        Log.d("User", "EMAIL SENT TO firebaseUser");
+        firebaseUser.sendEmailVerification().addOnSuccessListener(this, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("User", "EMAIL SENT TO firebaseUser");
+                dialog = new EmailGateDialog();
+                dialog.show(getSupportFragmentManager(), "email_verification_gate");
+                mHandler = new Handler();
+                mHandler.postDelayed(runnable, 1000);
+            }
+        });
+    }
+
+    private Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            Log.d("User", "timer is running");
+            /* do what you need to do */
+            firebaseUser = mAuth.getCurrentUser();
+            firebaseUser.reload();
+
+            if (firebaseUser.isEmailVerified()) {
+                Log.d("User", "firebaseUser======================> is email verified");
+                userIsVerfied = true;
+                dialog.updateTextView("Thank you\nfor confirming your email!");
+                dialog.animateImageView();
+                mHandler.removeCallbacks(runnable);
+                goToNextActivity();
+
+            }
+
+            mAuth.signOut();
+            mAuth.signInWithEmailAndPassword(eml, password);
+            firebaseUser = mAuth.getCurrentUser();
+            /* do what you need to do ===> AGAIN */
+            if (!userIsVerfied) {
+                mHandler.postDelayed(this, 3000);
+            }
+        }
+    };
+
+    private void goToNextActivity() {
+        mHandler2 = new Handler();
+        mHandler2.postDelayed(runnable2, 2500);
+    }
+
+    private Runnable runnable2 = new Runnable() {
+        @Override
+        public void run() {
+            firebaseUser = mAuth.getCurrentUser();
+            mHandler2.removeCallbacks(runnable);
+            String key = firebaseUser.getUid();
+            user.setUid(key);
+            user.setPoints(newUserFreePoints);  //starter points for the user
+            mDatabaseUserInfo.child(key).setValue(user);  //User registration data is now pushed to Firebase DB in node 'userInfo'
+            mDatabaseUsernames.child(user.getUsername()).setValue(key);
+            mDatabasePhonenumbers.child(user.getPhoneCountryCode() + user.getPhoneNumber()).setValue(key);
+            isUserRegistered();
+            //declare where you intend to go
+            Intent intent6 = new Intent(setUpPasswordActivity.this, signupAvatar.class);
+            intent6.putExtra("User", user);
+            //now make it happen
+            startActivity(intent6);
+        }
+    };
+
     /**
      * isUserRegistered
      * Confirms if user push to DB was successful
      */
-    public void isUserRegistered () {
+    public void isUserRegistered() {
         Log.d("User", "REG STATUS IS GETTING CHECKED");
         mDatabaseUserInfo.orderByChild("username").equalTo(signupCreateUsernameActivity.userName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d("User", "DB DATA CHANGED");
                 //database has returned a changed dataSnapshot, so do some stuff once
-                Toast.makeText(getApplicationContext(), "USER REGISTERED", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "USER REGISTERED", Toast.LENGTH_LONG).show();
                 isRegistered = true;
             }
+
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(getApplicationContext(), "REGISTERATION FAILED", Toast.LENGTH_LONG).show();
@@ -296,5 +386,6 @@ public class setUpPasswordActivity extends AppCompatActivity {
             }
         });
     }
+
 
 }

@@ -221,7 +221,6 @@ public class signupAvatar extends Activity implements ViewSwitcher.ViewFactory, 
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
-            Log.d("User", "*******************************************");
             ImageView imageView;  //THIS IS THE IMAGE VIEW USED IN THE IMAGE ADAPTER
 
             Display display = getWindowManager().getDefaultDisplay();
@@ -231,22 +230,13 @@ public class signupAvatar extends Activity implements ViewSwitcher.ViewFactory, 
             int thirdWidth = (int) ((size.x / 3.25) - 15);
             int scaledHeight = (int) (thirdWidth * .8);
 
-            Log.d("User", "thirdWidth ===> " + thirdWidth);
-            Log.d("User", "scaledHeight ===> " + scaledHeight);
             if (convertView == null) {
-                Log.d("User", "position ===> " + position);
-                Log.d("User", "convertView ===> null");
                 imageView = new ImageView(mContext);
-//                imageView.setImageResource(imgs[position]);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 imageView.setPadding(20, 0, 20, 0);
-                //     imageView.setLayoutParams(new Gallery.LayoutParams(thirdWidth, scaledHeight));
                 imageView.setLayoutParams(new Gallery.LayoutParams(thirdWidth, scaledHeight));
             } else {
-                Log.d("User", "position ===> " + position);
-                Log.d("User", "convertView ===> !null");
                 imageView = (ImageView) convertView;
-//                imageView.setImageResource(imgs[position]);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 imageView.setPadding(20, 0, 20, 0);
                 imageView.setLayoutParams(new Gallery.LayoutParams(thirdWidth, scaledHeight));
