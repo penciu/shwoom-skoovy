@@ -92,6 +92,8 @@ public class verificationCodeActivity extends AppCompatActivity {
 
         //logOut(user.getNexmoPhoneNumber(),user.getPhoneCountryCode());
 
+
+        logOut("19288976711","US");
         //The verification text is sent at this point.
         verifyClient.getVerifiedUser(user.getPhoneCountryCode(), user.getNexmoPhoneNumber());
 
