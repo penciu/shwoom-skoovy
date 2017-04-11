@@ -60,9 +60,9 @@ import java.util.regex.Pattern;
 
 
 public class loginActivity extends Activity {
-    //private TransparentProgressDialog pd;
-    //private Handler h;
-    //private Runnable r;
+    private TransparentProgressDialog pd;
+    private Handler h;
+    private Runnable r;
 
     public static FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -112,7 +112,7 @@ public class loginActivity extends Activity {
         setContentView(R.layout.activity_login);
         intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
 
-        /*
+
         h = new Handler();
         pd = new TransparentProgressDialog(this, R.drawable.spinner);
         r = new Runnable() {
@@ -122,7 +122,7 @@ public class loginActivity extends Activity {
                     pd.dismiss();
                 }
             }
-        };*/
+        };
 
         try {
             nexmoClient = new NexmoClient.NexmoClientBuilder()
@@ -670,12 +670,18 @@ public class loginActivity extends Activity {
         }
     }
 
+    //TODO: Delete before 4/19/2017
+    public void logout(View view) {
+        mAuth.signOut();
+        Toast.makeText(getApplicationContext(), "User Logged out", Toast.LENGTH_SHORT);
+    }
+
 
     /**
      * TransparentProgressDialog
      * shows spinner dialog after pressing 'next' for user to wait for next activity
      */
-   /* private class TransparentProgressDialog extends Dialog {
+    private class TransparentProgressDialog extends Dialog {
 
         private ImageView imageview;
 
@@ -706,5 +712,5 @@ public class loginActivity extends Activity {
             imageview.setAnimation(anim);
             imageview.startAnimation(anim);
         }
-    }*/
+    }
 }

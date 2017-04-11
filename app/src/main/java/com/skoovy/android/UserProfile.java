@@ -240,9 +240,9 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
             public void onClick(View view) {
 
                 //declare where you intend to go
-//                Intent intent2 = new Intent(UserProfile.this, SOMEMAPACTIVITY.class);
+                Intent intent2 = new Intent(UserProfile.this, MapsActivity.class);
                 //now make it happen
-//                startActivity(intent2);
+                startActivity(intent2);
 //                Log.d("User", "AVATAR"+images[position]);
             }
         });

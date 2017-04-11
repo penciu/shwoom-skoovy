@@ -92,6 +92,7 @@
     <string name="avatars_define">Avatars define you on the map</string>
     <string name="personality">by personality to ensure your privacy</string>
     <string name="kindly">You\'re email has been sent \na verification link.  \nIn order to finish registration,\nkindly confirm your email by selecting the link.</string>
+    <string name="title_activity_maps">Map</string>
 
     <!--    <string-array name="avatar_images">
             <item>@drawable/c8</item>

@@ -14,7 +14,7 @@
         android:orientation="horizontal"
         android:gravity="center_horizontal"
         android:background="@color/colorBackdrop"
-        android:id="@+id/profile_header"
+        android:id="@+id/maps_header"
         android:layout_height="40dp">
 
         <ImageButton
@@ -60,7 +60,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/profile_dashboard_container"
-        android:layout_below="@+id/profile_header"
+        android:layout_below="@+id/maps_header"
         android:paddingBottom="4dp">
 
         <RelativeLayout

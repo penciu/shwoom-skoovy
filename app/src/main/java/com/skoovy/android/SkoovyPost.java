@@ -16,39 +16,26 @@ public class SkoovyPost {
 
     public enum Type {FOOD, PLACE, EVENT};
     private Type postType;
-    private String imagePath;
+    private String imagePath = "photos/";
     private String postID;
     private String ownerUID;
     private boolean visibility;
     private List<String> viewers;
     private double latitude;
     private double longitude;
-    private LatLng location;
 
     //Emtpty Constructor for Firebase stuff.
     SkoovyPost(){}
 
     //Latitude given.
-    SkoovyPost(Type postType, String image, String ownerUID, boolean visibility, double latitude, double longitude) {
+    SkoovyPost(Type postType, String imageID, String ownerUID, boolean visibility, double latitude, double longitude) {
         generatePostID();
         this.postType = postType;
-        this.imagePath = image;
+        this.imagePath = imagePath + imageID + ".jpg";
         this.ownerUID = ownerUID;
         this.visibility = visibility;
         this.latitude = latitude;
         this.longitude = longitude;
-        recreateLocation();
-    }
-
-    SkoovyPost(Type postType, String image, String ownerUID, boolean visibility, LatLng location){
-        generatePostID();
-        this.postType = postType;
-        this.imagePath = image;
-        this.ownerUID = ownerUID;
-        this.visibility = visibility;
-        this.location = location;
-        latitude = location.latitude;
-        longitude = location.longitude;
     }
 
     public Type getPostType() {
@@ -72,12 +59,7 @@ public class SkoovyPost {
     }
 
     public LatLng getLocation() {
-        if(location != null)
-            return location;
-        else {
-            location = new LatLng(latitude,longitude);
-            return location;
-        }
+        return new LatLng(latitude,longitude);
     }
 
     public void setPostType(Type postType) {
@@ -90,19 +72,12 @@ public class SkoovyPost {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
-        recreateLocation();
     }
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
-        recreateLocation();
     }
 
-    public void setLocation(LatLng location) {
-        this.location = location;
-        this.latitude = location.latitude;
-        this.longitude = location.longitude;
-    }
 
     public MarkerOptions generateMarkerOptions() {
         BitmapDescriptor a = BitmapDescriptorFactory.defaultMarker();
@@ -136,7 +111,4 @@ public class SkoovyPost {
         postID = postID.replace("-","");
     }
 
-    private void recreateLocation(){
-        location = new LatLng(latitude,longitude);
-    }
 }

@@ -1,8 +1,75 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.skoovy.android.MapsActivity" />
+    tools:context="com.skoovy.android.MapsActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/maps_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/colorBackdrop"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/profileIconButton"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentTop="false"
+            android:adjustViewBounds="false"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="cameraIconButton"
+            android:cropToPadding="false"
+            android:padding="2dp"
+            android:paddingBottom="2dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/avatar" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="5dp"
+            android:adjustViewBounds="true"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/app_name"
+            android:scaleType="fitCenter"
+            android:src="@drawable/skoovylogo" />
+
+        <ImageButton
+            android:id="@+id/cameraIconButton"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:adjustViewBounds="false"
+            android:backgroundTint="@android:color/transparent"
+            android:cropToPadding="true"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/camera" />
+
+    </RelativeLayout>
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.test.tutmap.MapsActivitry"
+        tools:layout="@layout/fragment_map" />
+
+</LinearLayout>
+
+
