@@ -123,38 +123,52 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
 
         //Create Firebase storage reference
         FirebaseStorage storage = FirebaseStorage.getInstance();
-        StorageReference storageRef = storage.getReference();
+        final StorageReference storageRef = storage.getReference();
 
-
-//============>>> CURRENTLY ONLY ONE IMAGE IS BEING FETCHED.
-//                    NEED TO CONSIDER HOW TO FETCH MULTIPLE IMAGES.
-//                      PROBABLY IMPLEMENT WITH A WHILE LOOP THAT FETCHES UNTIL NULL VALUE
-//                          COMES BACK FROM STORAGE OR UNTIL MAXCOUNT IS REACHED.
-//
-//                 QUESTION:  WHAT HAPPENS WHEN NON-JPG IS FETCHED?
-//
-//                 QUESTION:  INSTEAD OF FETCHING AND HOLDING THE RESOURCE IN DEVICE MEMORY,
-//                            CAN WE JUST LOAD IMAGE DIRECTLY TO IMAGE VIEW (RAM)?
-
-        //Create pointer to file on cloud storage
-        StorageReference sampleRef = storageRef.child("photos/sample_image-min.jpg");
-
-
-        //Create localFile here ↴
-        final File localFile = new File(getFilesDir(), "image1.jpg");
-        sampleRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+        DatabaseReference dr = skoovyDatabase.getReference("posts");
+        dr.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                // Local temp file has been created
-                Log.d("User", "LOCALFILE CREATED.  FILENAME: " + localFile.toString());
+            public void onChildAdded(DataSnapshot dS, String s) {
+                SkoovyPost post = dS.getValue(SkoovyPost.class);
+                //Create pointer to file on cloud storage
+                StorageReference sampleRef = storageRef.child(post.getImagePath());
+
+                //Create localFile here ↴
+                final File localFile = new File(getExternalCacheDir(), post.getImageID() + ".jpg");
+                sampleRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        // Local temp file has been created
+                        Log.d("User", "LOCALFILE CREATED.  FILENAME: " + localFile.toString());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+                imageArrayList.add(localFile);
             }
-        }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                // Handle any errors
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
-        imageArrayList.add(localFile);
 
 
         setContentView(R.layout.activity_user_profile);

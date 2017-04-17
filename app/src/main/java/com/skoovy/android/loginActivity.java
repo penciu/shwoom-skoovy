@@ -587,7 +587,7 @@ public class loginActivity extends Activity {
                             Log.d("User", "followers:"+followers);
                             //WELCOME TO SKOOVY
                             //declare where you intend to go
-                            Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+                            Intent intent6 = new Intent(loginActivity.this, UserProfile.class);
                             //now make it happen
                             user.setPoints(newUserFreePoints);  //starter points for the user
                             intent6.putExtra("User", user);
@@ -599,7 +599,7 @@ public class loginActivity extends Activity {
                 } else {
                     //WELCOME TO SKOOVY
                     //declare where you intend to go
-                    Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+                    Intent intent6 = new Intent(loginActivity.this, UserProfile.class);
                     //now make it happen
                     user.setPoints(newUserFreePoints);  //starter points for the user
                     intent6.putExtra("User", user);
@@ -669,13 +669,6 @@ public class loginActivity extends Activity {
             return false;
         }
     }
-
-    //TODO: Delete before 4/19/2017
-    public void logout(View view) {
-        mAuth.signOut();
-        Toast.makeText(getApplicationContext(), "User Logged out", Toast.LENGTH_SHORT);
-    }
-
 
     /**
      * TransparentProgressDialog

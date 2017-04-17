@@ -4,6 +4,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,28 +15,62 @@ import java.util.UUID;
 
 public class SkoovyPost {
 
-    public enum Type {FOOD, PLACE, EVENT};
+    public enum Type {FOOD, PLACE, EVENT}
+
+    ;
     private Type postType;
-    private String imagePath = "photos/";
+    private String imagePath = "";
+    private String imageID = "";
     private String postID;
-    private String ownerUID;
+    private String userID;
     private boolean visibility;
     private List<String> viewers;
     private double latitude;
     private double longitude;
 
     //Emtpty Constructor for Firebase stuff.
-    SkoovyPost(){}
+    SkoovyPost() {
+    }
 
     //Latitude given.
-    SkoovyPost(Type postType, String imageID, String ownerUID, boolean visibility, double latitude, double longitude) {
+    SkoovyPost(Type postType, String imageID, String userID, boolean visibility, double latitude, double longitude) {
         generatePostID();
         this.postType = postType;
-        this.imagePath = imagePath + imageID + ".jpg";
-        this.ownerUID = ownerUID;
+        this.imagePath = "photos/" + imageID + ".jpg";
+        this.imageID = imageID;
+        this.userID = userID;
         this.visibility = visibility;
         this.latitude = latitude;
         this.longitude = longitude;
+    }
+
+    public String getImageID() {
+        return imageID;
+    }
+
+    public void setImageID(String imageID) {
+        this.imageID = imageID;
+        this.imagePath = "photos/" + imageID + ".jpg";
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public void setViewers(List<String> viewers) {
+        this.viewers = viewers;
+    }
+
+    public List<String> getViewers() {
+        return viewers;
+    }
+
+    public void setVisibility(boolean visibility) {
+        this.visibility = visibility;
     }
 
     public Type getPostType() {
@@ -59,7 +94,7 @@ public class SkoovyPost {
     }
 
     public LatLng getLocation() {
-        return new LatLng(latitude,longitude);
+        return new LatLng(latitude, longitude);
     }
 
     public void setPostType(Type postType) {
@@ -81,8 +116,8 @@ public class SkoovyPost {
 
     public MarkerOptions generateMarkerOptions() {
         BitmapDescriptor a = BitmapDescriptorFactory.defaultMarker();
-        switch(postType){
-            case FOOD:{
+        switch (postType) {
+            case FOOD: {
                 a = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN);
                 break;
             }
@@ -100,15 +135,19 @@ public class SkoovyPost {
             }
         }
         MarkerOptions opts = new MarkerOptions()
-                .position(new LatLng(latitude,longitude))
+                .position(new LatLng(latitude, longitude))
                 .icon(a)
-                .title("" + imagePath);
+                .title("" + imageID + ".jpg");
         return opts;
     }
 
-    private void generatePostID(){
+    private void generatePostID() {
         postID = UUID.randomUUID().toString();
-        postID = postID.replace("-","");
+        postID = postID.replace("-", "");
     }
 
+    public void sendToDatabase() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference("posts/" + postID).setValue(this);
+    }
 }

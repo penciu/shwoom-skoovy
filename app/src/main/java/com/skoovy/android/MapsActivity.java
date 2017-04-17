@@ -17,6 +17,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -104,16 +105,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.zoomTo(17));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(gps.getLatitude(), gps.getLongitude())));
             // Read from the database.
-            database.getReference("posts/df98d75f24814513a95aceda192cfd19").addValueEventListener(new ValueEventListener() {
+            database.getReference("posts").addChildEventListener(new ChildEventListener() {
                 @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    SkoovyPost value = dataSnapshot.getValue(SkoovyPost.class);
-                    mMap.addMarker(value.generateMarkerOptions());
+                public void onChildAdded(DataSnapshot dS, String s) {
+                    SkoovyPost post = dS.getValue(SkoovyPost.class);
+                    mMap.addMarker(post.generateMarkerOptions());
                 }
                 @Override
-                public void onCancelled(DatabaseError error) {
-
-                }
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {}
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
             });
         } catch (SecurityException ex) {
             onMapReady(mMap);
@@ -127,14 +132,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public View getInfoContents(Marker marker) {
-        return prepareInfoView(getResources().getDrawable(Integer.parseInt(marker.getTitle())));
+        return prepareInfoView(Drawable.createFromPath(getExternalCacheDir().getPath() + "/" + marker.getTitle()));
     }
 
     private View prepareInfoView(Drawable image){
         ImageView infoImageView = new ImageView(MapsActivity.this);
         infoImageView.setImageDrawable(image);
-        infoImageView.setMaxWidth(200);
-        infoImageView.setMaxHeight(200);
+        infoImageView.setMinimumWidth(1000);
+        infoImageView.setMinimumHeight(1000);
         return infoImageView;
     }
 }
