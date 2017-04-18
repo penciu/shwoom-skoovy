@@ -259,11 +259,10 @@ public class setUpPasswordActivity extends AppCompatActivity {
                                     mDatabaseUsernames.child(user.getUsername()).setValue(key);
                                     mDatabasePhonenumbers.child(user.getPhoneCountryCode()+user.getPhoneNumber()).setValue(key);
                                     isUserRegistered();
-                                    SkoovyUser skoovyuser = new SkoovyUser();
 
                                     //declare where you intend to go
                                     Intent intent6 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
-                                    intent6.putExtra("SkoovyUser", skoovyuser);
+                                    intent6.putExtra("User", user);
                                     //now make it happen
                                     startActivity(intent6);
                                 } else {

@@ -120,6 +120,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onCancelled(DatabaseError databaseError) {}
             });
+
+            database.getReference("request").addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot dS, String s) {
+                    SkoovyRequest request = dS.getValue(SkoovyRequest.class);
+                    mMap.addMarker(request.generateMarkerOptions());
+                }
+                @Override
+                public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+                @Override
+                public void onChildRemoved(DataSnapshot dataSnapshot) {}
+                @Override
+                public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+                @Override
+                public void onCancelled(DatabaseError databaseError) {}
+            });
         } catch (SecurityException ex) {
             onMapReady(mMap);
         }
@@ -132,7 +148,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public View getInfoContents(Marker marker) {
-        return prepareInfoView(Drawable.createFromPath(getExternalCacheDir().getPath() + "/" + marker.getTitle()));
+        if(marker.getSnippet().equals(null))
+            return prepareInfoView(Drawable.createFromPath(getExternalCacheDir().getPath() + "/" + marker.getTitle()));
+        else
+            return null;
     }
 
     private View prepareInfoView(Drawable image){

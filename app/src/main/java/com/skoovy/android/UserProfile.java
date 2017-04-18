@@ -104,6 +104,7 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
         //WE NEED user OBJECT HERE
         Intent intent3 = getIntent();
         User user = (User) intent3.getSerializableExtra("User");
+
         //Since the user is authenticated, we also need their profile stats
         skoovyAvatar = user.getAvatar();
         skoovyUserName = user.getUsername();
