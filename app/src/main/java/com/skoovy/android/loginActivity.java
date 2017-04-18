@@ -3,13 +3,12 @@ package com.skoovy.android;
 
 import android.app.Activity;
 import android.app.Dialog;
-
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.content.Intent;
 import android.os.Handler;
-import android.support.annotation.NonNull; //import is used
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -39,7 +38,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -83,6 +81,8 @@ public class loginActivity extends Activity {
     private String phonenumberAtGivenUser;
     private String uidAtGivenUser;
     private String nexmoPhoneNumberAtGivenUser;
+    private int pointsAtGivenUser;
+    private String avatarAtGivenUser;
 
     private String skoovyUserName;
 
@@ -103,14 +103,15 @@ public class loginActivity extends Activity {
 
     NexmoClient nexmoClient = null;
     VerifyClient verifyClient = null;
-
-    Intent intent6;
+    boolean mSTatus = false;
+//    Intent intent6;
+    Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
+//        intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
 
 
         h = new Handler();
@@ -355,8 +356,7 @@ public class loginActivity extends Activity {
      * addListenerOnButton
      * Listens to the buttons of this activity
      */
-    public void addListenerOnButton()
-    {
+    public void addListenerOnButton() {
         //undoButton1 is the undo text for email text field
         undoButton1.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -480,6 +480,8 @@ public class loginActivity extends Activity {
                             phonenumberAtGivenUser = (String) snap.child("phoneNumber").getValue();
                             nexmoPhoneNumberAtGivenUser = (String) snap.child("nexmoPhoneNumber").getValue();
                             uidAtGivenUser = (String) snap.child("uid").getValue();
+                            pointsAtGivenUser = (int)(long) snap.child("points").getValue();
+                            avatarAtGivenUser = (String) snap.child("avatar").getValue();
                             Log.d("User", " emailAtGivenUser= "+  emailAtGivenUser);
                         }
                         userLogin(emailAtGivenUser,password);
@@ -488,6 +490,7 @@ public class loginActivity extends Activity {
                         Log.d("User", "USER DOES NOT EXIST" );
                         Toast.makeText(getApplicationContext(), "User not found.  PLEASE SIGN-UP.", Toast.LENGTH_SHORT).show();
                     }
+                    currentSkoovyUsers.removeEventListener(this);
                 }
 
                 @Override
@@ -514,20 +517,29 @@ public class loginActivity extends Activity {
      * @param password password string entered by user
      */
     private void userLogin(String loginString, final String password) {
+        pd.show();
+        h.postDelayed(r, 5000);
         mAuth.signInWithEmailAndPassword(loginString, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()){
                             Log.d("User", "signInWithEmail:onComplete:" + task.isSuccessful());
                             //USER IS NOW AUTHENTICATED!!!
-                            //User signed up with email and is not verified
-                            if(!emailAtGivenUser.contains("@skoovy.com") && !mAuth.getCurrentUser().isEmailVerified()) {
-                                Toast.makeText(getApplicationContext(), "Please check your email for a verification link", Toast.LENGTH_LONG);
-                                mAuth.getCurrentUser().sendEmailVerification();
-                                mAuth.signOut();
-                                return;
-                            } else if (emailAtGivenUser.contains("@skoovy.com")) {
-                                verifyClient.getUserStatus(countrycodeAtGivenUser, nexmoPhoneNumberAtGivenUser, new SearchListener() {
+                            //Create User instance for this user
+                            User user = new User();
+                            user.setFirstname(firstnameAtGivenUser);
+                            user.setLastname(lastnameAtGivenUser);
+                            user.setBirthday(birthdayAtGivenUser);
+                            user.setUsername(email);
+                            if (emailAtGivenUser.contains("@skoovy.com")) { //user registered via mobile number instead of via email
+                                //user has not updated email in their Skoovy profile, so we continue to set their email to null.
+                                user.setEmail(null);
+//                                boolean nexmoUserStatus = isNexmoPhoneNumberVerified();
+                            } else {
+                                user.setEmail(emailAtGivenUser);
+                            }
+//                            } else if (emailAtGivenUser.contains("@skoovy.com")) {
+/*                                verifyClient.getUserStatus(countrycodeAtGivenUser, nexmoPhoneNumberAtGivenUser, new SearchListener() {
                                             @Override
                                             public void onException(IOException exception) {}
                                             @Override
@@ -550,20 +562,69 @@ public class loginActivity extends Activity {
                                             @Override
                                             public void onError(VerifyError errorCode, String errorMessage) {}
                                         }
-                                );
+                                );*/
+                            user.setPhoneCountryCode(countrycodeAtGivenUser);
+                            user.setPhonePrefixCode(prefixAtGivenUser);
+                            user.setPhoneNumber(phonenumberAtGivenUser);
+                            user.setPassword(password);
+                            user.setPoints(pointsAtGivenUser);
+                            user.setUid(uidAtGivenUser);
+                            user.setAvatar(avatarAtGivenUser);
+                            Log.d("User", "Login by user: " + user.toString());
+                            FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                            if (firebaseUser.isEmailVerified()) {
+                                Log.d("User", "firebaseUser======================> is email verified");
                             }
-                        } else {
-                            Log.d("User", "signInWithEmail:onComplete: USER NOT AUTHENTICATED" );
-                            Log.w("ContentValues", "signInWithEmail", task.getException());
-                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
-                                    .show();
+                            //WELCOME TO SKOOVY
+                            //declare where you intend to go
+                            Intent intent6 = new Intent(loginActivity.this, UserProfile.class);
+                            //now make it happen
+                            // PASS THE USER OBJECT TO THE NEXT INTENT HERE
+                            user.setPoints(newUserFreePoints);
+                            intent6.putExtra("User", user);
+                            startActivity(intent6);
+                            }
                         }
+//            else {
+//                            Log.d("User", "signInWithEmail:onComplete: USER NOT AUTHENTICATED" );
+//                            Log.w("ContentValues", "signInWithEmail", task.getException());
+//                            Toast.makeText(loginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT)
+//                                    .show();
+//                        }
                     }
-                }
+
         );
     }
 
-    private void continueLogin(final User user){
+    private boolean isNexmoPhoneNumberVerified(){
+        verifyClient.getUserStatus(countrycodeAtGivenUser, nexmoPhoneNumberAtGivenUser, new SearchListener() {
+                    @Override
+                    public void onException(IOException exception) {}
+                    @Override
+                    public void onUserStatus(UserStatus userStatus) {
+                        switch (userStatus) {
+                            case USER_VERIFIED: {
+                                //Create User instance for this user
+//                                final User user = new User();
+//                                populateUser(user);
+//                                Log.d("User", "Current Skoovy " + user.toString());
+//                                continueLogin(user); //Anonymous function cannot return values outside scope
+                                mSTatus = true;
+                                break;
+                            }
+                            default: { //User is not verified
+                                break;
+                            }
+                        }
+                    }
+                    @Override
+                    public void onError(VerifyError errorCode, String errorMessage) {}
+                }
+        );
+        return mSTatus;
+    }
+
+  /*  private void continueLogin(final User user){
         Log.d("USER","continueLogin");
         //Since the user is authenticated, we also need their profile stats
         skoovyUserName = user.getUsername();
@@ -587,7 +648,7 @@ public class loginActivity extends Activity {
                             Log.d("User", "followers:"+followers);
                             //WELCOME TO SKOOVY
                             //declare where you intend to go
-                            Intent intent6 = new Intent(loginActivity.this, UserProfile.class);
+                            Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
                             //now make it happen
                             user.setPoints(newUserFreePoints);  //starter points for the user
                             intent6.putExtra("User", user);
@@ -599,7 +660,7 @@ public class loginActivity extends Activity {
                 } else {
                     //WELCOME TO SKOOVY
                     //declare where you intend to go
-                    Intent intent6 = new Intent(loginActivity.this, UserProfile.class);
+                    Intent intent6 = new Intent(loginActivity.this, userIsRegisteredActivity.class);
                     //now make it happen
                     user.setPoints(newUserFreePoints);  //starter points for the user
                     intent6.putExtra("User", user);
@@ -620,8 +681,8 @@ public class loginActivity extends Activity {
             public void onCancelled(DatabaseError databaseError) {}
         });
     }
-
-    private void populateUser(User newUser) {
+*/
+ /*   private void populateUser(User newUser) {
         newUser.setFirstname(firstnameAtGivenUser);
         newUser.setLastname(lastnameAtGivenUser);
         newUser.setBirthday(birthdayAtGivenUser);
@@ -639,7 +700,7 @@ public class loginActivity extends Activity {
         newUser.setPassword(password);
         newUser.setUid(uidAtGivenUser);
     }
-
+*/
     /**
      * isValidEmail
      * Checks for valid email pattern
@@ -669,6 +730,13 @@ public class loginActivity extends Activity {
             return false;
         }
     }
+
+    //TODO: Delete before 4/19/2017
+    public void logout(View view) {
+        mAuth.signOut();
+        Toast.makeText(getApplicationContext(), "User Logged out", Toast.LENGTH_SHORT);
+    }
+
 
     /**
      * TransparentProgressDialog
