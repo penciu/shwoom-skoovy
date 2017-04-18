@@ -58,10 +58,10 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="42dp">
 
         <EditText
-            android:layout_width="257dp"
+            android:layout_width="255dp"
             android:layout_height="40dp"
             android:layout_marginStart="11dp"
             android:inputType="textEmailAddress"
@@ -70,8 +70,9 @@
             android:backgroundTint="#888888"
             android:minWidth="280dp"
             android:maxWidth="314dp"
-            android:layout_marginTop="-5dp"
-            android:textColor="#FF7F00" />
+            android:textColor="#FF7F00"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentTop="true" />
 
         <ImageButton
             android:layout_width="17dp"
@@ -99,72 +100,74 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="42dp">
 
         <EditText
-            android:layout_width="257dp"
-            android:layout_height="40dp"
-            android:inputType="textPassword"
-            android:ems="10"
             android:id="@+id/passwordTextField"
-            android:backgroundTint="#888888"
-            android:minWidth="280dp"
-            android:maxWidth="314dp"
-            android:layout_alignParentTop="true"
+            android:layout_width="255dp"
+            android:layout_height="40dp"
             android:layout_alignParentStart="true"
             android:layout_marginStart="11dp"
-            android:layout_marginTop="-5dp"
+            android:backgroundTint="#888888"
+            android:ems="10"
             android:imeActionId="@+id/login"
             android:imeOptions="actionUnspecified"
-            android:textColor="#FF7F00" />
+            android:inputType="textPassword"
+            android:maxWidth="314dp"
+            android:minWidth="280dp"
+            android:textColor="#FF7F00"
+            android:layout_alignParentTop="true" />
 
         <ImageButton
+            android:id="@+id/undoButton2"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:src="@drawable/close"
-            android:id="@+id/undoButton2"
             android:layout_alignEnd="@+id/passwordTextField"
+            android:layout_gravity="end"
             android:backgroundTint="@android:color/transparent"
-            android:layout_gravity="end" />
+            android:src="@drawable/close" />
 
     </RelativeLayout>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:inputType="textPersonName"
-        android:text="@string/password_help"
-        android:ems="10"
-        android:id="@+id/passwordHelp"
-        android:autoLink="web"
-        android:linksClickable="true"
-        android:textColorLink="#1F1FFF"
-        android:gravity="center_vertical|center_horizontal"
-        android:textColor="#1F1FFF"
-        android:backgroundTint="@android:color/transparent"
-        android:background="?android:attr/selectableItemBackground"
-        android:focusable="false"
-        android:layout_centerHorizontal="true"
-        android:textSize="15dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
-            android:text="@string/next"
+            android:id="@+id/loginButton"
             android:layout_width="190dp"
             android:layout_height="42dp"
-            android:adjustViewBounds="true"
-            android:id="@+id/loginButton"
-            android:background="@drawable/roundedwhitebuttonblackborder"
-            android:textColor="#000000"
-            android:textAllCaps="false"
-            android:textSize="25sp"
+            android:layout_below="@+id/passwordHelp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:shadowRadius="0" />
+            android:layout_marginTop="22dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/roundedwhitebuttonblackborder"
+            android:shadowRadius="0"
+            android:text="@string/next"
+            android:textAllCaps="false"
+            android:textColor="#000000"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/passwordHelp"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
+            android:autoLink="web"
+            android:background="?android:attr/selectableItemBackground"
+            android:backgroundTint="@android:color/transparent"
+            android:ems="10"
+            android:focusable="false"
+            android:gravity="center_vertical|center_horizontal"
+            android:inputType="textPersonName"
+            android:linksClickable="true"
+            android:text="@string/password_help"
+            android:textColor="#1F1FFF"
+            android:textColorLink="#1F1FFF"
+            android:textSize="15dp" />
 
     </RelativeLayout>
 
