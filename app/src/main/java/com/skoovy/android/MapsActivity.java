@@ -148,7 +148,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public View getInfoContents(Marker marker) {
-        if(marker.getSnippet().equals(null))
+        if(marker.getSnippet()==(null))
             return prepareInfoView(Drawable.createFromPath(getExternalCacheDir().getPath() + "/" + marker.getTitle()));
         else
             return null;
