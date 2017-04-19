@@ -261,7 +261,7 @@ public class setUpPasswordActivity extends AppCompatActivity {
                                     isUserRegistered();
 
                                     //declare where you intend to go
-                                    Intent intent6 = new Intent(setUpPasswordActivity.this, userIsRegisteredActivity.class);
+                                    Intent intent6 = new Intent(setUpPasswordActivity.this, signupAvatar.class);
                                     intent6.putExtra("User", user);
                                     //now make it happen
                                     startActivity(intent6);
