@@ -980,7 +980,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private void createVideoFolder() {
         File movieFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES);
-        mVideoFolder = new File(movieFile, "camera2VideoImage");
+        mVideoFolder = new File(movieFile, "skoovyMedia");
         if(!mVideoFolder.exists()) {
             mVideoFolder.mkdirs();
         }
@@ -996,7 +996,7 @@ public class CameraActivity extends AppCompatActivity {
 
     private void createImageFolder() {
         File imageFile = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        mImageFolder = new File(imageFile, "camera2VideoImage");
+        mImageFolder = new File(imageFile, "skoovyMedia");
         if(!mImageFolder.exists()) {
             mImageFolder.mkdirs();
         }
