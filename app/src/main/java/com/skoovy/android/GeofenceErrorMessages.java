@@ -1,9 +1,9 @@
-package com.skoovy.android;
+/*package com.skoovy.android;
 
 /**
  * Created by Lilith on 4/19/2017.
  */
-
+/*
 import android.content.Context;
 import android.content.res.Resources;
 
@@ -12,16 +12,18 @@ import com.google.android.gms.location.GeofenceStatusCodes;
 /**
  * Geofence error codes mapped to error messages.
  */
+/*
 public class GeofenceErrorMessages {
     /**
      * Prevents instantiation.
      */
-    private GeofenceErrorMessages() {
-    }
+   // private GeofenceErrorMessages() {
+ //   }
 
     /**
      * Returns the error string for a geofencing error code.
      */
+    /*
     public static String getErrorString(Context context, int errorCode) {
         Resources mResources = context.getResources();
 
@@ -42,3 +44,4 @@ public class GeofenceErrorMessages {
         }
     }
 }
+*/
