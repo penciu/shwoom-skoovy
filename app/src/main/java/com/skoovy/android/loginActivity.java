@@ -584,6 +584,9 @@ public class loginActivity extends Activity {
                             intent6.putExtra("User", user);
                             startActivity(intent6);
                             }
+                            else{
+                            Toast.makeText(getApplicationContext(), "Email not found or Incorrect Password", Toast.LENGTH_LONG).show();
+                        }
                         }
 //            else {
 //                            Log.d("User", "signInWithEmail:onComplete: USER NOT AUTHENTICATED" );
