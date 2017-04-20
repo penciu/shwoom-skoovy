@@ -20,7 +20,11 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.UUID;
 
 public class PicToFirebase extends AppCompatActivity implements View.OnClickListener /*  implementing click listener */ {
     //a constant to track the file chooser intent
@@ -82,6 +86,7 @@ public class PicToFirebase extends AppCompatActivity implements View.OnClickList
             }
         }
     }
+   
 
     //this method will upload the file
     private void uploadFile() {
@@ -92,7 +97,17 @@ public class PicToFirebase extends AppCompatActivity implements View.OnClickList
             progressDialog.setTitle("Uploading");
             progressDialog.show();
 
-            StorageReference riversRef = storageReference.child("photos/picTest1.jpg");
+            String imageID = UUID.randomUUID().toString();
+            imageID = imageID.replace("-", "");
+
+            //createImageFileName imageID;
+            //imageID = new createImageFileName();
+            GPSTracker gps = new GPSTracker(getApplicationContext());
+            SkoovyPost post = new SkoovyPost(SkoovyPost.Type.FOOD, imageID, imageID, true, gps.getLatitude(), gps.getLongitude());
+            //SkoovyPost post = new SkoovyPost(SkoovyPost.Type.FOOD, imageID, imageID, true, 37, -123);
+            post.sendToDatabase();
+
+            StorageReference riversRef = storageReference.child("photos/"+imageID+".jpg");
             riversRef.putFile(filePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -120,7 +135,7 @@ public class PicToFirebase extends AppCompatActivity implements View.OnClickList
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             //calculating progress percentage
-                            double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
+                            double progress = 100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount();
 
                             //displaying percentage in progress dialog
                             progressDialog.setMessage("Uploaded " + ((int) progress) + "%...");
@@ -144,4 +159,21 @@ public class PicToFirebase extends AppCompatActivity implements View.OnClickList
             uploadFile();
         }
     }
+
+    private class createImageFileName {
+
+        private String mImageFileName;
+        private File mImageFolder;
+
+        public File createImageFileName() throws IOException {
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String prepend = "IMAGE_" + timestamp + "_";
+            File imageFile = File.createTempFile(prepend, ".jpg", mImageFolder);
+            mImageFileName = imageFile.getAbsolutePath();
+            // sendImageToFirebase(imageFile); //mine
+            return imageFile;
+        }
+    }
+
+
 }
