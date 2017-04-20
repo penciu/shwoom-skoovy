@@ -60,7 +60,7 @@ public class UserProfile extends AppCompatActivity implements AvatarFragment.OnF
     private String skoovyAvatar;
     private ArrayList imageArrayList = new ArrayList();
     SkoovyUser skoovyuser = new SkoovyUser();
-    private int maxCount = 6; //max number of imageViews for gridview
+    private int maxCount = 2; //max number of imageViews for gridview
     private int followers;
     private int following;
 
