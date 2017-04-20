@@ -224,7 +224,7 @@ public class CameraActivity extends AppCompatActivity {
                             Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
                             if(afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED ||
                                     afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED) {
-                                Toast.makeText(getApplicationContext(), "AF Locked!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Captured", Toast.LENGTH_SHORT).show();
                                 startStillCaptureRequest();
                             }
                             break;
@@ -252,7 +252,7 @@ public class CameraActivity extends AppCompatActivity {
                             Integer afState = captureResult.get(CaptureResult.CONTROL_AF_STATE);
                             if(afState == CaptureResult.CONTROL_AF_STATE_FOCUSED_LOCKED ||
                                     afState == CaptureResult.CONTROL_AF_STATE_NOT_FOCUSED_LOCKED) {
-                                Toast.makeText(getApplicationContext(), "AF Locked!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Captured", Toast.LENGTH_SHORT).show();
                                 startStillCaptureRequest();
                             }
                             break;
@@ -311,7 +311,7 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 flashstatus = flashstatus.getNext();
-                Toast.makeText(CameraActivity.this, "mFlashState:" + flashstatus, Toast.LENGTH_LONG).show();
+                Toast.makeText(CameraActivity.this, "mFlashState:" + flashstatus, Toast.LENGTH_SHORT).show();
                 if (flashstatus == null) return;
                 switch (flashstatus) {
                     case FLASHAUTOMATIC:
@@ -868,10 +868,10 @@ public class CameraActivity extends AppCompatActivity {
         }
     }
     private void startPreview() {
+        //Toast.makeText(startPreview(), "This is my Toast message!", Toast.LENGTH_LONG).show();
         SurfaceTexture surfaceTexture = mTextureView.getSurfaceTexture();
         surfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
         Surface previewSurface = new Surface(surfaceTexture);
-
         try {
             mCaptureRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mCaptureRequestBuilder.addTarget(previewSurface);
