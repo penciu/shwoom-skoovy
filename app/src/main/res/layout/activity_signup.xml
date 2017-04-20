@@ -51,44 +51,47 @@
         android:gravity="center_horizontal" />
 
     <TextView
-        android:text="@string/first_name"
+        android:id="@+id/textView3"
         android:layout_width="313dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="11dp"
         android:layout_marginTop="17dp"
+        android:text="@string/first_name"
         android:textColor="#888888"
-        android:id="@+id/textView3"
         android:textSize="16sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="41dp">
+
         <EditText
+            android:id="@+id/firstName"
             android:layout_width="257dp"
             android:layout_height="40dp"
-            android:layout_marginStart="11dp"
-            android:ems="10"
-            android:id="@+id/firstName"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="13dp"
             android:backgroundTint="#888888"
-            android:minWidth="280dp"
-            android:maxWidth="314dp"
-            android:layout_marginTop="-5dp"
+            android:ems="10"
             android:inputType="textCapSentences"
+            android:maxWidth="314dp"
+            android:minWidth="280dp"
             android:textColor="#FF7F00"
             android:textSize="20sp" />
 
 
         <ImageButton
+            android:id="@+id/undoButton1"
             android:layout_width="17dp"
             android:layout_height="17dp"
-            android:src="@drawable/close"
-            android:id="@+id/undoButton1"
             android:layout_alignEnd="@+id/firstName"
-            android:backgroundTint="@android:color/transparent"
             android:layout_gravity="end"
-            android:layout_marginTop="0dp"
             android:layout_marginEnd="-17dp"
-            android:contentDescription="@string/undo" />
+            android:layout_marginTop="0dp"
+            android:backgroundTint="@android:color/transparent"
+            android:contentDescription="@string/undo"
+            android:src="@drawable/close" />
 
     </RelativeLayout>
 
@@ -104,7 +107,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="37dp">
         <EditText
             android:layout_width="257dp"
             android:layout_height="40dp"
@@ -119,7 +122,8 @@
             android:layout_marginTop="-5dp"
             android:inputType="textCapSentences"
             android:textColor="#FF7F00"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_alignParentBottom="true" />
 
         <ImageButton
             android:layout_width="17dp"
@@ -138,46 +142,41 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:text="@string/by_clicking_below"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="26dp"
 
-            android:id="@+id/textView"
             android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="16dp"
-            android:textSize="14sp"
-            android:layout_marginTop="-3dp" />
+            android:layout_alignStart="@+id/textView10"
+            android:layout_marginTop="11dp"
+            android:text="@string/by_clicking_below"
+            android:textSize="14sp" />
 
         <TextView
-            android:text="@string/tos_and_pp"
+            android:id="@+id/textView10"
             android:layout_width="match_parent"
             android:layout_height="30dp"
-            android:id="@+id/textView10"
-            android:autoLink="web"
-            android:linksClickable="true"
-            android:textColorLink="#1F1FFF"
-            android:layout_below="@+id/textView"
             android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView"
             android:layout_marginStart="16dp"
             android:layout_marginTop="-8dp"
+            android:autoLink="web"
+            android:linksClickable="true"
+            android:text="@string/tos_and_pp"
+            android:textColorLink="#1F1FFF"
             android:textSize="14sp" />
 
         <Button
-            android:text="@string/sign_up"
+            android:id="@+id/signupButton"
             android:layout_width="190dp"
             android:layout_height="42dp"
-            android:id="@+id/signupButton"
             android:layout_below="@+id/textView10"
-            android:background="@drawable/roundedgreybutton"
-            android:textColor="#FFFFFF"
-            android:textAllCaps="false"
-            android:textSize="25sp"
-            android:layout_marginBottom="68dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="40dp"/>
+            android:background="@drawable/roundedgreybutton"
+            android:text="@string/sign_up"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp" />
 
     </RelativeLayout>
 
