@@ -103,7 +103,7 @@ public class PicToFirebase extends AppCompatActivity implements View.OnClickList
             //createImageFileName imageID;
             //imageID = new createImageFileName();
             GPSTracker gps = new GPSTracker(getApplicationContext());
-            SkoovyPost post = new SkoovyPost(SkoovyPost.Type.FOOD, imageID, imageID, true, gps.getLatitude(), gps.getLongitude());
+            SkoovyPost post = new SkoovyPost(SkoovyPost.Type.FOOD, imageID, imageID, gps.getLatitude(), gps.getLongitude());
             //SkoovyPost post = new SkoovyPost(SkoovyPost.Type.FOOD, imageID, imageID, true, 37, -123);
             post.sendToDatabase();
 
