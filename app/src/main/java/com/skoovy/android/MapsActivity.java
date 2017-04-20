@@ -4,9 +4,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,11 +20,18 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleMap.InfoWindowAdapter {
@@ -33,7 +43,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int REQUEST_CODE_PERMISSION = 2;
     String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private String postID = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } catch (Exception e) {
             e.printStackTrace();
         }
+        getFiles();
     }
 
     /**
@@ -148,10 +158,30 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public View getInfoContents(Marker marker) {
-        if(marker.getSnippet()==(null))
-            return prepareInfoView(Drawable.createFromPath(getExternalCacheDir().getPath() + "/" + marker.getTitle()));
-        else
+        if(marker.getSnippet() == null) {
+            String path = getExternalCacheDir().getPath() + "/" + marker.getTitle();
+            if (fileExists(path))
+                return prepareInfoView(Drawable.createFromPath(path));
+            else{
+                getFiles();
+                return getInfoContents(marker);
+            }
+        }
+        else {
+            //test
+            Runnable run = new Runnable() {
+                @Override
+                public void run(){
+                    //declare where you intend to go
+                    Intent intent1 = new Intent(MapsActivity.this, CameraActivity.class);
+                    //now make it happen
+                    startActivity(intent1);
+                }
+            };
+            Handler hand = new Handler();
+            hand.postDelayed(run, 2000);
             return null;
+        }
     }
 
     private View prepareInfoView(Drawable image){
@@ -160,5 +190,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         infoImageView.setMinimumWidth(1000);
         infoImageView.setMinimumHeight(1000);
         return infoImageView;
+    }
+
+    boolean fileExists(String path){
+        File file = new File(path);
+        if(file.exists())
+            return true;
+        else
+            return false;
+    }
+
+    public void getFiles() {
+        //Create Firebase storage reference
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        final StorageReference storageRef = storage.getReference();
+
+        DatabaseReference dr = database.getReference("posts");
+        dr.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dS, String s) {
+                SkoovyPost post = dS.getValue(SkoovyPost.class);
+                //Create pointer to file on cloud storage
+                StorageReference sampleRef = storageRef.child(post.getImagePath());
+                //Create localFile here ↴
+                final File localFile = new File(getExternalCacheDir(), post.getImageID() + ".jpg");
+                sampleRef.getFile(localFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        // Local temp file has been created
+                        Log.d("User", "LOCALFILE CREATED.  FILENAME: " + localFile.toString());
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Handle any errors
+                    }
+                });
+            }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {}
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {}
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {}
+            @Override
+            public void onCancelled(DatabaseError databaseError) {}
+        });
     }
 }
