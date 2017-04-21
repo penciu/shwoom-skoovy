@@ -23,8 +23,6 @@ public class SkoovyPost {
     private String imageID = "";
     private String postID;
     private String userID;
-    private boolean visibility;
-    private List<String> viewers;
     private double latitude;
     private double longitude;
 
@@ -33,13 +31,12 @@ public class SkoovyPost {
     }
 
     //Latitude given.
-    SkoovyPost(Type postType, String imageID, String userID, boolean visibility, double latitude, double longitude) {
+    SkoovyPost(Type postType, String imageID, String userID, double latitude, double longitude) {
         generatePostID();
         this.postType = postType;
         this.imagePath = "photos/" + imageID + ".jpg";
         this.imageID = imageID;
         this.userID = userID;
-        this.visibility = visibility;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -59,18 +56,6 @@ public class SkoovyPost {
 
     public void setUserID(String userID) {
         this.userID = userID;
-    }
-
-    public void setViewers(List<String> viewers) {
-        this.viewers = viewers;
-    }
-
-    public List<String> getViewers() {
-        return viewers;
-    }
-
-    public void setVisibility(boolean visibility) {
-        this.visibility = visibility;
     }
 
     public Type getPostType() {
